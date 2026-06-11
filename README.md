@@ -2,7 +2,7 @@
 
 Public weekly dashboard of social media KPIs for the Torchbearer Community volunteer group, covering X (Twitter), Instagram, Bluesky, Threads, YouTube, Substack, TikTok, Facebook, and LinkedIn.
 
-**Live dashboard:** see the GitHub Pages URL in the repo sidebar.
+**Live dashboard:** https://torchbearercommunity.github.io/torchbearer-social-kpis/
 
 ## How it works
 
