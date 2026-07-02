@@ -1,6 +1,6 @@
 {
   "community": "Torchbearer Community",
-  "updated": "2026-05-10",
+  "updated": "2026-07-02",
   "weeks": [
     "2025-11-08",
     "2025-11-15",
@@ -25,7 +25,8 @@
     "2026-04-12",
     "2026-04-19",
     "2026-04-26",
-    "2026-05-03"
+    "2026-05-03",
+    "2026-06-07"
   ],
   "platforms": {
     "x": {
@@ -56,7 +57,8 @@
           317,
           323,
           340,
-          378
+          378,
+          430
         ],
         "Verified Followers": [
           null,
@@ -82,7 +84,8 @@
           106,
           109,
           113,
-          126
+          126,
+          135
         ],
         "Impressions": [
           null,
@@ -108,7 +111,8 @@
           null,
           null,
           null,
-          null
+          null,
+          16000
         ],
         "Engagements": [
           942,
@@ -134,7 +138,8 @@
           374,
           332,
           633,
-          552
+          552,
+          485
         ],
         "Engagement Rate %": [
           5.7,
@@ -160,7 +165,8 @@
           5.2,
           3.3,
           4.2,
-          4.8
+          4.8,
+          3
         ],
         "Profile Visits": [
           null,
@@ -186,7 +192,8 @@
           null,
           null,
           null,
-          null
+          null,
+          20
         ]
       }
     },
@@ -218,7 +225,8 @@
           null,
           null,
           59,
-          65
+          65,
+          89
         ],
         "Views": [
           null,
@@ -244,7 +252,8 @@
           null,
           null,
           210,
-          168
+          168,
+          402
         ],
         "Accounts Reached": [
           null,
@@ -270,7 +279,8 @@
           null,
           null,
           176,
-          51
+          51,
+          185
         ],
         "Interactions": [
           null,
@@ -296,7 +306,8 @@
           null,
           null,
           23,
-          48
+          48,
+          47
         ],
         "Profile Visits": [
           null,
@@ -322,7 +333,8 @@
           null,
           null,
           null,
-          null
+          null,
+          21
         ]
       }
     },
@@ -354,7 +366,8 @@
           null,
           null,
           null,
-          null
+          null,
+          8
         ],
         "Engagements": [
           null,
@@ -380,7 +393,8 @@
           null,
           null,
           null,
-          null
+          null,
+          12
         ]
       }
     },
@@ -412,9 +426,11 @@
           null,
           null,
           null,
-          null
+          null,
+          5
         ],
         "Views": [
+          null,
           null,
           null,
           null,
@@ -464,9 +480,11 @@
           null,
           null,
           null,
+          null,
           null
         ],
         "Profile Visits": [
+          null,
           null,
           null,
           null,
@@ -522,7 +540,8 @@
           45,
           45,
           50,
-          53
+          53,
+          61
         ],
         "Views": [
           null,
@@ -548,7 +567,8 @@
           60,
           57,
           73,
-          153
+          153,
+          270
         ],
         "Impressions": [
           null,
@@ -574,7 +594,8 @@
           751,
           984,
           1016,
-          1987
+          1987,
+          6900
         ],
         "CTR %": [
           null,
@@ -600,7 +621,8 @@
           3.3,
           3.4,
           3.8,
-          3.8
+          3.8,
+          2.7
         ]
       }
     },
@@ -632,7 +654,8 @@
           null,
           null,
           null,
-          null
+          null,
+          150
         ],
         "Views": [
           null,
@@ -658,7 +681,8 @@
           null,
           null,
           null,
-          null
+          null,
+          359
         ],
         "Open Rate %": [
           null,
@@ -684,7 +708,8 @@
           null,
           null,
           null,
-          null
+          null,
+          17.9
         ]
       }
     },
@@ -716,7 +741,8 @@
           null,
           null,
           null,
-          null
+          null,
+          1
         ],
         "Views": [
           null,
@@ -742,7 +768,8 @@
           null,
           null,
           null,
-          null
+          null,
+          0
         ],
         "Engagements": [
           null,
@@ -768,7 +795,8 @@
           null,
           null,
           null,
-          null
+          null,
+          0
         ],
         "Profile Views": [
           null,
@@ -794,7 +822,8 @@
           null,
           null,
           null,
-          null
+          null,
+          0
         ]
       }
     },
@@ -826,7 +855,8 @@
           4,
           5,
           5,
-          6
+          6,
+          null
         ],
         "Views": [
           null,
@@ -852,7 +882,8 @@
           226,
           138,
           122,
-          187
+          187,
+          null
         ],
         "Viewers": [
           null,
@@ -878,7 +909,8 @@
           99,
           63,
           73,
-          104
+          104,
+          null
         ],
         "Interactions": [
           null,
@@ -904,7 +936,8 @@
           60,
           21,
           18,
-          20
+          20,
+          null
         ]
       }
     },
@@ -936,7 +969,8 @@
           62,
           65,
           71,
-          79
+          79,
+          null
         ],
         "Impressions": [
           null,
@@ -962,7 +996,8 @@
           236,
           267,
           246,
-          236
+          236,
+          null
         ],
         "Engagements": [
           null,
@@ -988,7 +1023,8 @@
           45,
           35,
           31,
-          40
+          40,
+          null
         ],
         "Engagement Rate %": [
           null,
@@ -1014,7 +1050,8 @@
           19.1,
           13.1,
           12.6,
-          16.9
+          16.9,
+          null
         ]
       }
     }
