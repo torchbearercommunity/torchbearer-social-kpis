@@ -16,18 +16,22 @@ Weeks run **Monday–Sunday**. The week-ending date is the most recent **Sunday*
 1. Load the Claude in Chrome tools via ToolSearch (query `Claude_in_Chrome`, max_results 30). Call `list_connected_browsers` / `tabs_context_mcp` to confirm the extension is connected. If it isn't, ask the user to open Chrome with the Claude extension enabled, then continue.
 2. Read `data/kpis.json` to know the platforms, their exact metric names, and last week's values (for sanity-checking new numbers).
 
+## Browser prerequisite
+
+The Claude in Chrome extension only acts on sites the user has allowed. If `navigate` returns "Navigation to this domain is not allowed", ask Kevin to allow the site in the extension's site-permission settings (Claude toolbar icon → site access). Domains needed: x.com, business.facebook.com, instagram.com, bsky.app, threads.net, youtube.com + studio.youtube.com, substack.com (and the publication's subdomain), tiktok.com, linkedin.com.
+
 ## Account handles
 
 <!-- Fill in / correct these on the first run, then update this file so future runs don't have to rediscover them. -->
-- X: handle TBD — analytics at https://x.com/i/account_analytics
-- Instagram: handle TBD — Meta Business Suite insights at https://business.facebook.com/latest/insights/overview (or instagram.com professional dashboard)
-- Bluesky: handle TBD — profile at https://bsky.app/profile/HANDLE
-- Threads: handle TBD — insights at https://www.threads.net/insights
-- YouTube: channel TBD — https://studio.youtube.com → Analytics
-- Substack: publication TBD — https://PUBLICATION.substack.com/publish/stats
-- TikTok: handle TBD — https://www.tiktok.com/tiktokstudio/analytics
-- Facebook: page TBD — Meta Business Suite insights (same as Instagram)
-- LinkedIn: page TBD — https://www.linkedin.com/company/SLUG/admin/analytics/
+- X: @JoinTorchbearer — analytics at https://x.com/i/account_analytics. Click the "Select date range" button (calendar icon next to the 7D/2W presets), pick the week's Monday then its Sunday, Escape to close. KPI cards show Verified followers X / Y (Y = total Followers), Impressions, Engagement rate, Engagements, Profile visits. Page text extraction misses the numbers — read them from a screenshot.
+- Instagram: Torchbearer Community — Meta Business Suite insights at https://business.facebook.com/latest/insights/overview (or instagram.com professional dashboard)
+- Bluesky: jointorchbearer.bsky.social — no browser needed: public API at https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=jointorchbearer.bsky.social (followers) and app.bsky.feed.getAuthorFeed (sum likes+reposts+replies on the week's posts)
+- Threads: @torchbearercommunity — insights at https://www.threads.net/insights. Insights are gated until 100 followers ("Insights await"); until then only Followers (from the profile header) is available, other metrics are null.
+- YouTube: Torchbearer Community — https://studio.youtube.com → Analytics
+- Substack: TorchbearerCommunity — https://torchbearercommunity.substack.com/publish/stats. Subscribers from publish/home Overview. The Traffic tab's custom date range errors ("Failed to load"), so take Views as the sum of the week's posts' views from Stats → Posts. The per-post column is labeled "engagement rate" and there is no weekly open rate; record "Open Rate %" as the average of the week's posts' engagement rates (Kevin's decision, 2026-07-02).
+- TikTok: @torchbearercommunity — https://www.tiktok.com/tiktokstudio/analytics. Date dropdown (top right) → Custom → pick Monday then Sunday → Apply. Followers total is on the TikTok Studio home page (https://www.tiktok.com/tiktokstudio), not in Analytics.
+- Facebook: page TBD — Meta Business Suite insights (same as Instagram). As of 2026-07-02 facebook.com/business.facebook.com are not allowed for the extension (site access must be granted first).
+- LinkedIn: page TBD — https://www.linkedin.com/company/SLUG/admin/analytics/. As of 2026-07-02 linkedin.com is not allowed for the extension (site access must be granted first).
 
 ## Collection, platform by platform
 
