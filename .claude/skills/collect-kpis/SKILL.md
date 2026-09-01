@@ -18,7 +18,9 @@ Weeks run **Monday–Sunday**. The week-ending date is the most recent **Sunday*
 
 ## Browser prerequisite
 
-The Claude in Chrome extension only acts on sites the user has allowed. If `navigate` returns "Navigation to this domain is not allowed", ask Kevin to allow the site in the extension's site-permission settings (Claude toolbar icon → site access). Domains needed: x.com, business.facebook.com, instagram.com, bsky.app, threads.net, youtube.com + studio.youtube.com, substack.com (and the publication's subdomain), tiktok.com, linkedin.com.
+The Claude in Chrome extension only acts on sites the user has allowed. If `navigate` returns "Navigation to this domain is not allowed", ask Kevin to allow the site in the extension's site-permission settings (Claude toolbar icon → site access). Domains needed: x.com, business.facebook.com, instagram.com, bsky.app (and public.api.bsky.app), threads.net, youtube.com + studio.youtube.com, substack.com (and the publication's subdomain), tiktok.com, linkedin.com.
+
+As of 2026-09-01, only **x.com** is allowed on both connected browsers ("TBC Chrome" and "Browser 2") — every other domain above returns "Navigation to this domain is not allowed". This is an unattended-run blocker: in a scheduled/automated run there's no way to grant site access mid-run, so everything except X gets recorded as null. Kevin needs to open the extension's site-access settings and add the remaining 8 domains before the next run collects real numbers for them.
 
 ## Account handles
 
