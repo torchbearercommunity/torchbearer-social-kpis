@@ -1,76 +1,84 @@
 ---
 name: collect-kpis
-description: Weekly collection of Torchbearer Community social media KPIs. Opens each platform's analytics page in the user's logged-in Chrome browser, records followers, views/impressions, engagements, engagement rate, and profile views into data/kpis.json, then publishes the dashboard to GitHub Pages. Use when the user asks to collect/gather/update social media KPIs or run the weekly numbers.
+description: Weekly collection of Torchbearer Community social media KPIs — API pass, then browser pass in Kevin's logged-in Chrome, then validate, build, push to GitHub Pages, and post a Discord summary. Use when asked to collect/gather/update the social KPIs, run the weekly numbers, or retry a partial week.
 ---
 
-# Weekly KPI Collection
+# Weekly KPI collection — runbook
 
-Collect this week's numbers for all 9 Torchbearer Community accounts, append them to `data/kpis.json`, validate, and publish.
+Work in `C:\Users\kevin\Programming\TBCsocialMediaKPIsClaude`. Read `CLAUDE.md`
+and `docs/collection-guide.md` first; the guide has every URL, field name, and UI
+quirk. **This usually runs unattended** — nobody is watching and nobody can answer
+a question mid-run, so make reasonable decisions, never block on input, and put
+anything that needs Kevin into the final Discord summary instead.
 
-## Reporting week
+## 0. Preflight
 
-Weeks run **Monday–Sunday**. The week-ending date is the most recent **Sunday** (if today is Sunday, use today). Compute it first; it becomes the new entry in the `weeks` array. If that date is already the last entry in `weeks`, this week was already collected — ask the user whether to overwrite it.
+```
+node scripts/preflight.mjs
+```
+It prints the reporting week (`<start>`) and the mode:
+- **NEW** — collect everything.
+- **RETRY** — the week exists with nulls (Tuesday after a bad Monday, or a rerun).
+  Collect **only** the listed null metrics; leave existing values alone.
+- **DONE** — post `--status ok "Week <start> already fully collected"` via
+  `scripts/notify.mjs` and stop.
+If preflight exits non-zero (data file invalid), post `--status fail` with its
+output and stop — do not touch the data file.
 
-## Setup
+## 1. API pass (no browser)
 
-1. Load the Claude in Chrome tools via ToolSearch (query `Claude_in_Chrome`, max_results 30). Call `list_connected_browsers` / `tabs_context_mcp` to confirm the extension is connected. If it isn't, ask the user to open Chrome with the Claude extension enabled, then continue.
-2. Read `data/kpis.json` to know the platforms, their exact metric names, and last week's values (for sanity-checking new numbers).
+```
+node scripts/fetch-api.mjs --week <start> --apply
+```
+Bluesky always works; YouTube/Facebook/Instagram/Threads are collected here too
+whenever their credentials are in `.env`. Note `stillNeedBrowser` from its output —
+that is the browser to-do list.
 
-## Browser prerequisite
+## 2. Browser pass
 
-The Claude in Chrome extension only acts on sites the user has allowed. If `navigate` returns "Navigation to this domain is not allowed", ask Kevin to allow the site in the extension's site-permission settings (Claude toolbar icon → site access). Domains needed: x.com, business.facebook.com, instagram.com, bsky.app (and public.api.bsky.app), threads.net, youtube.com + studio.youtube.com, substack.com (and the publication's subdomain), tiktok.com, linkedin.com.
+1. Load the claude-in-chrome tools (ToolSearch `select:` the core set). Call
+   `list_connected_browsers`; pick the one named **"TBC Chrome"** with
+   `select_browser` (do not use AskUserQuestion). `tabs_context_mcp` with
+   `createIfEmpty`.
+2. **Site-access probe**: `navigate` to each domain still needed. Any
+   "Navigation to this domain is not allowed" → add that platform to a `blocked`
+   list and skip it. If *every* platform is blocked, go straight to step 4 with
+   status `fail`.
+3. Collect in this order, recording each platform immediately with
+   `node scripts/add-week.mjs <start> platform.metric=value …` before moving on:
+   **instagram, substack** (irrecoverable — always first), then **x, linkedin,
+   youtube, facebook**, then **threads, tiktok**. Skip metrics the API pass
+   already filled. Apply the rules in the collection guide; anything unreadable is
+   `null`, never a guess. Cap effort per platform at roughly a dozen tool calls —
+   if a page will not cooperate, null it, note why, move on.
+4. Close the tabs you opened (`tabs_close_mcp`).
 
-As of 2026-09-01, only **x.com** is allowed on both connected browsers ("TBC Chrome" and "Browser 2") — every other domain above returns "Navigation to this domain is not allowed". This is an unattended-run blocker: in a scheduled/automated run there's no way to grant site access mid-run, so everything except X gets recorded as null. Kevin needs to open the extension's site-access settings and add the remaining 8 domains before the next run collects real numbers for them.
+## 3. Validate, build, publish
 
-## Account handles
+```
+node scripts/validate.mjs && node scripts/build.mjs
+git add data/kpi-history.json index.html
+git commit -m "KPIs for week of <start>"
+git push
+```
+Also commit any edits you made to `docs/collection-guide.md`. If nothing at all
+was collected, skip the commit. Only push what validates.
 
-<!-- Fill in / correct these on the first run, then update this file so future runs don't have to rediscover them. -->
-- X: @JoinTorchbearer — analytics at https://x.com/i/account_analytics. Click the "Select date range" button (calendar icon next to the 7D/2W presets), pick the week's Monday then its Sunday, Escape to close. KPI cards show Verified followers X / Y (Y = total Followers), Impressions, Engagement rate, Engagements, Profile visits. Page text extraction misses the numbers — read them from a screenshot.
-- Instagram: Torchbearer Community — Meta Business Suite insights at https://business.facebook.com/latest/insights/overview (or instagram.com professional dashboard)
-- Bluesky: jointorchbearer.bsky.social — no browser needed: public API at https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=jointorchbearer.bsky.social (followers) and app.bsky.feed.getAuthorFeed (sum likes+reposts+replies on the week's posts)
-- Threads: @torchbearercommunity — insights at https://www.threads.net/insights. Insights are gated until 100 followers ("Insights await"); until then only Followers (from the profile header) is available, other metrics are null.
-- YouTube: Torchbearer Community — https://studio.youtube.com → Analytics
-- Substack: TorchbearerCommunity — https://torchbearercommunity.substack.com/publish/stats. Subscribers from publish/home Overview. The Traffic tab's custom date range errors ("Failed to load"), so take Views as the sum of the week's posts' views from Stats → Posts. The per-post column is labeled "engagement rate" and there is no weekly open rate; record "Open Rate %" as the average of the week's posts' engagement rates (Kevin's decision, 2026-07-02).
-- TikTok: @torchbearercommunity — https://www.tiktok.com/tiktokstudio/analytics. Date dropdown (top right) → Custom → pick Monday then Sunday → Apply. Followers total is on the TikTok Studio home page (https://www.tiktok.com/tiktokstudio), not in Analytics.
-- Facebook: page TBD — Meta Business Suite insights (same as Instagram). As of 2026-07-02 facebook.com/business.facebook.com are not allowed for the extension (site access must be granted first).
-- LinkedIn: page TBD — https://www.linkedin.com/company/SLUG/admin/analytics/. As of 2026-07-02 linkedin.com is not allowed for the extension (site access must be granted first).
+## 4. Discord summary — always, even on failure
 
-## Collection, platform by platform
+Compose a summary and send it with `node scripts/notify.mjs --status <ok|warn|fail> "<text>"`:
+- `ok` when every platform has its core metrics; `warn` when anything is null;
+  `fail` when nothing was collected or preflight failed.
+- Include: per-platform followers with week-over-week change and the week's
+  main engagement number; any **derived** values; the `blocked` domains (tell
+  Kevin to allow them in the extension's site access); and a **fill-in list** of
+  exactly what is missing, as ready-to-run commands, e.g.
+  `node scripts/add-week.mjs <start> substack.subscribers=… substack.views=…`.
+- End with the dashboard URL: https://torchbearercommunity.github.io/torchbearer-social-kpis/
 
-For each platform: open the analytics page in a tab (`tabs_create_mcp` + `navigate`), **set the date range to the last 7 days / the reporting week** where the UI allows it, and read the numbers with `get_page_text` or `read_page`. Record into the existing metric names in `data/kpis.json`:
-
-| Platform | Metrics to capture (kpis.json names) | Where |
-|---|---|---|
-| X | Followers, Verified Followers, Impressions, Engagements, Engagement Rate %, Profile Visits | Account analytics overview, 7-day range |
-| Instagram | Followers, Views, Accounts Reached, Interactions, Profile Visits | Business Suite → Insights → Instagram, last 7 days |
-| Bluesky | Followers, Engagements | Profile header for followers; sum likes+reposts+replies on the week's posts for Engagements |
-| Threads | Followers, Views, Interactions, Profile Visits | Threads insights, last 7 days |
-| YouTube | Subscribers, Views, Impressions, CTR % | Studio → Analytics, last 7 days (CTR = impressions click-through rate) |
-| Substack | Subscribers, Views, Open Rate % | Publish → Stats, last 7 days |
-| TikTok | Followers, Views, Engagements, Profile Views | TikTok Studio → Analytics, last 7 days (Engagements = likes+comments+shares) |
-| Facebook | Followers, Views, Viewers, Interactions | Business Suite → Insights → Facebook, last 7 days |
-| LinkedIn | Followers, Impressions, Engagements, Engagement Rate % | Page admin → Analytics (followers + content), last 7 days |
-
-Rules:
-- "Total" metrics (Followers/Subscribers) are the **current total**; everything else is **this week's count**.
-- Engagement rate: use the platform's own figure if shown; otherwise compute engagements ÷ impressions (or views) × 100, rounded to 1 decimal.
-- A metric you can't get this week is `null` — never guess, never reuse last week's value.
-- Sanity-check against last week: totals should rarely drop more than a few percent; if a number looks off by 10x, re-read the page before recording.
-- If a page won't load or the account is logged out, note it, move on, and at the end ask the user for just those numbers (they may enter them or say skip).
-
-## Record and publish
-
-1. Edit `data/kpis.json`: append the week-ending date to `weeks`, append exactly one value (number or null) to **every** metric array of **every** platform, and set `updated` to today (YYYY-MM-DD).
-2. Run `node scripts/validate.mjs` — must pass before continuing.
-3. Commit and push:
-   ```
-   git add data/kpis.json
-   git commit -m "KPIs for week ending <date>"
-   git push
-   ```
-4. GitHub Pages redeploys automatically (takes ~1 minute). Confirm with `gh api repos/:owner/:repo/pages --jq .status` or just tell the user the URL.
-5. Finish with a short summary table: per platform, followers (with weekly change) and the week's views + engagements, plus anything that couldn't be collected.
+Then finish with the same summary as your final message.
 
 ## Maintenance
 
-If you discover a better analytics URL, a renamed metric, or a new account handle during a run, update this SKILL.md so the next run is smoother. If a platform adds a metric worth tracking, add it to `data/kpis.json` as a new array (backfill with nulls) — the dashboard picks it up automatically.
+If you find a better URL, a renamed metric, or a new quirk, fix
+`docs/collection-guide.md` in the same run. Never edit `index.html` by hand.

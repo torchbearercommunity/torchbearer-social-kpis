@@ -1,0 +1,1452 @@
+{
+  "organization": "Torchbearer Community",
+  "updated": "2026-09-04",
+  "platforms": {
+    "x": {
+      "name": "X / Twitter",
+      "handle": "@JoinTorchbearer"
+    },
+    "linkedin": {
+      "name": "LinkedIn"
+    },
+    "youtube": {
+      "name": "YouTube"
+    },
+    "facebook": {
+      "name": "Facebook"
+    },
+    "instagram": {
+      "name": "Instagram"
+    },
+    "substack": {
+      "name": "Substack"
+    },
+    "bluesky": {
+      "name": "Bluesky",
+      "handle": "jointorchbearer.bsky.social"
+    },
+    "threads": {
+      "name": "Threads",
+      "handle": "@torchbearercommunity"
+    },
+    "tiktok": {
+      "name": "TikTok",
+      "handle": "@torchbearercommunity"
+    }
+  },
+  "weeks": [
+    {
+      "start": "2025-11-03",
+      "end": "2025-11-09",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 67,
+          "engagements": 942,
+          "engagementRate": 5.7
+        }
+      }
+    },
+    {
+      "start": "2025-11-10",
+      "end": "2025-11-16",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 85,
+          "engagements": 350,
+          "engagementRate": 9.1
+        },
+        "linkedin": {
+          "followers": 9,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": null,
+          "engagementRate": null
+        }
+      }
+    },
+    {
+      "start": "2025-11-17",
+      "end": "2025-11-23",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 139,
+          "engagements": 905,
+          "engagementRate": 4.2
+        },
+        "linkedin": {
+          "followers": 18,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": 32,
+          "engagementRate": 11.3
+        }
+      }
+    },
+    {
+      "start": "2025-11-24",
+      "end": "2025-11-30",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 147,
+          "engagements": 158,
+          "engagementRate": 3.4
+        },
+        "linkedin": {
+          "followers": 19,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": 9,
+          "engagementRate": 14
+        }
+      }
+    },
+    {
+      "start": "2025-12-08",
+      "end": "2025-12-14",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 183,
+          "engagements": 781,
+          "engagementRate": 3.1
+        },
+        "linkedin": {
+          "followers": 21,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": 12,
+          "engagementRate": 13.9
+        },
+        "youtube": {
+          "subscribers": 7,
+          "views": null,
+          "impressions": null,
+          "engagements": null,
+          "likes": null,
+          "comments": null,
+          "impressionsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2025-12-15",
+      "end": "2025-12-21",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 192,
+          "engagements": 430,
+          "engagementRate": 6.8
+        },
+        "linkedin": {
+          "followers": 23,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": 14,
+          "engagementRate": 7.5
+        },
+        "youtube": {
+          "subscribers": 9,
+          "views": null,
+          "impressions": null,
+          "engagements": null,
+          "likes": null,
+          "comments": null,
+          "impressionsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2025-12-22",
+      "end": "2025-12-28",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 190,
+          "engagements": 284,
+          "engagementRate": 8.1
+        },
+        "linkedin": {
+          "followers": 26,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": 12,
+          "engagementRate": 6.8
+        },
+        "youtube": {
+          "subscribers": 12,
+          "views": null,
+          "impressions": null,
+          "engagements": null,
+          "likes": null,
+          "comments": null,
+          "impressionsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2026-01-05",
+      "end": "2026-01-11",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 190,
+          "engagements": 283,
+          "engagementRate": 8.5
+        },
+        "linkedin": {
+          "followers": 27,
+          "membersReached": null,
+          "impressions": null,
+          "engagements": 30,
+          "engagementRate": 12.3
+        },
+        "youtube": {
+          "subscribers": 14,
+          "views": null,
+          "impressions": null,
+          "engagements": null,
+          "likes": null,
+          "comments": null,
+          "impressionsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2026-01-12",
+      "end": "2026-01-18",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 198,
+          "engagements": 283,
+          "engagementRate": 8
+        },
+        "linkedin": {
+          "followers": 28,
+          "membersReached": null,
+          "impressions": 314,
+          "engagements": 39,
+          "engagementRate": 9.9
+        },
+        "youtube": {
+          "subscribers": 14,
+          "views": null,
+          "impressions": 7,
+          "engagements": null,
+          "likes": 7,
+          "comments": null,
+          "impressionsCtr": null
+        },
+        "instagram": {
+          "followers": null,
+          "views": 107,
+          "reach": null,
+          "interactions": 4,
+          "profileVisits": null,
+          "reachToInteractionRate": null
+        }
+      }
+    },
+    {
+      "start": "2026-01-19",
+      "end": "2026-01-25",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 194,
+          "engagements": 169,
+          "engagementRate": 6.8
+        },
+        "linkedin": {
+          "followers": 29,
+          "membersReached": null,
+          "impressions": 69,
+          "engagements": 10,
+          "engagementRate": 13
+        },
+        "youtube": {
+          "subscribers": 15,
+          "views": null,
+          "impressions": 2,
+          "engagements": null,
+          "likes": 7,
+          "comments": 1,
+          "impressionsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2026-01-26",
+      "end": "2026-02-01",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 208,
+          "engagements": 319,
+          "engagementRate": 8.3
+        },
+        "linkedin": {
+          "followers": 30,
+          "membersReached": null,
+          "impressions": 92,
+          "engagements": 15,
+          "engagementRate": 15.2
+        },
+        "youtube": {
+          "subscribers": 15,
+          "views": 9,
+          "impressions": 82,
+          "engagements": null,
+          "likes": 4,
+          "comments": 0,
+          "impressionsCtr": 2.4
+        }
+      }
+    },
+    {
+      "start": "2026-02-02",
+      "end": "2026-02-08",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": 220,
+          "engagements": 356,
+          "engagementRate": 10
+        },
+        "linkedin": {
+          "followers": 31,
+          "membersReached": null,
+          "impressions": 154,
+          "engagements": 14,
+          "engagementRate": 9.1
+        },
+        "youtube": {
+          "subscribers": 16,
+          "views": 33,
+          "impressions": 1317,
+          "engagements": null,
+          "likes": 13,
+          "comments": 0,
+          "impressionsCtr": 1.6
+        }
+      }
+    },
+    {
+      "start": "2026-02-09",
+      "end": "2026-02-15",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 74,
+          "followers": 232,
+          "engagements": 326,
+          "engagementRate": 7.3
+        },
+        "linkedin": {
+          "followers": 31,
+          "membersReached": null,
+          "impressions": 142,
+          "engagements": 10,
+          "engagementRate": 7
+        },
+        "youtube": {
+          "subscribers": 17,
+          "views": 137,
+          "impressions": 265,
+          "engagements": null,
+          "likes": 9,
+          "comments": 1,
+          "impressionsCtr": 25
+        }
+      }
+    },
+    {
+      "start": "2026-02-16",
+      "end": "2026-02-22",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 75,
+          "followers": 238,
+          "engagements": 305,
+          "engagementRate": 6.5
+        },
+        "linkedin": {
+          "followers": 31,
+          "membersReached": null,
+          "impressions": 111,
+          "engagements": 8,
+          "engagementRate": 7.2
+        },
+        "youtube": {
+          "subscribers": 19,
+          "views": 66,
+          "impressions": 213,
+          "engagements": null,
+          "likes": 4,
+          "comments": 0,
+          "impressionsCtr": 11
+        }
+      }
+    },
+    {
+      "start": "2026-02-23",
+      "end": "2026-03-01",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 81,
+          "followers": 243,
+          "engagements": 227,
+          "engagementRate": 7.3
+        },
+        "linkedin": {
+          "followers": 31,
+          "membersReached": null,
+          "impressions": 79,
+          "engagements": 7,
+          "engagementRate": 8.9
+        },
+        "youtube": {
+          "subscribers": 19,
+          "views": 66,
+          "impressions": 213,
+          "engagements": null,
+          "likes": 4,
+          "comments": 0,
+          "impressionsCtr": 11
+        }
+      }
+    },
+    {
+      "start": "2026-03-02",
+      "end": "2026-03-08",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 88,
+          "followers": 257,
+          "engagements": 387,
+          "engagementRate": 8.1
+        },
+        "linkedin": {
+          "followers": 31,
+          "membersReached": null,
+          "impressions": 155,
+          "engagements": 13,
+          "engagementRate": 8.4
+        },
+        "youtube": {
+          "subscribers": 21,
+          "views": 25,
+          "impressions": 159,
+          "engagements": null,
+          "likes": 10,
+          "comments": 0,
+          "impressionsCtr": 6.9
+        }
+      }
+    },
+    {
+      "start": "2026-03-09",
+      "end": "2026-03-15",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 98,
+          "followers": 285,
+          "engagements": 507,
+          "engagementRate": 5.3
+        },
+        "linkedin": {
+          "followers": 31,
+          "membersReached": null,
+          "impressions": 155,
+          "engagements": 13,
+          "engagementRate": 8.4
+        },
+        "youtube": {
+          "subscribers": 21,
+          "views": 25,
+          "impressions": 159,
+          "engagements": null,
+          "likes": 10,
+          "comments": 0,
+          "impressionsCtr": 6.9
+        }
+      }
+    },
+    {
+      "start": "2026-03-16",
+      "end": "2026-03-22",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 102,
+          "followers": 295,
+          "engagements": 393,
+          "engagementRate": 4.8
+        },
+        "linkedin": {
+          "followers": 42,
+          "membersReached": null,
+          "impressions": 101,
+          "engagements": 9,
+          "engagementRate": 8.9
+        },
+        "youtube": {
+          "subscribers": 39,
+          "views": 58,
+          "impressions": 513,
+          "engagements": null,
+          "likes": 2,
+          "comments": 0,
+          "impressionsCtr": 8
+        }
+      }
+    },
+    {
+      "start": "2026-03-23",
+      "end": "2026-03-29",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 102,
+          "followers": 302,
+          "engagements": 296,
+          "engagementRate": 7.9
+        },
+        "linkedin": {
+          "followers": 48,
+          "membersReached": null,
+          "impressions": 247,
+          "engagements": 39,
+          "engagementRate": 15.8
+        },
+        "youtube": {
+          "subscribers": 40,
+          "views": 195,
+          "impressions": 3773,
+          "engagements": null,
+          "likes": 7,
+          "comments": 4,
+          "impressionsCtr": 3.8
+        }
+      }
+    },
+    {
+      "start": "2026-03-30",
+      "end": "2026-04-05",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 104,
+          "followers": 307,
+          "engagements": 231,
+          "engagementRate": 7.2
+        },
+        "linkedin": {
+          "followers": 55,
+          "membersReached": null,
+          "impressions": 185,
+          "engagements": 18,
+          "engagementRate": 9.7
+        },
+        "youtube": {
+          "subscribers": 42,
+          "views": 67,
+          "impressions": 1302,
+          "engagements": null,
+          "likes": 1,
+          "comments": 3,
+          "impressionsCtr": 3.1
+        }
+      }
+    },
+    {
+      "start": "2026-04-06",
+      "end": "2026-04-12",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 106,
+          "followers": 317,
+          "engagements": 374,
+          "engagementRate": 5.2
+        },
+        "linkedin": {
+          "followers": 62,
+          "membersReached": 123,
+          "impressions": 236,
+          "engagements": 45,
+          "engagementRate": 19.1
+        },
+        "youtube": {
+          "subscribers": 45,
+          "views": 60,
+          "impressions": 751,
+          "engagements": null,
+          "likes": 7,
+          "comments": 1,
+          "impressionsCtr": 3.3
+        },
+        "facebook": {
+          "followers": 4,
+          "views": 226,
+          "viewers": 99,
+          "engagements": 60,
+          "viewsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2026-04-13",
+      "end": "2026-04-19",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 109,
+          "followers": 323,
+          "engagements": 332,
+          "engagementRate": 3.3
+        },
+        "linkedin": {
+          "followers": 65,
+          "membersReached": 127,
+          "impressions": 267,
+          "engagements": 35,
+          "engagementRate": 13.1
+        },
+        "youtube": {
+          "subscribers": 45,
+          "views": 57,
+          "impressions": 984,
+          "engagements": null,
+          "likes": 9,
+          "comments": 3,
+          "impressionsCtr": 3.4
+        },
+        "facebook": {
+          "followers": 5,
+          "views": 138,
+          "viewers": 63,
+          "engagements": 21,
+          "viewsCtr": null
+        }
+      }
+    },
+    {
+      "start": "2026-04-20",
+      "end": "2026-04-26",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 113,
+          "followers": 340,
+          "engagements": 633,
+          "engagementRate": 4.2
+        },
+        "linkedin": {
+          "followers": 71,
+          "membersReached": 146,
+          "impressions": 246,
+          "engagements": 31,
+          "engagementRate": 12.6
+        },
+        "youtube": {
+          "subscribers": 50,
+          "views": 73,
+          "impressions": 1016,
+          "engagements": null,
+          "likes": 9,
+          "comments": 4,
+          "impressionsCtr": 3.8
+        },
+        "facebook": {
+          "followers": 5,
+          "views": 122,
+          "viewers": 73,
+          "engagements": 18,
+          "viewsCtr": null
+        },
+        "instagram": {
+          "followers": 59,
+          "views": 210,
+          "reach": 176,
+          "interactions": 23,
+          "profileVisits": 4,
+          "reachToInteractionRate": null
+        }
+      }
+    },
+    {
+      "start": "2026-04-27",
+      "end": "2026-05-03",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 126,
+          "followers": 378,
+          "engagements": 552,
+          "engagementRate": 4.8
+        },
+        "linkedin": {
+          "followers": 79,
+          "membersReached": 132,
+          "impressions": 236,
+          "engagements": 40,
+          "engagementRate": 16.9
+        },
+        "youtube": {
+          "subscribers": 53,
+          "views": 153,
+          "impressions": 1987,
+          "engagements": null,
+          "likes": 11,
+          "comments": 4,
+          "impressionsCtr": 3.8
+        },
+        "facebook": {
+          "followers": 6,
+          "views": 187,
+          "viewers": 104,
+          "engagements": 20,
+          "viewsCtr": null
+        },
+        "instagram": {
+          "followers": 65,
+          "views": 168,
+          "reach": 51,
+          "interactions": 48,
+          "profileVisits": 12,
+          "reachToInteractionRate": null
+        }
+      }
+    },
+    {
+      "start": "2026-05-04",
+      "end": "2026-05-10",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 130,
+          "followers": 383,
+          "engagements": 366,
+          "engagementRate": 8.2
+        },
+        "linkedin": {
+          "followers": 83,
+          "membersReached": 188,
+          "impressions": 323,
+          "engagements": 39,
+          "engagementRate": 12.1
+        },
+        "youtube": {
+          "subscribers": 53,
+          "views": 82,
+          "impressions": 1218,
+          "engagements": null,
+          "likes": 0,
+          "comments": 0,
+          "impressionsCtr": 4.1
+        },
+        "facebook": {
+          "followers": 7,
+          "views": 580,
+          "viewers": 273,
+          "engagements": 83,
+          "viewsCtr": null
+        },
+        "instagram": {
+          "followers": 69,
+          "views": 131,
+          "reach": 40,
+          "interactions": 37,
+          "profileVisits": 12,
+          "reachToInteractionRate": null
+        }
+      }
+    },
+    {
+      "start": "2026-05-11",
+      "end": "2026-05-17",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 135,
+          "followers": 408,
+          "engagements": 143,
+          "engagementRate": 1.8
+        },
+        "linkedin": {
+          "followers": 87,
+          "membersReached": 97,
+          "impressions": 212,
+          "engagements": 29,
+          "engagementRate": 13.7
+        },
+        "youtube": {
+          "subscribers": 53,
+          "views": 94,
+          "impressions": 1802,
+          "engagements": 22,
+          "likes": 14,
+          "comments": 6,
+          "impressionsCtr": 3.1
+        },
+        "facebook": {
+          "followers": 8,
+          "views": 107,
+          "viewers": 107,
+          "engagements": 86,
+          "viewsCtr": null
+        },
+        "instagram": {
+          "followers": 70,
+          "views": 482,
+          "reach": 372,
+          "interactions": 49,
+          "profileVisits": 7,
+          "reachToInteractionRate": 13
+        }
+      }
+    },
+    {
+      "start": "2026-05-18",
+      "end": "2026-05-24",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 136,
+          "followers": 410,
+          "engagements": 295,
+          "engagementRate": 4.2
+        },
+        "linkedin": {
+          "followers": 89,
+          "membersReached": 196,
+          "impressions": 345,
+          "engagements": 77,
+          "engagementRate": 22.3
+        },
+        "youtube": {
+          "subscribers": 55,
+          "views": 102,
+          "impressions": 1504,
+          "engagements": 12,
+          "likes": 8,
+          "comments": 4,
+          "impressionsCtr": 3.9
+        },
+        "facebook": {
+          "followers": 10,
+          "views": 491,
+          "viewers": 236,
+          "engagements": 49,
+          "viewsCtr": 10
+        },
+        "instagram": {
+          "followers": 76,
+          "views": 472,
+          "reach": 282,
+          "interactions": 56,
+          "profileVisits": 12,
+          "reachToInteractionRate": 19.8
+        }
+      }
+    },
+    {
+      "start": "2026-05-25",
+      "end": "2026-05-31",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 137,
+          "followers": 421,
+          "engagements": 274,
+          "engagementRate": 3.1
+        },
+        "linkedin": {
+          "followers": 91,
+          "membersReached": 200,
+          "impressions": 355,
+          "engagements": 50,
+          "engagementRate": 14.1
+        },
+        "youtube": {
+          "subscribers": 58,
+          "views": 112,
+          "impressions": 1245,
+          "engagements": 16,
+          "likes": 14,
+          "comments": 2,
+          "impressionsCtr": 4.7
+        },
+        "facebook": {
+          "followers": 13,
+          "views": 871,
+          "viewers": 255,
+          "engagements": 63,
+          "viewsCtr": 7.2
+        },
+        "instagram": {
+          "followers": 82,
+          "views": 472,
+          "reach": 283,
+          "interactions": 57,
+          "profileVisits": 13,
+          "reachToInteractionRate": 20
+        }
+      }
+    },
+    {
+      "start": "2026-06-01",
+      "end": "2026-06-07",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 135,
+          "followers": 429,
+          "engagements": 370,
+          "engagementRate": 5.4,
+          "impressions": 16000,
+          "profileVisits": 20
+        },
+        "linkedin": {
+          "followers": 104,
+          "membersReached": 198,
+          "impressions": 296,
+          "engagements": 39,
+          "engagementRate": 13.2
+        },
+        "youtube": {
+          "subscribers": 60,
+          "views": 270,
+          "impressions": 6908,
+          "engagements": 17,
+          "likes": 12,
+          "comments": 4,
+          "impressionsCtr": 2.7
+        },
+        "facebook": {
+          "followers": 16,
+          "views": 297,
+          "viewers": 49,
+          "engagements": 29,
+          "viewsCtr": 9.7
+        },
+        "instagram": {
+          "followers": 87,
+          "views": 402,
+          "reach": 631,
+          "interactions": 35,
+          "profileVisits": 15,
+          "reachToInteractionRate": 5.5
+        },
+        "bluesky": {
+          "followers": 8,
+          "engagements": 12
+        },
+        "threads": {
+          "followers": 5
+        },
+        "substack": {
+          "subscribers": 150,
+          "views": 359,
+          "openRate": 17.9
+        },
+        "tiktok": {
+          "followers": 1,
+          "views": 0,
+          "engagements": 0,
+          "profileVisits": 0
+        }
+      }
+    },
+    {
+      "start": "2026-06-08",
+      "end": "2026-06-14",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 136,
+          "followers": 432,
+          "engagements": 122,
+          "engagementRate": 6.1
+        },
+        "linkedin": {
+          "followers": 108,
+          "membersReached": 88,
+          "impressions": 175,
+          "engagements": 29,
+          "engagementRate": 16.6
+        },
+        "youtube": {
+          "subscribers": 63,
+          "views": 62,
+          "impressions": 826,
+          "engagements": 5,
+          "likes": 5,
+          "comments": 0,
+          "impressionsCtr": 4.6
+        },
+        "facebook": {
+          "followers": 18,
+          "views": 97,
+          "viewers": 0,
+          "engagements": 0,
+          "viewsCtr": 0
+        },
+        "instagram": {
+          "followers": 93,
+          "views": null,
+          "reach": 178,
+          "interactions": 13,
+          "profileVisits": 30,
+          "reachToInteractionRate": 7.3
+        }
+      }
+    },
+    {
+      "start": "2026-06-15",
+      "end": "2026-06-21",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 137,
+          "followers": 436,
+          "engagements": 203,
+          "engagementRate": 4.3
+        },
+        "linkedin": {
+          "followers": 111,
+          "membersReached": 92,
+          "impressions": 159,
+          "engagements": 14,
+          "engagementRate": 8.8
+        },
+        "youtube": {
+          "subscribers": 65,
+          "views": 120,
+          "impressions": 1596,
+          "engagements": 7,
+          "likes": 3,
+          "comments": 0,
+          "impressionsCtr": 4.5
+        },
+        "facebook": {
+          "followers": 17,
+          "views": 378,
+          "viewers": 17,
+          "engagements": 7,
+          "viewsCtr": 2
+        },
+        "instagram": {
+          "followers": 97,
+          "views": 524,
+          "reach": 363,
+          "interactions": 35,
+          "profileVisits": 31,
+          "reachToInteractionRate": 9.6
+        }
+      }
+    },
+    {
+      "start": "2026-06-22",
+      "end": "2026-06-28",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 136,
+          "followers": 439,
+          "engagements": 157,
+          "engagementRate": 4.4
+        },
+        "linkedin": {
+          "followers": 112,
+          "membersReached": 211,
+          "impressions": 559,
+          "engagements": 55,
+          "engagementRate": 9.8
+        },
+        "youtube": {
+          "subscribers": 67,
+          "views": 126,
+          "impressions": 2809,
+          "engagements": 21,
+          "likes": 12,
+          "comments": 3,
+          "impressionsCtr": 2.2
+        },
+        "facebook": {
+          "followers": 18,
+          "views": 73,
+          "viewers": 31,
+          "engagements": 25,
+          "viewsCtr": 34
+        },
+        "instagram": {
+          "followers": 97,
+          "views": null,
+          "reach": 186,
+          "interactions": 42,
+          "profileVisits": 25,
+          "reachToInteractionRate": 22
+        }
+      }
+    },
+    {
+      "start": "2026-07-06",
+      "end": "2026-07-12",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 136,
+          "followers": 445,
+          "engagements": 2,
+          "engagementRate": 0.4
+        },
+        "linkedin": {
+          "followers": 118,
+          "membersReached": 105,
+          "impressions": 233,
+          "engagements": 25,
+          "engagementRate": 10.7
+        },
+        "youtube": {
+          "subscribers": 69,
+          "views": 95,
+          "impressions": 2627,
+          "engagements": 4,
+          "likes": 3,
+          "comments": 0,
+          "impressionsCtr": 2.1
+        },
+        "facebook": {
+          "followers": 18,
+          "views": 202,
+          "viewers": 0,
+          "engagements": 27,
+          "viewsCtr": 13
+        },
+        "instagram": {
+          "followers": 106,
+          "views": null,
+          "reach": 129,
+          "interactions": 2,
+          "profileVisits": 8,
+          "reachToInteractionRate": 1.5
+        },
+        "substack": {
+          "followers": 206,
+          "subscribers": 193,
+          "views": 829,
+          "uniqueVisitors": 600,
+          "subscriberConversionRate": 4.5
+        }
+      }
+    },
+    {
+      "start": "2026-07-13",
+      "end": "2026-07-19",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 138,
+          "followers": 447,
+          "engagements": 190,
+          "engagementRate": 2.6
+        },
+        "linkedin": {
+          "followers": 120,
+          "membersReached": 171,
+          "impressions": 342,
+          "engagements": 55,
+          "engagementRate": 16.1
+        },
+        "youtube": {
+          "subscribers": 70,
+          "views": 103,
+          "impressions": 2061,
+          "engagements": 19,
+          "likes": 10,
+          "comments": 4,
+          "impressionsCtr": 3.1
+        },
+        "facebook": {
+          "followers": 20,
+          "views": 1195,
+          "viewers": 842,
+          "engagements": 53,
+          "viewsCtr": 4.4
+        },
+        "instagram": {
+          "followers": 112,
+          "views": null,
+          "reach": 995,
+          "interactions": 68,
+          "profileVisits": 23,
+          "reachToInteractionRate": 6.8
+        },
+        "substack": {
+          "followers": 212,
+          "subscribers": 208,
+          "views": 193,
+          "uniqueVisitors": 94,
+          "subscriberConversionRate": 15.9
+        }
+      }
+    },
+    {
+      "start": "2026-07-20",
+      "end": "2026-07-26",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 144,
+          "followers": 453,
+          "engagements": 312,
+          "engagementRate": 2.8
+        },
+        "linkedin": {
+          "followers": 124,
+          "membersReached": 183,
+          "impressions": 422,
+          "engagements": 59,
+          "engagementRate": 14
+        },
+        "youtube": {
+          "subscribers": 72,
+          "views": 99,
+          "impressions": 1458,
+          "engagements": 23,
+          "likes": 19,
+          "comments": 4,
+          "impressionsCtr": 4.1
+        },
+        "facebook": {
+          "followers": 23,
+          "views": 5147,
+          "viewers": 4281,
+          "engagements": 115,
+          "viewsCtr": 2.2
+        },
+        "instagram": {
+          "followers": 113,
+          "views": null,
+          "reach": 569,
+          "interactions": 51,
+          "profileVisits": 9,
+          "reachToInteractionRate": 9
+        },
+        "substack": {
+          "followers": 220,
+          "subscribers": 214,
+          "views": 250,
+          "uniqueVisitors": 57,
+          "subscriberConversionRate": 10.5
+        }
+      }
+    },
+    {
+      "start": "2026-07-27",
+      "end": "2026-08-02",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 143,
+          "followers": 457,
+          "engagements": 124,
+          "engagementRate": 2.9
+        },
+        "linkedin": {
+          "followers": 124,
+          "membersReached": 106,
+          "impressions": 232,
+          "engagements": 26,
+          "engagementRate": 11.2
+        },
+        "youtube": {
+          "subscribers": 73,
+          "views": 273,
+          "impressions": 4918,
+          "engagements": 44,
+          "likes": 31,
+          "comments": 8,
+          "impressionsCtr": 3.5
+        },
+        "facebook": {
+          "followers": 24,
+          "views": 398,
+          "viewers": 324,
+          "engagements": 10,
+          "viewsCtr": 2.5
+        },
+        "instagram": {
+          "followers": 118,
+          "views": null,
+          "reach": 43,
+          "interactions": 23,
+          "profileVisits": 14,
+          "reachToInteractionRate": 53
+        },
+        "substack": {
+          "followers": 231,
+          "subscribers": 224,
+          "views": 269,
+          "uniqueVisitors": 74,
+          "subscriberConversionRate": 13.5
+        }
+      }
+    },
+    {
+      "start": "2026-08-03",
+      "end": "2026-08-09",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 144,
+          "followers": 463,
+          "engagements": 198,
+          "engagementRate": 4.9
+        },
+        "linkedin": {
+          "followers": 127,
+          "membersReached": 157,
+          "impressions": 305,
+          "engagements": 49,
+          "engagementRate": 16.1
+        },
+        "youtube": {
+          "subscribers": 75,
+          "views": 49,
+          "impressions": 1040,
+          "engagements": 7,
+          "likes": 5,
+          "comments": 2,
+          "impressionsCtr": 2.6
+        },
+        "facebook": {
+          "followers": 26,
+          "views": 397,
+          "viewers": 258,
+          "engagements": 23,
+          "viewsCtr": 5.7
+        },
+        "instagram": {
+          "followers": 120,
+          "views": null,
+          "reach": 216,
+          "interactions": 30,
+          "profileVisits": 16,
+          "reachToInteractionRate": 13.9
+        },
+        "substack": {
+          "followers": 239,
+          "subscribers": 232,
+          "views": 288,
+          "uniqueVisitors": 347,
+          "subscriberConversionRate": 2.3
+        }
+      }
+    },
+    {
+      "start": "2026-08-10",
+      "end": "2026-08-16",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": null,
+          "followers": null,
+          "engagements": 306,
+          "engagementRate": 4.1
+        },
+        "linkedin": {
+          "followers": null,
+          "membersReached": 155,
+          "impressions": 247,
+          "engagements": 37,
+          "engagementRate": 15
+        },
+        "youtube": {
+          "subscribers": 78,
+          "views": 122,
+          "impressions": 1475,
+          "engagements": 23,
+          "likes": 15,
+          "comments": 8,
+          "impressionsCtr": 4.5
+        },
+        "facebook": {
+          "followers": 28,
+          "views": 759,
+          "viewers": 421,
+          "engagements": 40,
+          "viewsCtr": 0
+        },
+        "instagram": {
+          "followers": null,
+          "views": null,
+          "reach": null,
+          "interactions": null,
+          "profileVisits": null,
+          "reachToInteractionRate": null
+        },
+        "substack": {
+          "followers": null,
+          "subscribers": null,
+          "views": null,
+          "uniqueVisitors": null,
+          "subscriberConversionRate": null
+        }
+      }
+    },
+    {
+      "start": "2026-08-17",
+      "end": "2026-08-23",
+      "platforms": {
+        "x": {
+          "verifiedFollowers": 148,
+          "followers": 475,
+          "engagements": 116,
+          "engagementRate": 4.2
+        },
+        "linkedin": {
+          "followers": null,
+          "membersReached": 137,
+          "impressions": 239,
+          "engagements": 46,
+          "engagementRate": 19.2
+        },
+        "youtube": {
+          "subscribers": 81,
+          "views": 170,
+          "impressions": 2226,
+          "engagements": 21,
+          "likes": 12,
+          "comments": 7,
+          "impressionsCtr": 3.8
+        },
+        "facebook": {
+          "followers": 30,
+          "views": 471,
+          "viewers": 125,
+          "engagements": 23,
+          "viewsCtr": 0
+        },
+        "instagram": {
+          "followers": 132,
+          "views": null,
+          "reach": null,
+          "interactions": 35,
+          "profileVisits": 18,
+          "reachToInteractionRate": null
+        },
+        "substack": {
+          "followers": null,
+          "subscribers": null,
+          "views": null,
+          "uniqueVisitors": null,
+          "subscriberConversionRate": null
+        }
+      }
+    },
+    {
+      "start": "2026-08-24",
+      "end": "2026-08-30",
+      "platforms": {
+        "x": {
+          "followers": 478,
+          "verifiedFollowers": 144,
+          "impressions": 4248,
+          "engagements": 163,
+          "engagementRate": 3.8,
+          "profileVisits": 5
+        },
+        "bluesky": {
+          "followers": 13,
+          "engagements": 3
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,766 @@
+<style>
+  :root {
+    color-scheme: light;
+    /* ground */
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --border: rgba(11, 11, 11, 0.10);
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    /* ink */
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-3: #898781;
+    /* brand */
+    --brand: #b45309;
+    /* chart */
+    --series: #2a78d6;
+    --series-wash: rgba(42, 120, 214, 0.10);
+    --spark-dim: #9ec5f4;
+    /* semantic */
+    --delta-up: #006300;
+    --delta-down: #c03535;
+    --tooltip-bg: #1f1e1c;
+    --tooltip-ink: #ffffff;
+    --tooltip-ink-2: #c3c2b7;
+    --chip-bg: rgba(11, 11, 11, 0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --border: rgba(255, 255, 255, 0.10);
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --ink-3: #898781;
+      --brand: #e08a3c;
+      --series: #3987e5;
+      --series-wash: rgba(57, 135, 229, 0.14);
+      --spark-dim: #2a4a73;
+      --delta-up: #0ca30c;
+      --delta-down: #e66767;
+      --tooltip-bg: #f4f3ef;
+      --tooltip-ink: #0b0b0b;
+      --tooltip-ink-2: #52514e;
+      --chip-bg: rgba(255, 255, 255, 0.07);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --border: rgba(255, 255, 255, 0.10);
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-3: #898781;
+    --brand: #e08a3c;
+    --series: #3987e5;
+    --series-wash: rgba(57, 135, 229, 0.14);
+    --spark-dim: #2a4a73;
+    --delta-up: #0ca30c;
+    --delta-down: #e66767;
+    --tooltip-bg: #f4f3ef;
+    --tooltip-ink: #0b0b0b;
+    --tooltip-ink-2: #52514e;
+    --chip-bg: rgba(255, 255, 255, 0.07);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* ── header ── */
+  header.masthead {
+    display: flex; align-items: center; gap: 14px;
+    padding-bottom: 20px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .torch {
+    width: 38px; height: 38px; flex: none; border-radius: 10px;
+    background: var(--brand); color: #fff;
+    display: grid; place-items: center;
+  }
+  .torch svg { width: 22px; height: 22px; }
+  .masthead .titles { flex: 1 1 auto; min-width: 0; }
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--brand);
+  }
+  h1 { font-size: 22px; font-weight: 650; margin: 1px 0 0; letter-spacing: -0.01em; }
+  .masthead .stamp { text-align: right; font-size: 12.5px; color: var(--ink-3); line-height: 1.45; }
+  .masthead .stamp strong { color: var(--ink-2); font-weight: 600; }
+
+  /* ── summary strip ── */
+  .summary {
+    display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 900px) { .summary { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .summary { grid-template-columns: 1fr; } }
+  .tile {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  }
+  .tile .label { font-size: 12.5px; color: var(--ink-2); }
+  .tile .value { font-size: 26px; font-weight: 650; letter-spacing: -0.01em; }
+  .tile.hero .value { font-size: 48px; line-height: 1.1; }
+  .tile .sub { font-size: 12px; color: var(--ink-3); }
+  .delta { font-size: 12.5px; font-weight: 600; }
+  .delta.up { color: var(--delta-up); }
+  .delta.down { color: var(--delta-down); }
+  .delta.flat { color: var(--ink-3); }
+
+  /* ── filter row ── */
+  .filters { display: flex; align-items: center; gap: 8px; margin: 4px 0 16px; flex-wrap: wrap; }
+  .filters .flabel { font-size: 12.5px; color: var(--ink-3); margin-right: 2px; }
+  .rangebtn {
+    font: 600 12.5px/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink-2); background: none;
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 7px 14px; cursor: pointer;
+  }
+  .rangebtn:hover { background: var(--chip-bg); }
+  .rangebtn[aria-pressed="true"] { background: var(--ink); color: var(--page); border-color: var(--ink); }
+  .rangebtn:focus-visible, .rangebtn:focus, a:focus-visible, summary:focus-visible,
+  [tabindex]:focus-visible { outline: 2px solid var(--series); outline-offset: 2px; }
+  .rangebtn:focus:not(:focus-visible) { outline: none; }
+
+  /* ── platform grid ── */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px; min-width: 0;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .card-head { display: flex; align-items: baseline; gap: 8px; }
+  .pdot { width: 9px; height: 9px; border-radius: 50%; background: var(--series); flex: none; align-self: center; }
+  .pname { font-size: 15px; font-weight: 650; }
+  .phandle { font-size: 12px; color: var(--ink-3); }
+  .stale {
+    margin-left: auto; font-size: 11px; color: var(--ink-3);
+    background: var(--chip-bg); border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+  }
+  .card .big { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .card .big .n { font-size: 32px; font-weight: 650; letter-spacing: -0.01em; line-height: 1; }
+  .card .big .u { font-size: 12.5px; color: var(--ink-2); }
+  .chart-block { display: flex; flex-direction: column; gap: 3px; }
+  .chart-title { font-size: 11.5px; font-weight: 600; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; }
+  .chart-box { position: relative; }
+  .chart-box svg { display: block; width: 100%; height: auto; }
+  .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; margin: 0; }
+  .metrics > div { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; border-bottom: 1px dotted var(--grid); padding: 3px 0; }
+  .metrics dt { color: var(--ink-2); margin: 0; }
+  .metrics dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .empty-card { justify-content: center; align-items: center; min-height: 180px; gap: 6px; border-style: dashed; }
+  .empty-card .pname { color: var(--ink-2); }
+  .empty-card .note { font-size: 12.5px; color: var(--ink-3); text-align: center; max-width: 240px; }
+
+  /* ── tooltip ── */
+  #tooltip {
+    position: fixed; z-index: 10; pointer-events: none; display: none;
+    background: var(--tooltip-bg); color: var(--tooltip-ink);
+    border-radius: 8px; padding: 8px 11px; font-size: 12.5px; line-height: 1.45;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25); max-width: 240px;
+  }
+  #tooltip .tt-when { color: var(--tooltip-ink-2); font-size: 11.5px; }
+  #tooltip .tt-val { font-weight: 650; font-size: 14px; }
+  #tooltip .tt-lab { color: var(--tooltip-ink-2); }
+
+  /* ── tables ── */
+  section.tables { margin-top: 36px; }
+  section.tables > h2 { font-size: 16px; font-weight: 650; margin: 0 0 4px; }
+  section.tables > p { margin: 0 0 14px; font-size: 13px; color: var(--ink-2); }
+  details.ptable { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); margin-bottom: 8px; }
+  details.ptable summary { cursor: pointer; padding: 12px 16px; font-weight: 600; font-size: 14px; list-style-position: inside; }
+  details.ptable[open] summary { border-bottom: 1px solid var(--border); }
+  .tscroll { overflow-x: auto; padding: 4px 8px 10px; }
+  table.data { border-collapse: collapse; font-size: 12.5px; min-width: 560px; width: 100%; }
+  table.data th, table.data td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+  table.data th { color: var(--ink-2); font-weight: 600; }
+  table.data th:first-child, table.data td:first-child { text-align: left; }
+  table.data td { font-variant-numeric: tabular-nums; }
+  table.data td.na { color: var(--ink-3); }
+
+  footer.colophon { margin-top: 36px; font-size: 12px; color: var(--ink-3); border-top: 1px solid var(--border); padding-top: 14px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .rangebtn { transition: background 120ms ease; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="torch" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2c.6 2.2 2.4 3.3 3.5 4.9 1.2 1.7 1.6 3.8.6 5.8-.7 1.4-2 2.4-3.5 2.7.6-.9.8-2 .4-3-.4-1.1-1.3-1.8-1.9-2.8-.4-.8-.6-1.6-.4-2.5-1.6 1.2-2.9 3.2-2.9 5.3 0 2.9 2.3 5.2 5.2 5.2s5.2-2.3 5.2-5.2c0-4.6-4-6.6-6.2-10.4z" transform="translate(-1.2 1)"/>
+        <rect x="10.4" y="19" width="3.2" height="3.4" rx="1.1"/>
+      </svg>
+    </div>
+    <div class="titles">
+      <div class="eyebrow">Torchbearer Community</div>
+      <h1>Social KPI Dashboard</h1>
+    </div>
+    <div class="stamp">
+      <div>Data through <strong id="stamp-through"></strong></div>
+      <div>Updated <strong id="stamp-updated"></strong></div>
+    </div>
+  </header>
+
+  <div class="summary" id="summary"></div>
+
+  <div class="filters" role="group" aria-label="Time range">
+    <span class="flabel">Range</span>
+    <button class="rangebtn" data-weeks="12" aria-pressed="false" type="button">Last 12 weeks</button>
+    <button class="rangebtn" data-weeks="26" aria-pressed="false" type="button">Last 26 weeks</button>
+    <button class="rangebtn" data-weeks="0" aria-pressed="true" type="button">All time</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <section class="tables">
+    <h2>Data tables</h2>
+    <p>Every value in the charts, without hovering. Blank cells were not recorded that week.</p>
+    <div id="tables"></div>
+  </section>
+
+  <footer class="colophon">
+    Source: weekly account analytics collected from each platform &middot; maintained by the Torchbearer growth team.
+    Missing weeks (gaps in the charts) are weeks with no report.
+  </footer>
+</div>
+
+<div id="tooltip" role="status" aria-hidden="true"></div>
+
+<script>
+const DATA = /*__DATA__*/;
+
+/* ───────── config ───────── */
+const PLATFORMS = [
+  { key: 'x',         name: 'X / Twitter', handle: '@JoinTorchbearer',
+    primary: 'followers', primaryLabel: 'followers',
+    engage: 'engagements',
+    secondary: [['verifiedFollowers','Verified followers'],['impressions','Impressions'],['engagements','Weekly engagements'],['engagementRate','Engagement rate','%'],['profileVisits','Profile visits']] },
+  { key: 'linkedin',  name: 'LinkedIn',
+    primary: 'followers', primaryLabel: 'followers',
+    engage: 'engagements',
+    secondary: [['membersReached','Members reached'],['impressions','Impressions'],['engagements','Weekly engagements'],['engagementRate','Engagement rate','%']] },
+  { key: 'youtube',   name: 'YouTube',
+    primary: 'subscribers', primaryLabel: 'subscribers',
+    engage: 'engagements',
+    secondary: [['views','Views'],['impressions','Impressions'],['likes','Likes'],['comments','Comments'],['impressionsCtr','Impressions CTR','%']] },
+  { key: 'facebook',  name: 'Facebook',
+    primary: 'followers', primaryLabel: 'followers',
+    engage: 'engagements',
+    secondary: [['views','Views'],['viewers','Viewers'],['engagements','Weekly engagements'],['viewsCtr','Views CTR','%']] },
+  { key: 'instagram', name: 'Instagram',
+    primary: 'followers', primaryLabel: 'followers',
+    engage: 'interactions',
+    secondary: [['reach','Accounts reached'],['interactions','Interactions'],['profileVisits','Profile visits'],['reachToInteractionRate','Reach → interaction','%']] },
+  { key: 'substack',  name: 'Substack',
+    primary: 'subscribers', primaryLabel: 'subscribers',
+    engage: 'views',
+    engageLabel: 'weekly views',
+    engageIsViews: true, // views ≠ engagements — excluded from the summary total
+    secondary: [['followers','Followers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Subscriber conversion','%'],['openRate','Open rate','%']] },
+  { key: 'bluesky',   name: 'Bluesky',  primary: 'followers', primaryLabel: 'followers', engage: 'engagements', secondary: [] },
+  { key: 'threads',   name: 'Threads',  primary: 'followers', primaryLabel: 'followers', engage: 'interactions',
+    secondary: [['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits']] },
+  { key: 'tiktok',    name: 'TikTok',   primary: 'followers', primaryLabel: 'followers', engage: 'engagements',
+    secondary: [['views','Views'],['engagements','Weekly engagements'],['profileVisits','Profile views']] },
+];
+
+const weeks = DATA.weeks; // sorted ascending by start
+const latestWeek = weeks[weeks.length - 1];
+
+/* ───────── helpers ───────── */
+const MS_WEEK = 7 * 86400e3;
+const parseDate = (s) => new Date(s + 'T00:00:00');
+const fmtInt = (n) => n == null ? '—' : n.toLocaleString('en-US');
+function fmtCompact(n) {
+  if (n == null) return '—';
+  if (Math.abs(n) >= 10000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  return n.toLocaleString('en-US');
+}
+function fmtWeekLabel(w) {
+  const s = parseDate(w.start), e = parseDate(w.end);
+  const mo = (d) => d.toLocaleDateString('en-US', { month: 'short' });
+  const sameM = s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear();
+  return sameM
+    ? `${mo(s)} ${s.getDate()}–${e.getDate()}, ${e.getFullYear()}`
+    : `${mo(s)} ${s.getDate()} – ${mo(e)} ${e.getDate()}, ${e.getFullYear()}`;
+}
+function series(platKey, metric, weekSet) {
+  const out = [];
+  for (const w of (weekSet || weeks)) {
+    const p = w.platforms[platKey];
+    if (p && p[metric] != null) out.push({ week: w, t: parseDate(w.start).getTime(), v: p[metric] });
+  }
+  return out;
+}
+function latestPoint(platKey, metric) {
+  const s = series(platKey, metric);
+  return s.length ? s[s.length - 1] : null;
+}
+function prevPoint(platKey, metric) {
+  const s = series(platKey, metric);
+  return s.length > 1 ? s[s.length - 2] : null;
+}
+function deltaChip(cur, prev, { pct = true, upIsGood = true } = {}) {
+  if (cur == null || prev == null || prev.v === 0) return null;
+  const diff = cur.v - prev.v;
+  const cls = diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat';
+  const arrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '·';
+  const body = pct
+    ? `${Math.abs(diff / prev.v * 100).toFixed(1)}%`
+    : fmtInt(Math.abs(diff));
+  const el = document.createElement('span');
+  el.className = 'delta ' + cls;
+  el.textContent = `${arrow} ${body}`;
+  el.title = `vs ${fmtWeekLabel(prev.week)}`;
+  return el;
+}
+
+/* ───────── tooltip ───────── */
+const tip = document.getElementById('tooltip');
+function showTip(x, y, rows) {
+  tip.textContent = '';
+  for (const r of rows) {
+    const d = document.createElement('div');
+    d.className = r.cls || '';
+    d.textContent = r.text;
+    tip.appendChild(d);
+  }
+  tip.style.display = 'block';
+  tip.setAttribute('aria-hidden', 'false');
+  const pad = 14;
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let px = x + pad, py = y - h - pad;
+  if (px + w > innerWidth - 8) px = x - w - pad;
+  if (py < 8) py = y + pad;
+  tip.style.left = px + 'px';
+  tip.style.top = py + 'px';
+}
+function hideTip() { tip.style.display = 'none'; tip.setAttribute('aria-hidden', 'true'); }
+
+/* ───────── chart builders (inline SVG) ───────── */
+const SVG = 'http://www.w3.org/2000/svg';
+function el(tag, attrs) {
+  const e = document.createElementNS(SVG, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+function niceMax(v) {
+  if (v <= 0) return 1;
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  for (const m of [1, 2, 2.5, 5, 10]) if (v <= m * p) return m * p;
+  return 10 * p;
+}
+
+// Line sparkline with area wash, endpoint marker, crosshair tooltip.
+function lineChart(pts, { width = 340, height = 84, valueLabel = '' } = {}) {
+  const box = document.createElement('div');
+  box.className = 'chart-box';
+  if (!pts.length) return box;
+  const padL = 6, padR = 40, padT = 10, padB = 6;
+  const svg = el('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img',
+    'aria-label': `${valueLabel} trend, ${pts.length} data points` });
+  const t0 = pts[0].t, t1 = pts[pts.length - 1].t || t0 + 1;
+  const vmax = niceMax(Math.max(...pts.map(p => p.v)));
+  const X = (t) => t1 === t0 ? (padL + (width - padL - padR) / 2) : padL + (t - t0) / (t1 - t0) * (width - padL - padR);
+  const Y = (v) => padT + (1 - v / vmax) * (height - padT - padB);
+
+  // hairline midline + baseline
+  svg.appendChild(el('line', { x1: padL, x2: width - padR, y1: Y(vmax / 2), y2: Y(vmax / 2), stroke: 'var(--grid)', 'stroke-width': 1 }));
+  svg.appendChild(el('line', { x1: padL, x2: width - padR, y1: Y(0), y2: Y(0), stroke: 'var(--baseline)', 'stroke-width': 1 }));
+
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.t).toFixed(1)},${Y(p.v).toFixed(1)}`).join('');
+  svg.appendChild(el('path', { d: `${line}L${X(t1).toFixed(1)},${Y(0).toFixed(1)}L${X(t0).toFixed(1)},${Y(0).toFixed(1)}Z`, fill: 'var(--series-wash)', stroke: 'none' }));
+  svg.appendChild(el('path', { d: line, fill: 'none', stroke: 'var(--series)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+
+  // endpoint marker: 2px surface ring + 8px dot
+  const last = pts[pts.length - 1];
+  svg.appendChild(el('circle', { cx: X(last.t), cy: Y(last.v), r: 6, fill: 'var(--surface)' }));
+  svg.appendChild(el('circle', { cx: X(last.t), cy: Y(last.v), r: 4, fill: 'var(--series)' }));
+  // endpoint direct label (text token, never series color)
+  const endLab = el('text', { x: Math.min(X(last.t) + 9, width - 2), y: Y(last.v) + 4,
+    'font-size': 11, 'font-weight': 600, fill: 'var(--ink-2)' });
+  endLab.textContent = fmtCompact(last.v);
+  svg.appendChild(endLab);
+
+  // crosshair + hover
+  const cross = el('line', { y1: padT, y2: height - padB, stroke: 'var(--ink-3)', 'stroke-width': 1, visibility: 'hidden' });
+  svg.appendChild(cross);
+  const hoverDotRing = el('circle', { r: 6, fill: 'var(--surface)', visibility: 'hidden' });
+  const hoverDot = el('circle', { r: 4, fill: 'var(--series)', visibility: 'hidden' });
+  svg.appendChild(hoverDotRing); svg.appendChild(hoverDot);
+
+  function nearest(clientX) {
+    const rect = svg.getBoundingClientRect();
+    const mx = (clientX - rect.left) / rect.width * width;
+    let best = 0, bd = Infinity;
+    pts.forEach((p, i) => { const d = Math.abs(X(p.t) - mx); if (d < bd) { bd = d; best = i; } });
+    return best;
+  }
+  function focusIdx(i, cx, cy) {
+    const p = pts[i];
+    cross.setAttribute('x1', X(p.t)); cross.setAttribute('x2', X(p.t));
+    cross.setAttribute('visibility', 'visible');
+    hoverDotRing.setAttribute('cx', X(p.t)); hoverDotRing.setAttribute('cy', Y(p.v));
+    hoverDot.setAttribute('cx', X(p.t)); hoverDot.setAttribute('cy', Y(p.v));
+    hoverDotRing.setAttribute('visibility', 'visible'); hoverDot.setAttribute('visibility', 'visible');
+    const rect = svg.getBoundingClientRect();
+    const sx = cx != null ? cx : rect.left + X(p.t) / width * rect.width;
+    const sy = cy != null ? cy : rect.top + Y(p.v) / height * rect.height;
+    showTip(sx, sy, [
+      { text: fmtWeekLabel(p.week), cls: 'tt-when' },
+      { text: fmtInt(p.v), cls: 'tt-val' },
+      { text: valueLabel, cls: 'tt-lab' },
+    ]);
+  }
+  function clear() {
+    cross.setAttribute('visibility', 'hidden');
+    hoverDotRing.setAttribute('visibility', 'hidden'); hoverDot.setAttribute('visibility', 'hidden');
+    hideTip();
+  }
+  svg.addEventListener('pointermove', (ev) => focusIdx(nearest(ev.clientX), ev.clientX, ev.clientY));
+  svg.addEventListener('pointerleave', clear);
+  // keyboard access
+  svg.setAttribute('tabindex', '0');
+  let kIdx = pts.length - 1;
+  svg.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowLeft') { kIdx = Math.max(0, kIdx - 1); focusIdx(kIdx); ev.preventDefault(); }
+    else if (ev.key === 'ArrowRight') { kIdx = Math.min(pts.length - 1, kIdx + 1); focusIdx(kIdx); ev.preventDefault(); }
+    else if (ev.key === 'Escape') clear();
+  });
+  svg.addEventListener('focus', () => focusIdx(kIdx));
+  svg.addEventListener('blur', clear);
+
+  box.appendChild(svg);
+  return box;
+}
+
+// Weekly bars: rounded 4px data-end, square baseline, 2px surface gaps, per-bar hover.
+function barChart(pts, { width = 340, height = 72, valueLabel = '' } = {}) {
+  const box = document.createElement('div');
+  box.className = 'chart-box';
+  if (!pts.length) return box;
+  const padL = 6, padR = 40, padT = 8, padB = 6;
+  const svg = el('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img',
+    'aria-label': `${valueLabel} per week, ${pts.length} bars` });
+  const t0 = pts[0].t, t1 = pts[pts.length - 1].t || t0 + 1;
+  const vmax = niceMax(Math.max(...pts.map(p => p.v), 1));
+  const span = width - padL - padR;
+  const X = (t) => t1 === t0 ? padL + span / 2 : padL + (t - t0) / (t1 - t0) * span;
+  const Y = (v) => padT + (1 - v / vmax) * (height - padT - padB);
+  const y0 = Y(0);
+  // bar width from tightest spacing, minus 2px surface gap, capped at 24
+  let minGap = Infinity;
+  for (let i = 1; i < pts.length; i++) minGap = Math.min(minGap, X(pts[i].t) - X(pts[i - 1].t));
+  if (!isFinite(minGap)) minGap = span;
+  const bw = Math.max(3, Math.min(24, minGap - 2));
+
+  svg.appendChild(el('line', { x1: padL, x2: width - padR, y1: y0, y2: y0, stroke: 'var(--baseline)', 'stroke-width': 1 }));
+
+  pts.forEach((p) => {
+    const x = X(p.t) - bw / 2;
+    const h = Math.max(0, y0 - Y(p.v));
+    const r = Math.min(4, bw / 2, h);
+    const d = h <= 0
+      ? `M${x},${y0}h${bw}`
+      : `M${x},${y0}V${y0 - h + r}q0,${-r} ${r},${-r}h${bw - 2 * r}q${r},0 ${r},${r}V${y0}Z`;
+    const bar = el('path', { d, fill: 'var(--series)' });
+    svg.appendChild(bar);
+    // hit target wider than the mark
+    const hit = el('rect', { x: X(p.t) - Math.max(bw, 14) / 2, y: padT, width: Math.max(bw, 14), height: height - padT - padB, fill: 'transparent', tabindex: '0' });
+    const focus = (ev) => {
+      bar.setAttribute('opacity', '0.75');
+      const rect = svg.getBoundingClientRect();
+      const sx = ev && ev.clientX != null ? ev.clientX : rect.left + X(p.t) / width * rect.width;
+      const sy = ev && ev.clientY != null ? ev.clientY : rect.top + Y(p.v) / height * rect.height;
+      showTip(sx, sy, [
+        { text: fmtWeekLabel(p.week), cls: 'tt-when' },
+        { text: fmtInt(p.v), cls: 'tt-val' },
+        { text: valueLabel, cls: 'tt-lab' },
+      ]);
+    };
+    const clear = () => { bar.removeAttribute('opacity'); hideTip(); };
+    hit.addEventListener('pointermove', focus);
+    hit.addEventListener('pointerleave', clear);
+    hit.addEventListener('focus', () => focus(null));
+    hit.addEventListener('blur', clear);
+    svg.appendChild(hit);
+  });
+
+  // direct label on the max bar only
+  const maxP = pts.reduce((a, b) => (b.v > a.v ? b : a));
+  const lab = el('text', { x: Math.max(14, Math.min(X(maxP.t), width - padR)), y: Math.max(Y(maxP.v) - 4, 9),
+    'font-size': 10.5, 'font-weight': 600, fill: 'var(--ink-2)', 'text-anchor': 'middle' });
+  lab.textContent = fmtCompact(maxP.v);
+  svg.appendChild(lab);
+
+  box.appendChild(svg);
+  return box;
+}
+
+/* ───────── summary strip ───────── */
+function buildSummary() {
+  const host = document.getElementById('summary');
+  host.textContent = '';
+
+  // hero: total audience = sum of latest known primary per platform
+  let total = 0, prevTotal = 0, contributing = 0;
+  for (const P of PLATFORMS) {
+    const lp = latestPoint(P.key, P.primary);
+    if (lp) { total += lp.v; contributing++; }
+    const pp = prevPoint(P.key, P.primary);
+    prevTotal += (pp ? pp.v : (lp ? lp.v : 0));
+  }
+  const hero = document.createElement('div');
+  hero.className = 'tile hero';
+  const hl = document.createElement('div'); hl.className = 'label'; hl.textContent = 'Total audience';
+  const hv = document.createElement('div'); hv.className = 'value'; hv.textContent = fmtInt(total);
+  const hs = document.createElement('div'); hs.className = 'sub';
+  hs.textContent = `followers & subscribers across ${contributing} platforms · latest report per platform`;
+  hero.append(hl, hv, hs);
+  const hd = deltaChip({ v: total }, { v: prevTotal, week: latestWeek }, {});
+  if (hd) { hd.title = 'vs each platform’s previous report'; hero.insertBefore(hd, hs); }
+  host.appendChild(hero);
+
+  // latest full engagement week: most recent week where ≥4 platforms report engagements
+  let engWeek = null, engSum = 0;
+  for (let i = weeks.length - 1; i >= 0; i--) {
+    const w = weeks[i];
+    let sum = 0, count = 0;
+    for (const P of PLATFORMS) {
+      if (P.engageIsViews) continue;
+      const p = w.platforms[P.key];
+      const v = p && p[P.engage];
+      if (v != null) { sum += v; count++; }
+    }
+    if (count >= 4) { engWeek = w; engSum = sum; break; }
+  }
+  const t2 = document.createElement('div'); t2.className = 'tile';
+  t2.innerHTML = '';
+  const t2l = document.createElement('div'); t2l.className = 'label'; t2l.textContent = 'Weekly engagements';
+  const t2v = document.createElement('div'); t2v.className = 'value'; t2v.textContent = engWeek ? fmtInt(engSum) : '—';
+  const t2s = document.createElement('div'); t2s.className = 'sub';
+  t2s.textContent = engWeek ? `all platforms · ${fmtWeekLabel(engWeek)}` : 'no full week yet';
+  t2.append(t2l, t2v, t2s);
+  host.appendChild(t2);
+
+  // fastest growing: biggest % follower growth, latest vs ~4 reports back
+  let best = null;
+  for (const P of PLATFORMS) {
+    const s = series(P.key, P.primary);
+    if (s.length < 2) continue;
+    const cur = s[s.length - 1];
+    const base = s[Math.max(0, s.length - 5)];
+    if (base.v > 0 && base !== cur) {
+      const g = (cur.v - base.v) / base.v * 100;
+      if (!best || g > best.g) best = { P, g, base, cur };
+    }
+  }
+  const t3 = document.createElement('div'); t3.className = 'tile';
+  const t3l = document.createElement('div'); t3l.className = 'label'; t3l.textContent = 'Fastest growing';
+  const t3v = document.createElement('div'); t3v.className = 'value'; t3v.textContent = best ? best.P.name : '—';
+  const t3s = document.createElement('div'); t3s.className = 'sub';
+  t3s.textContent = best ? `+${best.g.toFixed(1)}% ${best.P.primaryLabel} since ${fmtWeekLabel(best.base.week)}` : '';
+  t3.append(t3l, t3v, t3s);
+  host.appendChild(t3);
+
+  // tracking span
+  const t4 = document.createElement('div'); t4.className = 'tile';
+  const t4l = document.createElement('div'); t4l.className = 'label'; t4l.textContent = 'Weeks tracked';
+  const t4v = document.createElement('div'); t4v.className = 'value'; t4v.textContent = String(weeks.length);
+  const t4s = document.createElement('div'); t4s.className = 'sub';
+  const first = weeks[0], lastW = weeks[weeks.length - 1];
+  t4s.textContent = `${parseDate(first.start).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} – ${parseDate(lastW.end).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`;
+  t4.append(t4l, t4v, t4s);
+  host.appendChild(t4);
+}
+
+/* ───────── platform cards ───────── */
+let rangeWeeks = 0; // 0 = all
+
+function filteredWeeks() {
+  if (!rangeWeeks) return weeks;
+  const cutoff = parseDate(latestWeek.end).getTime() - rangeWeeks * MS_WEEK;
+  return weeks.filter((w) => parseDate(w.end).getTime() >= cutoff);
+}
+
+function buildCards() {
+  const host = document.getElementById('grid');
+  host.textContent = '';
+  const wset = filteredWeeks();
+
+  for (const P of PLATFORMS) {
+    const all = series(P.key, P.primary);
+    if (!all.length) {
+      const card = document.createElement('div');
+      card.className = 'card empty-card';
+      const name = document.createElement('div'); name.className = 'pname'; name.textContent = P.name;
+      const note = document.createElement('div'); note.className = 'note';
+      note.textContent = 'New platform — tracking starts with the next weekly report.';
+      card.append(name, note);
+      host.appendChild(card);
+      continue;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // head
+    const head = document.createElement('div');
+    head.className = 'card-head';
+    const dot = document.createElement('span'); dot.className = 'pdot';
+    const name = document.createElement('span'); name.className = 'pname'; name.textContent = P.name;
+    head.append(dot, name);
+    const handle = P.handle || (DATA.platforms[P.key] && DATA.platforms[P.key].handle);
+    if (handle) { const h = document.createElement('span'); h.className = 'phandle'; h.textContent = handle; head.appendChild(h); }
+    const lp = all[all.length - 1];
+    if (lp.week !== latestWeek) {
+      const stale = document.createElement('span');
+      stale.className = 'stale';
+      stale.textContent = 'as of ' + fmtWeekLabel(lp.week);
+      head.appendChild(stale);
+    }
+    card.appendChild(head);
+
+    // big number + delta
+    const big = document.createElement('div'); big.className = 'big';
+    const n = document.createElement('span'); n.className = 'n'; n.textContent = fmtInt(lp.v);
+    const u = document.createElement('span'); u.className = 'u'; u.textContent = P.primaryLabel;
+    big.append(n, u);
+    const d = deltaChip(lp, all.length > 1 ? all[all.length - 2] : null, {});
+    if (d) big.appendChild(d);
+    card.appendChild(big);
+
+    // follower sparkline
+    const pts = series(P.key, P.primary, wset);
+    if (pts.length > 1) {
+      const blk = document.createElement('div'); blk.className = 'chart-block';
+      const ttl = document.createElement('div'); ttl.className = 'chart-title';
+      ttl.textContent = P.primaryLabel + ' over time';
+      blk.append(ttl, lineChart(pts, { valueLabel: P.primaryLabel }));
+      card.appendChild(blk);
+    }
+
+    // engagement bars
+    const ename = P.engageLabel || (P.engage === 'interactions' ? 'weekly interactions' : 'weekly engagements');
+    const epts = series(P.key, P.engage, wset);
+    if (epts.length > 1) {
+      const blk = document.createElement('div'); blk.className = 'chart-block';
+      const ttl = document.createElement('div'); ttl.className = 'chart-title';
+      ttl.textContent = ename;
+      blk.append(ttl, barChart(epts, { valueLabel: ename }));
+      card.appendChild(blk);
+    }
+
+    // secondary metrics (latest known each)
+    if (P.secondary.length) {
+      const dl = document.createElement('dl'); dl.className = 'metrics';
+      for (const [metric, label, unit] of P.secondary) {
+        const lpm = latestPoint(P.key, metric);
+        if (!lpm) continue;
+        const row = document.createElement('div');
+        const dt = document.createElement('dt'); dt.textContent = label;
+        const dd = document.createElement('dd');
+        dd.textContent = unit === '%' ? lpm.v + '%' : fmtInt(lpm.v);
+        if (lpm.week !== lp.week || lp.week !== latestWeek) dd.title = fmtWeekLabel(lpm.week);
+        row.append(dt, dd);
+        dl.appendChild(row);
+      }
+      if (dl.children.length) card.appendChild(dl);
+    }
+
+    host.appendChild(card);
+  }
+}
+
+/* ───────── data tables ───────── */
+const TABLE_COLS = {
+  x: [['followers','Followers'],['verifiedFollowers','Verified'],['impressions','Impressions'],['engagements','Engagements'],['engagementRate','Eng. rate %'],['profileVisits','Profile visits']],
+  linkedin: [['followers','Followers'],['membersReached','Reached'],['impressions','Impressions'],['engagements','Engagements'],['engagementRate','Eng. rate %']],
+  youtube: [['subscribers','Subscribers'],['views','Views'],['impressions','Impressions'],['engagements','Engagements'],['likes','Likes'],['comments','Comments'],['impressionsCtr','CTR %']],
+  facebook: [['followers','Followers'],['views','Views'],['viewers','Viewers'],['engagements','Engagements'],['viewsCtr','Views CTR %']],
+  instagram: [['followers','Followers'],['reach','Reached'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['reachToInteractionRate','R→I %']],
+  substack: [['followers','Followers'],['subscribers','Subscribers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Conv. %'],['openRate','Open rate %']],
+  bluesky: [['followers','Followers'],['engagements','Engagements']],
+  threads: [['followers','Followers'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits']],
+  tiktok: [['followers','Followers'],['views','Views'],['engagements','Engagements'],['profileVisits','Profile views']],
+};
+
+function buildTables() {
+  const host = document.getElementById('tables');
+  host.textContent = '';
+  for (const P of PLATFORMS) {
+    const cols = TABLE_COLS[P.key];
+    if (!cols) continue;
+    const rows = weeks.filter((w) => w.platforms[P.key]);
+    if (!rows.length) continue;
+
+    const det = document.createElement('details');
+    det.className = 'ptable';
+    const sum = document.createElement('summary');
+    sum.textContent = `${P.name} — ${rows.length} weeks`;
+    det.appendChild(sum);
+
+    const scroll = document.createElement('div'); scroll.className = 'tscroll';
+    const table = document.createElement('table'); table.className = 'data';
+    const thead = document.createElement('thead');
+    const hr = document.createElement('tr');
+    const th0 = document.createElement('th'); th0.textContent = 'Week'; hr.appendChild(th0);
+    for (const [, label] of cols) { const th = document.createElement('th'); th.textContent = label; hr.appendChild(th); }
+    thead.appendChild(hr); table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const w = rows[i];
+      const tr = document.createElement('tr');
+      const td0 = document.createElement('td'); td0.textContent = fmtWeekLabel(w); tr.appendChild(td0);
+      for (const [metric] of cols) {
+        const td = document.createElement('td');
+        const v = w.platforms[P.key][metric];
+        if (v == null) { td.textContent = '–'; td.className = 'na'; }
+        else td.textContent = fmtInt(v);
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody);
+    scroll.appendChild(table);
+    det.appendChild(scroll);
+    host.appendChild(det);
+  }
+}
+
+/* ───────── boot ───────── */
+document.getElementById('stamp-through').textContent = fmtWeekLabel(latestWeek);
+document.getElementById('stamp-updated').textContent =
+  parseDate(DATA.updated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+for (const btn of document.querySelectorAll('.rangebtn')) {
+  btn.addEventListener('click', () => {
+    rangeWeeks = Number(btn.dataset.weeks);
+    for (const b of document.querySelectorAll('.rangebtn')) b.setAttribute('aria-pressed', String(b === btn));
+    buildCards();
+  });
+}
+
+buildSummary();
+buildCards();
+buildTables();
+</script>

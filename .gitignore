@@ -1,2 +1,6 @@
 archive/
 node_modules/
+.browser-profile/
+scripts/browser/shots/
+.env
+dist/

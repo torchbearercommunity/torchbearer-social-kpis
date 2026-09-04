@@ -1,0 +1,17 @@
+{
+  "name": "torchbearer-social-kpis",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate.mjs",
+    "preflight": "node scripts/preflight.mjs",
+    "fetch-api": "node scripts/fetch-api.mjs",
+    "notify": "node scripts/notify.mjs",
+    "add-week": "node scripts/add-week.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.49.0"
+  }
+}
