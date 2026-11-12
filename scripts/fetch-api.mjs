@@ -111,36 +111,47 @@ if (env.YOUTUBE_API_KEY || env.YOUTUBE_REFRESH_TOKEN || env.YOUTUBE_ACCESS_TOKEN
 // ---------- Facebook + Instagram (Meta Graph API) ----------
 if (env.META_PAGE_TOKEN && env.META_PAGE_ID) {
   const tok = `access_token=${env.META_PAGE_TOKEN}`;
-  const g = "https://graph.facebook.com/v21.0";
+  const g = "https://graph.facebook.com/v27.0";
+  const range = `since=${sinceSec}&until=${untilSec}`;
+  // Each metric is requested on its own: Meta retires metric names regularly, and one
+  // invalid name fails the whole request. This way a retired name costs one field.
   try {
     const page = await getJson(`${g}/${env.META_PAGE_ID}?fields=followers_count,instagram_business_account&${tok}`);
     out.facebook = isCurrent ? { followers: page.followers_count } : {};
-    try {
-      const ins = await getJson(`${g}/${env.META_PAGE_ID}/insights?metric=page_views_total,page_post_engagements&period=day&since=${sinceSec}&until=${untilSec}&${tok}`);
-      for (const m of ins.data ?? []) {
-        const v = sum(m.values ?? [], (x) => x.value);
-        if (m.name === "page_views_total") out.facebook.views = v;
-        if (m.name === "page_post_engagements") out.facebook.engagements = v;
-      }
-    } catch (e) { notes.push("facebook insights: " + e.message); }
-    browser.push("facebook (viewers, views CTR)");
+    // Names checked against the Page Insights reference on 2026-11-12. page_media_view is the
+    // "Views" number in Business Suite; page_views_total would be visits to the Page itself.
+    const fbMetrics = { page_media_view: "views", page_total_media_view_unique: "viewers", page_post_engagements: "engagements" };
+    for (const [metric, field] of Object.entries(fbMetrics)) {
+      try {
+        const ins = await getJson(`${g}/${env.META_PAGE_ID}/insights?metric=${metric}&period=day&${range}&${tok}`);
+        const m = (ins.data ?? [])[0];
+        if (m) out.facebook[field] = sum(m.values ?? [], (x) => (typeof x.value === "number" ? x.value : 0));
+        else notes.push(`facebook ${metric}: no data returned`);
+      } catch (e) { notes.push(`facebook ${metric}: ${e.message}`); }
+    }
+    browser.push("facebook (link clicks, views CTR)");
 
     const ig = page.instagram_business_account?.id;
     if (ig) {
       const prof = await getJson(`${g}/${ig}?fields=followers_count&${tok}`);
       out.instagram = isCurrent ? { followers: prof.followers_count } : {};
-      try {
-        const ins = await getJson(`${g}/${ig}/insights?metric=reach,profile_views,total_interactions,views&period=day&metric_type=total_value&since=${sinceSec}&until=${untilSec}&${tok}`);
-        const field = { reach: "reach", profile_views: "profileVisits", total_interactions: "interactions", views: "views" };
-        for (const m of ins.data ?? []) {
-          const v = m.total_value?.value ?? sum(m.values ?? [], (x) => x.value);
-          if (field[m.name]) out.instagram[field[m.name]] = v;
-        }
-        if (out.instagram.reach && out.instagram.interactions != null) {
-          out.instagram.reachToInteractionRate = Math.round(1000 * out.instagram.interactions / out.instagram.reach) / 10;
-        }
-      } catch (e) { notes.push("instagram insights: " + e.message); browser.push("instagram (insights)"); }
-    } else { notes.push("instagram: no instagram_business_account linked to the Page"); browser.push("instagram"); }
+      // Valid account metrics per the Instagram insights reference on 2026-11-12.
+      // profile_views is no longer offered, so profile visits stay a browser metric.
+      const igMetrics = { reach: "reach", views: "views", total_interactions: "interactions" };
+      for (const [metric, field] of Object.entries(igMetrics)) {
+        try {
+          const ins = await getJson(`${g}/${ig}/insights?metric=${metric}&period=day&metric_type=total_value&${range}&${tok}`);
+          const m = (ins.data ?? [])[0];
+          const v = m?.total_value?.value ?? (m?.values ? sum(m.values, (x) => x.value) : null);
+          if (v != null) out.instagram[field] = v;
+          else notes.push(`instagram ${metric}: no data returned`);
+        } catch (e) { notes.push(`instagram ${metric}: ${e.message}`); }
+      }
+      if (out.instagram.reach && out.instagram.interactions != null) {
+        out.instagram.reachToInteractionRate = Math.round(1000 * out.instagram.interactions / out.instagram.reach) / 10;
+      }
+      browser.push("instagram (profile visits)");
+    } else { notes.push("instagram: no Instagram account is linked to the Facebook Page, so the API cannot see it"); browser.push("instagram"); }
   } catch (e) { notes.push("meta FAILED: " + e.message); browser.push("facebook", "instagram"); }
 } else browser.push("facebook", "instagram");
 

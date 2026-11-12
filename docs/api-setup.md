@@ -42,10 +42,34 @@ history cannot be backfilled.
 OAuth for weekly views, likes, comments, and watch hours: enable *YouTube Analytics API*, create an OAuth client (type Desktop), and complete the consent flow once with scope `https://www.googleapis.com/auth/yt-analytics.readonly` while signed in as the account that owns the channel (the OAuth Playground at developers.google.com/oauthplayground works: gear icon → use your own client id and secret → authorize the scope → exchange for tokens). Save `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, and the **refresh token** as `YOUTUBE_REFRESH_TOKEN`; the collector trades it for a fresh access token on every run. Set the OAuth consent screen to *In production*: in *Testing* mode Google expires refresh tokens after seven days. This path has not yet been run against the live channel, so check the first run's output.
 
 ## Facebook + Instagram (Meta Graph API)
-1. https://developers.facebook.com → **Create app** → type *Business*. Add the *Facebook Login for Business* and *Instagram Graph API* products.
-2. Open **Graph API Explorer**, select the app, choose the Torchbearer Community Page under *User or Page*, add permissions `pages_read_engagement`, `read_insights`, `instagram_basic`, `instagram_manage_insights`, `pages_show_list`, and generate a **Page access token**.
-3. Exchange it for a long-lived token: `GET /oauth/access_token?grant_type=fb_exchange_token&client_id=APP_ID&client_secret=APP_SECRET&fb_exchange_token=SHORT_TOKEN`. Page tokens derived from a long-lived user token do not expire.
-4. `.env`: `META_PAGE_TOKEN=...` and `META_PAGE_ID=...` (numeric Page id — `GET /me/accounts` lists it). The Instagram account must be a Business/Creator account linked to this Page.
+
+Do every step signed in to Facebook as the person who administers the TBC Page.
+Meta renames its screens often; the labels below were checked on 2026-11-12.
+
+1. **Link Instagram to the Page.** Facebook Page -> Settings -> Linked accounts ->
+   Instagram -> Connect account, then sign in as the TBC Instagram account. The API
+   can only see an Instagram account that is linked to the Page.
+2. **Create the app.** developers.facebook.com -> My Apps -> Create App. Choose the
+   use case **Manage everything on your Page**. Leave the app in Development mode:
+   an app admin can read their own Page without App Review.
+3. **Generate a token.** Tools -> Graph API Explorer. Pick the app, choose "Get User
+   Access Token", and add: `pages_show_list`, `pages_read_engagement`,
+   `read_insights`, `instagram_basic`, `instagram_manage_insights`. Approve the
+   Page and the Instagram account in the dialog.
+4. **Make it long-lived.** Click the info icon beside the token -> Open in Access
+   Token Tool -> Extend Access Token. Copy the new token back into the Explorer.
+5. **Get the Page token.** Run `me/accounts` in the Explorer. Copy the Page's
+   `access_token` and `id`. A Page token made from a long-lived user token has no
+   expiry date; changing the Facebook password or removing the app invalidates it.
+6. **Store them** as repository secrets `META_PAGE_TOKEN` and `META_PAGE_ID`
+   (and in `.env` if you also run the collector by hand).
+
+The collector asks for Facebook `page_media_view` (views),
+`page_total_media_view_unique` (viewers), `page_post_engagements`; and Instagram
+`reach`, `views`, `total_interactions`. Each is requested separately, so a retired
+name costs one field and shows up in the run notes. Instagram profile visits and
+Facebook link clicks are not offered by the API. This collector has not yet run
+against the live accounts.
 
 ## Threads
 1. In the same Meta app, add the *Threads API* product with permissions `threads_basic` and `threads_manage_insights`.
@@ -53,7 +77,7 @@ OAuth for weekly views, likes, comments, and watch hours: enable *YouTube Analyt
 3. `.env`: `THREADS_ACCESS_TOKEN=...`. Threads insights only exist once the account passes 100 followers.
 
 ## Metric names
-`scripts/fetch-api.mjs` requests: Facebook `page_views_total`, `page_post_engagements`; Instagram `reach`, `profile_views`, `total_interactions`, `views` (with `metric_type=total_value`); Threads `views`, `likes`, `replies`, `reposts`, `quotes`, `followers_count`. Meta renames and retires insight metrics regularly. A 400 "invalid metric" means the name changed — check the current Graph API reference and update the script; the browser fallback covers the gap meanwhile.
+`scripts/fetch-api.mjs` requests for Threads: `views`, `likes`, `replies`, `reposts`, `quotes`, `followers_count`. Meta renames and retires insight metrics regularly. A 400 "invalid metric" means the name changed — check the current Graph API reference and update the script; the browser fallback covers the gap meanwhile.
 
 ## Testing
 ```
