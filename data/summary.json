@@ -1,11 +1,11 @@
 {
   "organization": "Torchbearer Community",
-  "updated": "2026-11-11",
+  "updated": "2026-11-12",
   "dataThrough": {
     "start": "2026-11-02",
     "end": "2026-11-08"
   },
-  "totalAudience": 1102,
+  "totalAudience": 1103,
   "platforms": {
     "x": {
       "name": "X / Twitter",
@@ -83,10 +83,10 @@
       "name": "Bluesky",
       "handle": "jointorchbearer.bsky.social",
       "url": "https://bsky.app/profile/jointorchbearer.bsky.social",
-      "audience": 16,
+      "audience": 17,
       "audienceMetric": "followers",
       "asOf": "2026-11-02",
-      "change": 3,
+      "change": 4,
       "changeSince": "2026-08-24",
       "weeklyEngagements": 0,
       "engagementsWeek": "2026-11-02"
@@ -320,7 +320,7 @@
     {
       "start": "2026-11-02",
       "end": "2026-11-08",
-      "total": 1102
+      "total": 1103
     }
   ],
   "dashboardUrl": "https://torchbearercommunity.github.io/torchbearer-social-kpis/"
