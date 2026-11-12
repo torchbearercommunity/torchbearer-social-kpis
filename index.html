@@ -32,6 +32,10 @@
     --tooltip-ink: #ffffff;
     --tooltip-ink-2: #c3c2b7;
     --chip-bg: rgba(11, 11, 11, 0.05);
+    /* categorical slots (audience-by-platform stack), fixed order */
+    --cat-1: #2a78d6; --cat-2: #eb6834; --cat-3: #1baf7a; --cat-4: #eda100; --cat-5: #e87ba4;
+    --cat-other: #898781;
+    --notice-bg: #fdf3d7; --notice-ink: #5b4300; --notice-border: #e9cf7c;
   }
   @media (prefers-color-scheme: dark) {
     :root:where(:not([data-theme="light"])) {
@@ -54,6 +58,9 @@
       --tooltip-ink: #0b0b0b;
       --tooltip-ink-2: #52514e;
       --chip-bg: rgba(255, 255, 255, 0.07);
+      --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70; --cat-4: #c98500; --cat-5: #d55181;
+      --cat-other: #898781;
+      --notice-bg: #33290c; --notice-ink: #f3dc9a; --notice-border: #6b5514;
     }
   }
   :root[data-theme="dark"] {
@@ -76,6 +83,9 @@
     --tooltip-ink: #0b0b0b;
     --tooltip-ink-2: #52514e;
     --chip-bg: rgba(255, 255, 255, 0.07);
+    --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70; --cat-4: #c98500; --cat-5: #d55181;
+    --cat-other: #898781;
+    --notice-bg: #33290c; --notice-ink: #f3dc9a; --notice-border: #6b5514;
   }
 
   * { box-sizing: border-box; }
@@ -129,6 +139,47 @@
   .delta.down { color: var(--delta-down); }
   .delta.flat { color: var(--ink-3); }
 
+  /* ── stale-data notice ── */
+  .notice {
+    display: none; align-items: flex-start; gap: 10px;
+    background: var(--notice-bg); color: var(--notice-ink);
+    border: 1px solid var(--notice-border); border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 16px; font-size: 13.5px;
+  }
+  .notice.on { display: flex; }
+  .notice svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
+
+  /* ── community progress ── */
+  .progress { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width: 900px) { .progress { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px; min-width: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .panel h2 { font-size: 15px; font-weight: 650; margin: 0; }
+  .panel .psub { font-size: 12.5px; color: var(--ink-3); margin: -4px 0 2px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--ink-2); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+  #tooltip .tt-row { display: flex; align-items: center; gap: 7px; }
+  #tooltip .tt-row b { font-weight: 650; margin-left: auto; padding-left: 14px; font-variant-numeric: tabular-nums; }
+  #tooltip .tt-key { width: 10px; height: 2px; border-radius: 1px; flex: none; }
+  #tooltip .tt-total { border-top: 1px solid rgba(128,128,128,0.4); margin-top: 4px; padding-top: 4px; }
+  a.plink { color: inherit; text-decoration: none; }
+  a.plink:hover { text-decoration: underline; }
+
+  /* ── embed mode (?embed=1 or ?embed=summary) ── */
+  html[data-embed] body { background: transparent; }
+  html[data-embed] .wrap { padding: 4px 2px 8px; max-width: none; }
+  html[data-embed] header.masthead, html[data-embed] footer.colophon { display: none; }
+  html[data-embed][data-theme="light"] { --surface: #ffffff; --border: #dddddd; }
+  html[data-embed="summary"] .grid, html[data-embed="summary"] section.tables,
+  html[data-embed="summary"] .filters { display: none; }
+  .embed-foot { display: none; font-size: 12px; color: var(--ink-3); margin-top: 10px; }
+  html[data-embed] .embed-foot { display: block; }
+  .embed-foot a { color: var(--series); }
+
   /* ── filter row ── */
   .filters { display: flex; align-items: center; gap: 8px; margin: 4px 0 16px; flex-wrap: wrap; }
   .filters .flabel { font-size: 12.5px; color: var(--ink-3); margin-right: 2px; }
@@ -154,9 +205,9 @@
     border-radius: 12px; padding: 18px; min-width: 0;
     display: flex; flex-direction: column; gap: 12px;
   }
-  .card-head { display: flex; align-items: baseline; gap: 8px; }
+  .card-head { display: flex; align-items: baseline; gap: 4px 8px; flex-wrap: wrap; }
   .pdot { width: 9px; height: 9px; border-radius: 50%; background: var(--series); flex: none; align-self: center; }
-  .pname { font-size: 15px; font-weight: 650; }
+  .pname { font-size: 15px; font-weight: 650; white-space: nowrap; }
   .phandle { font-size: 12px; color: var(--ink-3); }
   .stale {
     margin-left: auto; font-size: 11px; color: var(--ink-3);
@@ -227,6 +278,11 @@
     </div>
   </header>
 
+  <div class="notice" id="notice" role="status">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 2.5 16h15L10 3z"/><path d="M10 8.5v3.5"/><path d="M10 14.3v.2"/></svg>
+    <span id="notice-text"></span>
+  </div>
+
   <div class="summary" id="summary"></div>
 
   <div class="filters" role="group" aria-label="Time range">
@@ -236,13 +292,20 @@
     <button class="rangebtn" data-weeks="0" aria-pressed="true" type="button">All time</button>
   </div>
 
+  <div class="progress" id="progress"></div>
+
   <div class="grid" id="grid"></div>
 
   <section class="tables">
     <h2>Data tables</h2>
-    <p>Every value in the charts, without hovering. Blank cells were not recorded that week.</p>
+    <p>Every value in the charts, without hovering. A dash means not recorded that week; gray audience figures are carried forward from the last report.</p>
     <div id="tables"></div>
   </section>
+
+  <div class="embed-foot">
+    Data through <span id="embed-through"></span> &middot;
+    <a href="https://torchbearercommunity.github.io/torchbearer-social-kpis/" target="_blank" rel="noopener">Open the full social dashboard</a>
+  </div>
 
   <footer class="colophon">
     Source: weekly account analytics collected from each platform &middot; maintained by the Torchbearer growth team.
@@ -255,34 +318,41 @@
 <script>
 const DATA = {
   "organization": "Torchbearer Community",
-  "updated": "2026-09-04",
+  "updated": "2026-11-11",
   "platforms": {
     "x": {
       "name": "X / Twitter",
-      "handle": "@JoinTorchbearer"
+      "handle": "@JoinTorchbearer",
+      "url": "https://x.com/JoinTorchbearer"
     },
     "linkedin": {
-      "name": "LinkedIn"
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/company/109655987"
     },
     "youtube": {
-      "name": "YouTube"
+      "name": "YouTube",
+      "url": "https://www.youtube.com/channel/UCo1kAWa39iW5DPIHk__qvXQ"
     },
     "facebook": {
-      "name": "Facebook"
+      "name": "Facebook",
+      "url": "https://www.facebook.com/profile.php?id=61587232704207"
     },
     "instagram": {
       "name": "Instagram"
     },
     "substack": {
-      "name": "Substack"
+      "name": "Substack",
+      "url": "https://torchbearercommunity.substack.com"
     },
     "bluesky": {
       "name": "Bluesky",
-      "handle": "jointorchbearer.bsky.social"
+      "handle": "jointorchbearer.bsky.social",
+      "url": "https://bsky.app/profile/jointorchbearer.bsky.social"
     },
     "threads": {
       "name": "Threads",
-      "handle": "@torchbearercommunity"
+      "handle": "@torchbearercommunity",
+      "url": "https://www.threads.net/@torchbearercommunity"
     },
     "tiktok": {
       "name": "TikTok",
@@ -560,6 +630,10 @@ const DATA = {
           "likes": 4,
           "comments": 0,
           "impressionsCtr": 2.4
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 5
         }
       }
     },
@@ -588,6 +662,10 @@ const DATA = {
           "likes": 13,
           "comments": 0,
           "impressionsCtr": 1.6
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 8
         }
       }
     },
@@ -616,6 +694,10 @@ const DATA = {
           "likes": 9,
           "comments": 1,
           "impressionsCtr": 25
+        },
+        "bluesky": {
+          "posts": 3,
+          "engagements": 12
         }
       }
     },
@@ -644,6 +726,10 @@ const DATA = {
           "likes": 4,
           "comments": 0,
           "impressionsCtr": 11
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 6
         }
       }
     },
@@ -672,6 +758,10 @@ const DATA = {
           "likes": 4,
           "comments": 0,
           "impressionsCtr": 11
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 5
         }
       }
     },
@@ -700,6 +790,10 @@ const DATA = {
           "likes": 10,
           "comments": 0,
           "impressionsCtr": 6.9
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 5
         }
       }
     },
@@ -728,6 +822,10 @@ const DATA = {
           "likes": 10,
           "comments": 0,
           "impressionsCtr": 6.9
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 11
         }
       }
     },
@@ -756,6 +854,10 @@ const DATA = {
           "likes": 2,
           "comments": 0,
           "impressionsCtr": 8
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
         }
       }
     },
@@ -784,6 +886,10 @@ const DATA = {
           "likes": 7,
           "comments": 4,
           "impressionsCtr": 3.8
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 8
         }
       }
     },
@@ -812,6 +918,10 @@ const DATA = {
           "likes": 1,
           "comments": 3,
           "impressionsCtr": 3.1
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 6
         }
       }
     },
@@ -847,6 +957,10 @@ const DATA = {
           "viewers": 99,
           "engagements": 60,
           "viewsCtr": null
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 7
         }
       }
     },
@@ -882,6 +996,10 @@ const DATA = {
           "viewers": 63,
           "engagements": 21,
           "viewsCtr": null
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 6
         }
       }
     },
@@ -925,6 +1043,10 @@ const DATA = {
           "interactions": 23,
           "profileVisits": 4,
           "reachToInteractionRate": null
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 4
         }
       }
     },
@@ -968,6 +1090,10 @@ const DATA = {
           "interactions": 48,
           "profileVisits": 12,
           "reachToInteractionRate": null
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 8
         }
       }
     },
@@ -1011,6 +1137,10 @@ const DATA = {
           "interactions": 37,
           "profileVisits": 12,
           "reachToInteractionRate": null
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 6
         }
       }
     },
@@ -1054,6 +1184,10 @@ const DATA = {
           "interactions": 49,
           "profileVisits": 7,
           "reachToInteractionRate": 13
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 6
         }
       }
     },
@@ -1097,6 +1231,10 @@ const DATA = {
           "interactions": 56,
           "profileVisits": 12,
           "reachToInteractionRate": 19.8
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 13
         }
       }
     },
@@ -1140,6 +1278,10 @@ const DATA = {
           "interactions": 57,
           "profileVisits": 13,
           "reachToInteractionRate": 20
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 8
         }
       }
     },
@@ -1188,7 +1330,8 @@ const DATA = {
         },
         "bluesky": {
           "followers": 8,
-          "engagements": 12
+          "engagements": 12,
+          "posts": 1
         },
         "threads": {
           "followers": 5
@@ -1246,6 +1389,10 @@ const DATA = {
           "interactions": 13,
           "profileVisits": 30,
           "reachToInteractionRate": 7.3
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
         }
       }
     },
@@ -1289,6 +1436,10 @@ const DATA = {
           "interactions": 35,
           "profileVisits": 31,
           "reachToInteractionRate": 9.6
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 3
         }
       }
     },
@@ -1332,6 +1483,10 @@ const DATA = {
           "interactions": 42,
           "profileVisits": 25,
           "reachToInteractionRate": 22
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 7
         }
       }
     },
@@ -1382,6 +1537,10 @@ const DATA = {
           "views": 829,
           "uniqueVisitors": 600,
           "subscriberConversionRate": 4.5
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
         }
       }
     },
@@ -1432,6 +1591,10 @@ const DATA = {
           "views": 193,
           "uniqueVisitors": 94,
           "subscriberConversionRate": 15.9
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 5
         }
       }
     },
@@ -1482,6 +1645,10 @@ const DATA = {
           "views": 250,
           "uniqueVisitors": 57,
           "subscriberConversionRate": 10.5
+        },
+        "bluesky": {
+          "posts": 5,
+          "engagements": 19
         }
       }
     },
@@ -1532,6 +1699,10 @@ const DATA = {
           "views": 269,
           "uniqueVisitors": 74,
           "subscriberConversionRate": 13.5
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 5
         }
       }
     },
@@ -1582,6 +1753,10 @@ const DATA = {
           "views": 288,
           "uniqueVisitors": 347,
           "subscriberConversionRate": 2.3
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 12
         }
       }
     },
@@ -1632,6 +1807,10 @@ const DATA = {
           "views": null,
           "uniqueVisitors": null,
           "subscriberConversionRate": null
+        },
+        "bluesky": {
+          "posts": 2,
+          "engagements": 14
         }
       }
     },
@@ -1682,6 +1861,10 @@ const DATA = {
           "views": null,
           "uniqueVisitors": null,
           "subscriberConversionRate": null
+        },
+        "bluesky": {
+          "posts": 1,
+          "engagements": 8
         }
       }
     },
@@ -1699,47 +1882,84 @@ const DATA = {
         },
         "bluesky": {
           "followers": 13,
-          "engagements": 3
+          "engagements": 3,
+          "posts": 1
+        }
+      }
+    },
+    {
+      "start": "2026-11-02",
+      "end": "2026-11-08",
+      "platforms": {
+        "bluesky": {
+          "followers": 16,
+          "engagements": 0,
+          "posts": 2
         }
       }
     }
   ]
 };
 
+/* ───────── page mode (query string) ─────────
+   ?embed=1        full dashboard without masthead/footer, for an iframe
+   ?embed=summary  headline tiles and the two progress charts only
+   ?theme=light|dark  force a theme (embeds default to light)
+   ?range=12|26    preselect the time range */
+const QS = new URLSearchParams(location.search);
+const EMBED = QS.get('embed');
+if (EMBED) document.documentElement.dataset.embed = EMBED === 'summary' ? 'summary' : '1';
+const THEME = QS.get('theme') || (EMBED ? 'light' : null);
+if (THEME === 'light' || THEME === 'dark') document.documentElement.dataset.theme = THEME;
+
 /* ───────── config ───────── */
 const PLATFORMS = [
   { key: 'x',         name: 'X / Twitter', handle: '@JoinTorchbearer',
     primary: 'followers', primaryLabel: 'followers',
     engage: 'engagements',
-    secondary: [['verifiedFollowers','Verified followers'],['impressions','Impressions'],['engagements','Weekly engagements'],['engagementRate','Engagement rate','%'],['profileVisits','Profile visits']] },
+    secondary: [['verifiedFollowers','Verified followers'],['impressions','Impressions'],['engagements','Weekly engagements'],['engagementRate','Engagement rate','%'],['profileVisits','Profile visits'],['linkClicks','Link clicks'],['posts','Posts published']] },
   { key: 'linkedin',  name: 'LinkedIn',
     primary: 'followers', primaryLabel: 'followers',
     engage: 'engagements',
-    secondary: [['membersReached','Members reached'],['impressions','Impressions'],['engagements','Weekly engagements'],['engagementRate','Engagement rate','%']] },
+    secondary: [['membersReached','Members reached'],['impressions','Impressions'],['engagements','Weekly engagements'],['engagementRate','Engagement rate','%'],['linkClicks','Link clicks'],['posts','Posts published']] },
   { key: 'youtube',   name: 'YouTube',
     primary: 'subscribers', primaryLabel: 'subscribers',
     engage: 'engagements',
-    secondary: [['views','Views'],['impressions','Impressions'],['likes','Likes'],['comments','Comments'],['impressionsCtr','Impressions CTR','%']] },
+    secondary: [['views','Views'],['impressions','Impressions'],['likes','Likes'],['comments','Comments'],['impressionsCtr','Impressions CTR','%'],['watchHours','Watch hours'],['posts','Videos published']] },
   { key: 'facebook',  name: 'Facebook',
     primary: 'followers', primaryLabel: 'followers',
     engage: 'engagements',
-    secondary: [['views','Views'],['viewers','Viewers'],['engagements','Weekly engagements'],['viewsCtr','Views CTR','%']] },
+    secondary: [['views','Views'],['viewers','Viewers'],['engagements','Weekly engagements'],['viewsCtr','Views CTR','%'],['linkClicks','Link clicks'],['posts','Posts published']] },
   { key: 'instagram', name: 'Instagram',
     primary: 'followers', primaryLabel: 'followers',
     engage: 'interactions',
-    secondary: [['reach','Accounts reached'],['interactions','Interactions'],['profileVisits','Profile visits'],['reachToInteractionRate','Reach → interaction','%']] },
+    secondary: [['reach','Accounts reached'],['interactions','Interactions'],['profileVisits','Profile visits'],['reachToInteractionRate','Reach → interaction','%'],['posts','Posts published']] },
   { key: 'substack',  name: 'Substack',
     primary: 'subscribers', primaryLabel: 'subscribers',
     engage: 'views',
     engageLabel: 'weekly views',
     engageIsViews: true, // views ≠ engagements — excluded from the summary total
-    secondary: [['followers','Followers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Subscriber conversion','%'],['openRate','Open rate','%']] },
-  { key: 'bluesky',   name: 'Bluesky',  primary: 'followers', primaryLabel: 'followers', engage: 'engagements', secondary: [] },
+    secondary: [['followers','Followers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Subscriber conversion','%'],['openRate','Open rate','%'],['posts','Posts published']] },
+  { key: 'bluesky',   name: 'Bluesky',  primary: 'followers', primaryLabel: 'followers', engage: 'engagements',
+    secondary: [['engagements','Weekly engagements'],['posts','Posts published']] },
   { key: 'threads',   name: 'Threads',  primary: 'followers', primaryLabel: 'followers', engage: 'interactions',
-    secondary: [['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits']] },
+    secondary: [['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['posts','Posts published']] },
   { key: 'tiktok',    name: 'TikTok',   primary: 'followers', primaryLabel: 'followers', engage: 'engagements',
     secondary: [['views','Views'],['engagements','Weekly engagements'],['profileVisits','Profile views']] },
 ];
+
+// Audience-by-platform stack: fixed order and fixed colors (color follows the
+// platform, never its rank). Slots 1-5 of the validated categorical palette in
+// palette order, so adjacent bands pass the CVD checks; the small tail folds into Other.
+const STACK = [
+  { key: 'x',         color: 'var(--cat-1)' },
+  { key: 'linkedin',  color: 'var(--cat-2)' },
+  { key: 'youtube',   color: 'var(--cat-3)' },
+  { key: 'instagram', color: 'var(--cat-4)' },
+  { key: 'substack',  color: 'var(--cat-5)' },
+  { key: 'other',     color: 'var(--cat-other)', name: 'Other platforms', members: ['facebook', 'bluesky', 'threads', 'tiktok'] },
+];
+const P_BY_KEY = Object.fromEntries(PLATFORMS.map((P) => [P.key, P]));
 
 const weeks = DATA.weeks; // sorted ascending by start
 const latestWeek = weeks[weeks.length - 1];
@@ -1747,7 +1967,7 @@ const latestWeek = weeks[weeks.length - 1];
 /* ───────── helpers ───────── */
 const MS_WEEK = 7 * 86400e3;
 const parseDate = (s) => new Date(s + 'T00:00:00');
-const fmtInt = (n) => n == null ? '—' : n.toLocaleString('en-US');
+const fmtInt = (n) => n == null ? '—' : n.toLocaleString('en-US', { maximumFractionDigits: 1 });
 function fmtCompact(n) {
   if (n == null) return '—';
   if (Math.abs(n) >= 10000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
@@ -1799,7 +2019,13 @@ function showTip(x, y, rows) {
   for (const r of rows) {
     const d = document.createElement('div');
     d.className = r.cls || '';
-    d.textContent = r.text;
+    if (r.value !== undefined) { // keyed series row: [line key] label ......... value
+      d.className = 'tt-row ' + (r.cls || '');
+      if (r.color) { const k = document.createElement('span'); k.className = 'tt-key'; k.style.background = r.color; d.appendChild(k); }
+      const l = document.createElement('span'); l.className = 'tt-lab'; l.textContent = r.text;
+      const b = document.createElement('b'); b.textContent = r.value;
+      d.append(l, b);
+    } else d.textContent = r.text;
     tip.appendChild(d);
   }
   tip.style.display = 'block';
@@ -1974,6 +2200,265 @@ function barChart(pts, { width = 340, height = 72, valueLabel = '' } = {}) {
   return box;
 }
 
+/* ───────── community-level model ───────── */
+// Audience per week with carry-forward: a platform counts at its latest known
+// value from its first report onward (null before that), so one skipped report
+// never makes the total dip. `reported` marks values recorded in that exact week.
+const AUDIENCE = (() => {
+  const last = {};
+  return weeks.map((w) => {
+    const vals = {}, reported = {};
+    let total = 0;
+    for (const P of PLATFORMS) {
+      const v = w.platforms[P.key] && w.platforms[P.key][P.primary];
+      if (v != null) { last[P.key] = v; reported[P.key] = true; }
+      vals[P.key] = last[P.key] ?? null;
+      total += vals[P.key] || 0;
+    }
+    return { week: w, t: parseDate(w.start).getTime(), vals, reported, total };
+  });
+})();
+// The last week in which platforms holding at least half the audience actually reported.
+// Past it, totals are carried forward, which is absence of data and not flat growth.
+const FRESH = (() => {
+  for (let i = AUDIENCE.length - 1; i >= 0; i--) {
+    const r = AUDIENCE[i];
+    let rep = 0;
+    for (const P of PLATFORMS) if (r.reported[P.key]) rep += r.vals[P.key] || 0;
+    if (r.total && rep / r.total >= 0.5) return r;
+  }
+  return AUDIENCE[AUDIENCE.length - 1];
+})();
+// Weekly engagements summed across platforms (Substack excluded: its number is views).
+// `coverage` is the share of the audience (on platforms that report engagements) held by
+// the platforms that reported that week. Below half, the week's total is partial and is
+// drawn dimmed, so a week where only a small platform was collected cannot read as a collapse.
+const ENGAGE = weeks.map((w, i) => {
+  const parts = [];
+  let have = 0, all = 0;
+  for (const P of PLATFORMS) {
+    if (P.engageIsViews) continue;
+    const aud = AUDIENCE[i].vals[P.key] || 0;
+    all += aud;
+    const v = w.platforms[P.key] && w.platforms[P.key][P.engage];
+    if (v != null) { parts.push({ name: P.name, v }); have += aud; }
+  }
+  return { week: w, t: parseDate(w.start).getTime(), v: parts.reduce((a, x) => a + x.v, 0), parts, coverage: all ? have / all : 1 };
+}).filter((r) => r.parts.length);
+
+// Like-for-like growth: only platforms with a known value at both ends count, so a
+// platform that started being tracked in between cannot pass for growth.
+function likeForLike(sinceWeeks) {
+  const cur = FRESH;
+  let base = AUDIENCE[0];
+  for (const r of AUDIENCE) if (r.t <= cur.t - sinceWeeks * MS_WEEK) base = r;
+  if (base === cur) return null;
+  let diff = 0, n = 0, baseSum = 0;
+  for (const P of PLATFORMS) {
+    if (cur.vals[P.key] != null && base.vals[P.key] != null) { diff += cur.vals[P.key] - base.vals[P.key]; baseSum += base.vals[P.key]; n++; }
+  }
+  return n ? { diff, n, base, pct: baseSum ? diff / baseSum * 100 : null } : null;
+}
+
+/* ───────── axis helpers ───────── */
+function monthTicks(t0, t1) {
+  const out = [];
+  const d = new Date(t0); d.setDate(1); d.setHours(0, 0, 0, 0);
+  if (d.getTime() < t0) d.setMonth(d.getMonth() + 1);
+  while (d.getTime() <= t1) { out.push(new Date(d)); d.setMonth(d.getMonth() + 1); }
+  const step = Math.max(1, Math.ceil(out.length / 6));
+  return out.filter((_, i) => i % step === 0).map((m, i) => ({
+    t: m.getTime(),
+    label: m.toLocaleDateString('en-US', { month: 'short' }) + (m.getMonth() === 0 || i === 0 ? ' ’' + String(m.getFullYear()).slice(2) : ''),
+  }));
+}
+// Axis ceiling for the charts with y ticks: finer steps than niceMax so the plot is not half empty.
+function axisMax(v) {
+  if (v <= 0) return 1;
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  for (const m of [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]) if (v <= m * p) return m * p;
+  return 10 * p;
+}
+function drawAxes(svg, { X, Y, vmax, t0, t1, padL, width, padR, height, padB }) {
+  for (const v of [0, vmax / 2, vmax]) {
+    svg.appendChild(el('line', { x1: padL, x2: width - padR, y1: Y(v), y2: Y(v), stroke: v === 0 ? 'var(--baseline)' : 'var(--grid)', 'stroke-width': 1 }));
+    const tx = el('text', { x: padL - 6, y: Y(v) + 3.5, 'font-size': 10.5, fill: 'var(--ink-3)', 'text-anchor': 'end', style: 'font-variant-numeric: tabular-nums' });
+    tx.textContent = fmtCompact(v);
+    svg.appendChild(tx);
+  }
+  for (const m of monthTicks(t0, t1)) {
+    const tx = el('text', { x: X(m.t), y: height - padB + 15, 'font-size': 10.5, fill: 'var(--ink-3)', 'text-anchor': 'middle' });
+    tx.textContent = m.label;
+    svg.appendChild(tx);
+  }
+}
+
+// Stacked area: audience by platform. Thin 2px top edges carry identity, fills are a wash.
+function stackChart(rows, { width = 660, height = 250 } = {}) {
+  const box = document.createElement('div');
+  box.className = 'chart-box';
+  if (rows.length < 2) return box;
+  const padL = 38, padR = 46, padT = 12, padB = 22;
+  const svg = el('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img', tabindex: '0',
+    'aria-label': `Total audience by platform, ${rows.length} weeks. Latest total ${fmtInt(rows[rows.length - 1].total)}.` });
+  const t0 = rows[0].t, t1 = rows[rows.length - 1].t;
+  const vmax = axisMax(Math.max(...rows.map((r) => r.total)));
+  const X = (t) => padL + (t - t0) / (t1 - t0) * (width - padL - padR);
+  const Y = (v) => padT + (1 - v / vmax) * (height - padT - padB);
+  drawAxes(svg, { X, Y, vmax, t0, t1, padL, width, padR, height, padB });
+
+  if (FRESH.t < t1 && FRESH.t >= t0) {
+    const x0 = X(FRESH.t), x1 = X(t1);
+    svg.appendChild(el('rect', { x: x0, y: padT, width: x1 - x0, height: height - padT - padB, fill: 'var(--chip-bg)' }));
+    const tx = el('text', { x: x0 + 6, y: padT + 13, 'font-size': 10.5, fill: 'var(--ink-3)' });
+    tx.textContent = x1 - x0 > 150 ? 'Not collected yet, last report carried forward' : 'Not collected yet';
+    if (x1 - x0 > 86) svg.appendChild(tx);
+  }
+  const bandVal = (r, B) => B.members ? B.members.reduce((a, k) => a + (r.vals[k] || 0), 0) : (r.vals[B.key] || 0);
+  const base = rows.map(() => 0);
+  for (const B of STACK) {
+    const top = rows.map((r, i) => base[i] + bandVal(r, B));
+    if (!top.some((v, i) => v > base[i])) continue;
+    const fwd = rows.map((r, i) => `${i ? 'L' : 'M'}${X(r.t).toFixed(1)},${Y(top[i]).toFixed(1)}`).join('');
+    const back = rows.map((r, i) => `L${X(r.t).toFixed(1)},${Y(base[i]).toFixed(1)}`).reverse().join('');
+    svg.appendChild(el('path', { d: fwd + back + 'Z', fill: B.color, 'fill-opacity': 0.2, stroke: 'none' }));
+    // top edge only where the band has thickness (a platform not yet tracked draws nothing)
+    let d = '', pen = false;
+    rows.forEach((r, i) => {
+      const on = top[i] > base[i] || (i + 1 < rows.length && top[i + 1] > base[i + 1]);
+      if (on) { d += `${pen ? 'L' : 'M'}${X(r.t).toFixed(1)},${Y(top[i]).toFixed(1)}`; pen = true; } else pen = false;
+    });
+    svg.appendChild(el('path', { d, fill: 'none', stroke: B.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+    for (let i = 0; i < rows.length; i++) base[i] = top[i];
+  }
+  // direct label: the total at the right end
+  const last = rows[rows.length - 1];
+  const lab = el('text', { x: X(last.t) + 7, y: Y(last.total) + 4, 'font-size': 11.5, 'font-weight': 650, fill: 'var(--ink)' });
+  lab.textContent = fmtCompact(last.total);
+  svg.appendChild(lab);
+
+  const cross = el('line', { y1: padT, y2: height - padB, stroke: 'var(--ink-3)', 'stroke-width': 1, visibility: 'hidden' });
+  svg.appendChild(cross);
+  function nearest(clientX) {
+    const rect = svg.getBoundingClientRect();
+    const mx = (clientX - rect.left) / rect.width * width;
+    let best = 0, bd = Infinity;
+    rows.forEach((r, i) => { const dd = Math.abs(X(r.t) - mx); if (dd < bd) { bd = dd; best = i; } });
+    return best;
+  }
+  function focusIdx(i, cx, cy) {
+    const r = rows[i];
+    cross.setAttribute('x1', X(r.t)); cross.setAttribute('x2', X(r.t)); cross.setAttribute('visibility', 'visible');
+    const rect = svg.getBoundingClientRect();
+    const out = [{ text: fmtWeekLabel(r.week), cls: 'tt-when' }];
+    for (const B of [...STACK].reverse()) {
+      const v = bandVal(r, B);
+      if (v > 0) out.push({ text: B.name || P_BY_KEY[B.key].name, value: fmtInt(v), color: B.color });
+    }
+    out.push({ text: 'Total audience', value: fmtInt(r.total), cls: 'tt-total' });
+    if (r.t > FRESH.t) out.push({ text: 'Mostly carried forward from earlier reports', cls: 'tt-when' });
+    showTip(cx != null ? cx : rect.left + X(r.t) / width * rect.width, cy != null ? cy : rect.top + Y(r.total) / height * rect.height, out);
+  }
+  const clear = () => { cross.setAttribute('visibility', 'hidden'); hideTip(); };
+  svg.addEventListener('pointermove', (ev) => focusIdx(nearest(ev.clientX), ev.clientX, ev.clientY));
+  svg.addEventListener('pointerleave', clear);
+  let kIdx = rows.length - 1;
+  svg.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowLeft') { kIdx = Math.max(0, kIdx - 1); focusIdx(kIdx); ev.preventDefault(); }
+    else if (ev.key === 'ArrowRight') { kIdx = Math.min(rows.length - 1, kIdx + 1); focusIdx(kIdx); ev.preventDefault(); }
+    else if (ev.key === 'Escape') clear();
+  });
+  svg.addEventListener('focus', () => focusIdx(kIdx));
+  svg.addEventListener('blur', clear);
+  box.appendChild(svg);
+  return box;
+}
+
+// Weekly engagement totals: one series, so one color and no legend.
+function totalBars(rows, { width = 420, height = 250 } = {}) {
+  const box = document.createElement('div');
+  box.className = 'chart-box';
+  if (!rows.length) return box;
+  const padL = 38, padR = 12, padT = 16, padB = 22;
+  const svg = el('svg', { viewBox: `0 0 ${width} ${height}`, role: 'img',
+    'aria-label': `Weekly engagements across all platforms, ${rows.length} weeks` });
+  const t0 = rows[0].t, t1 = rows.length > 1 ? rows[rows.length - 1].t : t0 + MS_WEEK;
+  const vmax = axisMax(Math.max(...rows.map((r) => r.v), 1));
+  const inset = 10; // keep the first and last bars clear of the plot edges
+  const span = width - padL - padR - 2 * inset;
+  const X = (t) => padL + inset + (t - t0) / (t1 - t0) * span;
+  const Y = (v) => padT + (1 - v / vmax) * (height - padT - padB);
+  drawAxes(svg, { X, Y, vmax, t0, t1, padL, width, padR, height, padB });
+  const y0 = Y(0);
+  const bw = Math.max(3, Math.min(24, span / Math.max(1, Math.round((t1 - t0) / MS_WEEK)) - 2));
+  rows.forEach((r) => {
+    const x = X(r.t) - bw / 2, h = Math.max(0, y0 - Y(r.v)), rad = Math.min(4, bw / 2, h);
+    const d = h <= 0 ? `M${x},${y0}h${bw}` : `M${x},${y0}V${y0 - h + rad}q0,${-rad} ${rad},${-rad}h${bw - 2 * rad}q${rad},0 ${rad},${rad}V${y0}Z`;
+    const partial = r.coverage < 0.5;
+    const bar = el('path', { d, fill: partial ? 'var(--spark-dim)' : 'var(--series)' });
+    svg.appendChild(bar);
+    const hitW = Math.max(bw + 2, 14);
+    const hit = el('rect', { x: X(r.t) - hitW / 2, y: padT, width: hitW, height: height - padT - padB, fill: 'transparent', tabindex: '0' });
+    const focus = (ev) => {
+      bar.setAttribute('opacity', '0.75');
+      const rect = svg.getBoundingClientRect();
+      const out = [{ text: fmtWeekLabel(r.week), cls: 'tt-when' }];
+      for (const part of [...r.parts].sort((a, b) => b.v - a.v)) out.push({ text: part.name, value: fmtInt(part.v) });
+      out.push({ text: `Total, ${r.parts.length} platform${r.parts.length === 1 ? '' : 's'} reporting`, value: fmtInt(r.v), cls: 'tt-total' });
+      if (partial) out.push({ text: `Partial week: those platforms hold ${Math.round(r.coverage * 100)}% of the audience`, cls: 'tt-when' });
+      showTip(ev && ev.clientX != null ? ev.clientX : rect.left + X(r.t) / width * rect.width,
+              ev && ev.clientY != null ? ev.clientY : rect.top + Y(r.v) / height * rect.height, out);
+    };
+    const clear = () => { bar.removeAttribute('opacity'); hideTip(); };
+    hit.addEventListener('pointermove', focus);
+    hit.addEventListener('pointerleave', clear);
+    hit.addEventListener('focus', () => focus(null));
+    hit.addEventListener('blur', clear);
+    svg.appendChild(hit);
+  });
+  if (rows.some((r) => r.coverage < 0.5 && r.v > 0)) {
+    const note = el('text', { x: width - padR, y: 10, 'font-size': 10.5, fill: 'var(--ink-3)', 'text-anchor': 'end' });
+    note.textContent = 'Pale bars: partial weeks';
+    svg.appendChild(note);
+  }
+  const maxR = rows.reduce((a, b) => (b.v > a.v ? b : a));
+  const lab = el('text', { x: Math.max(padL + 14, Math.min(X(maxR.t), width - padR - 14)), y: Math.max(Y(maxR.v) - 5, 10),
+    'font-size': 10.5, 'font-weight': 600, fill: 'var(--ink-2)', 'text-anchor': 'middle' });
+  lab.textContent = fmtCompact(maxR.v);
+  svg.appendChild(lab);
+  box.appendChild(svg);
+  return box;
+}
+
+function buildProgress() {
+  const host = document.getElementById('progress');
+  host.textContent = '';
+  const keep = new Set(filteredWeeks());
+  const panel = (title, sub) => {
+    const p = document.createElement('section'); p.className = 'panel';
+    const h = document.createElement('h2'); h.textContent = title;
+    const s = document.createElement('p'); s.className = 'psub'; s.textContent = sub;
+    p.append(h, s);
+    return p;
+  };
+
+  const a = panel('Total audience', 'Followers and subscribers, by platform. A platform joins the total at its first report.');
+  const arows = AUDIENCE.filter((r) => keep.has(r.week));
+  const legend = document.createElement('div'); legend.className = 'legend';
+  for (const B of STACK) {
+    const item = document.createElement('span');
+    const sw = document.createElement('i'); sw.style.background = B.color;
+    item.append(sw, document.createTextNode(B.name || P_BY_KEY[B.key].name));
+    legend.appendChild(item);
+  }
+  a.append(legend, stackChart(arows));
+  host.appendChild(a);
+
+  const e = panel('Weekly engagements', 'Likes, replies, shares and clicks, all platforms combined.');
+  e.appendChild(totalBars(ENGAGE.filter((r) => keep.has(r.week))));
+  host.appendChild(e);
+}
+
 /* ───────── summary strip ───────── */
 function buildSummary() {
   const host = document.getElementById('summary');
@@ -2027,7 +2512,7 @@ function buildSummary() {
     if (s.length < 2) continue;
     const cur = s[s.length - 1];
     const base = s[Math.max(0, s.length - 5)];
-    if (base.v > 0 && base !== cur) {
+    if (base.v >= 25 && base !== cur) { // a base under 25 turns two new followers into a headline
       const g = (cur.v - base.v) / base.v * 100;
       if (!best || g > best.g) best = { P, g, base, cur };
     }
@@ -2040,13 +2525,18 @@ function buildSummary() {
   t3.append(t3l, t3v, t3s);
   host.appendChild(t3);
 
-  // tracking span
+  // growth over the last 12 weeks, like-for-like
+  const g = likeForLike(12);
   const t4 = document.createElement('div'); t4.className = 'tile';
-  const t4l = document.createElement('div'); t4l.className = 'label'; t4l.textContent = 'Weeks tracked';
-  const t4v = document.createElement('div'); t4v.className = 'value'; t4v.textContent = String(weeks.length);
+  const t4l = document.createElement('div'); t4l.className = 'label';
+  t4l.textContent = FRESH.week === latestWeek ? 'New audience, last 12 weeks'
+    : 'New audience, 12 weeks to ' + parseDate(FRESH.week.end).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const t4v = document.createElement('div'); t4v.className = 'value';
+  t4v.textContent = g ? (g.diff >= 0 ? '+' : '−') + fmtInt(Math.abs(g.diff)) : '—';
   const t4s = document.createElement('div'); t4s.className = 'sub';
-  const first = weeks[0], lastW = weeks[weeks.length - 1];
-  t4s.textContent = `${parseDate(first.start).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} – ${parseDate(lastW.end).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`;
+  t4s.textContent = g
+    ? `${g.pct != null ? (g.diff >= 0 ? '+' : '−') + Math.abs(g.pct).toFixed(1) + '% ' : ''}since ${fmtWeekLabel(g.base.week)} · the ${g.n} platforms tracked at both dates`
+    : 'needs 12 weeks of history';
   t4.append(t4l, t4v, t4s);
   host.appendChild(t4);
 }
@@ -2085,7 +2575,9 @@ function buildCards() {
     const head = document.createElement('div');
     head.className = 'card-head';
     const dot = document.createElement('span'); dot.className = 'pdot';
-    const name = document.createElement('span'); name.className = 'pname'; name.textContent = P.name;
+    const purl = DATA.platforms[P.key] && DATA.platforms[P.key].url;
+    const name = document.createElement(purl ? 'a' : 'span'); name.className = 'pname' + (purl ? ' plink' : ''); name.textContent = P.name;
+    if (purl) { name.href = purl; name.target = '_blank'; name.rel = 'noopener'; name.title = 'Open the ' + P.name + ' profile'; }
     head.append(dot, name);
     const handle = P.handle || (DATA.platforms[P.key] && DATA.platforms[P.key].handle);
     if (handle) { const h = document.createElement('span'); h.className = 'phandle'; h.textContent = handle; head.appendChild(h); }
@@ -2151,30 +2643,59 @@ function buildCards() {
 
 /* ───────── data tables ───────── */
 const TABLE_COLS = {
-  x: [['followers','Followers'],['verifiedFollowers','Verified'],['impressions','Impressions'],['engagements','Engagements'],['engagementRate','Eng. rate %'],['profileVisits','Profile visits']],
-  linkedin: [['followers','Followers'],['membersReached','Reached'],['impressions','Impressions'],['engagements','Engagements'],['engagementRate','Eng. rate %']],
-  youtube: [['subscribers','Subscribers'],['views','Views'],['impressions','Impressions'],['engagements','Engagements'],['likes','Likes'],['comments','Comments'],['impressionsCtr','CTR %']],
-  facebook: [['followers','Followers'],['views','Views'],['viewers','Viewers'],['engagements','Engagements'],['viewsCtr','Views CTR %']],
-  instagram: [['followers','Followers'],['reach','Reached'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['reachToInteractionRate','R→I %']],
-  substack: [['followers','Followers'],['subscribers','Subscribers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Conv. %'],['openRate','Open rate %']],
-  bluesky: [['followers','Followers'],['engagements','Engagements']],
-  threads: [['followers','Followers'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits']],
+  x: [['followers','Followers'],['verifiedFollowers','Verified'],['impressions','Impressions'],['engagements','Engagements'],['engagementRate','Eng. rate %'],['profileVisits','Profile visits'],['linkClicks','Link clicks'],['posts','Posts']],
+  linkedin: [['followers','Followers'],['membersReached','Reached'],['impressions','Impressions'],['engagements','Engagements'],['engagementRate','Eng. rate %'],['linkClicks','Link clicks'],['posts','Posts']],
+  youtube: [['subscribers','Subscribers'],['views','Views'],['impressions','Impressions'],['engagements','Engagements'],['likes','Likes'],['comments','Comments'],['impressionsCtr','CTR %'],['watchHours','Watch hours'],['posts','Videos']],
+  facebook: [['followers','Followers'],['views','Views'],['viewers','Viewers'],['engagements','Engagements'],['viewsCtr','Views CTR %'],['linkClicks','Link clicks'],['posts','Posts']],
+  instagram: [['followers','Followers'],['reach','Reached'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['reachToInteractionRate','R→I %'],['posts','Posts']],
+  substack: [['followers','Followers'],['subscribers','Subscribers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Conv. %'],['openRate','Open rate %'],['posts','Posts']],
+  bluesky: [['followers','Followers'],['engagements','Engagements'],['posts','Posts']],
+  threads: [['followers','Followers'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['posts','Posts']],
   tiktok: [['followers','Followers'],['views','Views'],['engagements','Engagements'],['profileVisits','Profile views']],
 };
 
 function buildTables() {
   const host = document.getElementById('tables');
   host.textContent = '';
+
+  // audience by platform (the table twin of the stacked chart)
+  {
+    const det = document.createElement('details'); det.className = 'ptable';
+    const sum = document.createElement('summary'); sum.textContent = `Total audience by platform, ${AUDIENCE.length} weeks`;
+    det.appendChild(sum);
+    const scroll = document.createElement('div'); scroll.className = 'tscroll';
+    const table = document.createElement('table'); table.className = 'data';
+    const hr = document.createElement('tr');
+    for (const label of ['Week', 'Total', ...PLATFORMS.map((P) => P.name)]) { const th = document.createElement('th'); th.textContent = label; hr.appendChild(th); }
+    const thead = document.createElement('thead'); thead.appendChild(hr); table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    for (let i = AUDIENCE.length - 1; i >= 0; i--) {
+      const r = AUDIENCE[i];
+      const tr = document.createElement('tr');
+      const td0 = document.createElement('td'); td0.textContent = fmtWeekLabel(r.week); tr.appendChild(td0);
+      const tdt = document.createElement('td'); tdt.textContent = fmtInt(r.total); tr.appendChild(tdt);
+      for (const P of PLATFORMS) {
+        const td = document.createElement('td');
+        const v = r.vals[P.key];
+        td.textContent = v == null ? '–' : fmtInt(v);
+        if (v == null || !r.reported[P.key]) { td.className = 'na'; if (v != null) td.title = 'Carried forward from an earlier report'; }
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+    table.appendChild(tbody); scroll.appendChild(table); det.appendChild(scroll); host.appendChild(det);
+  }
+
   for (const P of PLATFORMS) {
-    const cols = TABLE_COLS[P.key];
-    if (!cols) continue;
     const rows = weeks.filter((w) => w.platforms[P.key]);
     if (!rows.length) continue;
+    const cols = (TABLE_COLS[P.key] || []).filter(([m]) => rows.some((w) => w.platforms[P.key][m] != null));
+    if (!cols.length) continue;
 
     const det = document.createElement('details');
     det.className = 'ptable';
     const sum = document.createElement('summary');
-    sum.textContent = `${P.name} — ${rows.length} weeks`;
+    sum.textContent = `${P.name}, ${rows.length} week${rows.length === 1 ? '' : 's'}`;
     det.appendChild(sum);
 
     const scroll = document.createElement('div'); scroll.className = 'tscroll';
@@ -2211,17 +2732,54 @@ document.getElementById('stamp-through').textContent = fmtWeekLabel(latestWeek);
 document.getElementById('stamp-updated').textContent =
   parseDate(DATA.updated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-for (const btn of document.querySelectorAll('.rangebtn')) {
-  btn.addEventListener('click', () => {
-    rangeWeeks = Number(btn.dataset.weeks);
-    for (const b of document.querySelectorAll('.rangebtn')) b.setAttribute('aria-pressed', String(b === btn));
-    buildCards();
-  });
+document.getElementById('embed-through').textContent = fmtWeekLabel(latestWeek);
+
+// Say so plainly when numbers are old: a dashboard that looks current but is not misleads.
+// The API job can keep one small platform fresh while the big ones go uncollected, so this
+// looks at how much of the audience sits on platforms with no report in the last two weeks.
+{
+  const cur = AUDIENCE[AUDIENCE.length - 1];
+  const old = [], DAY = 86400e3;
+  let oldAudience = 0;
+  for (const P of PLATFORMS) {
+    const lp = latestPoint(P.key, P.primary);
+    if (!lp) continue;
+    if (Date.now() - parseDate(lp.week.end).getTime() > 13 * DAY) { old.push({ name: P.name, v: lp.v }); oldAudience += lp.v; }
+  }
+  const ageWeeks = Math.floor((Date.now() - parseDate(latestWeek.end).getTime()) / (7 * DAY));
+  let msg = '';
+  if (ageWeeks >= 2) {
+    msg = `The newest report here covers ${fmtWeekLabel(latestWeek)}, ${ageWeeks} weeks ago. Nothing has been collected since, so current numbers will differ.`;
+  } else if (cur.total && oldAudience / cur.total >= 0.25) {
+    old.sort((a, b) => b.v - a.v);
+    const names = old.slice(0, 3).map((o) => o.name).join(', ') + (old.length > 3 ? ` and ${old.length - 3} more` : '');
+    msg = `No report in the last two weeks for ${names}. Each card shows the date of its latest report.`;
+  }
+  if (msg) {
+    document.getElementById('notice-text').textContent = msg;
+    document.getElementById('notice').classList.add('on');
+  }
 }
 
+function setRange(n) {
+  rangeWeeks = n;
+  for (const b of document.querySelectorAll('.rangebtn')) b.setAttribute('aria-pressed', String(Number(b.dataset.weeks) === n));
+  buildProgress();
+  buildCards();
+}
+for (const btn of document.querySelectorAll('.rangebtn')) btn.addEventListener('click', () => setRange(Number(btn.dataset.weeks)));
+
 buildSummary();
-buildCards();
+setRange([12, 26].includes(Number(QS.get('range'))) ? Number(QS.get('range')) : 0);
 buildTables();
+
+// In an iframe, report the content height so the host page can size the frame.
+if (EMBED && window.parent !== window) {
+  // measure the content, not the viewport, so the frame can shrink as well as grow
+  const post = () => window.parent.postMessage({ type: 'tbc-social-kpis:height', height: Math.ceil(document.querySelector('.wrap').getBoundingClientRect().height) + 8 }, '*');
+  new ResizeObserver(post).observe(document.body);
+  post();
+}
 </script>
 
 </body>

@@ -13,6 +13,11 @@ Threads, and TikTok. Forty weeks of history since November 2025.
 - [`src/dashboard-template.html`](src/dashboard-template.html) — the dashboard.
   `node scripts/build.mjs` inlines the data into [`index.html`](index.html), which
   GitHub Pages serves. `index.html` is generated — edit the template instead.
+- [`.github/workflows/weekly-api.yml`](.github/workflows/weekly-api.yml): every
+  Monday GitHub collects the platforms that have an API and republishes. No
+  computer, browser, or volunteer involved.
+- [`docs/embedding.md`](docs/embedding.md): put the numbers on another site: an
+  iframe (`?embed=summary`) or the JSON feed at `data/summary.json`.
 - [`scripts/`](scripts/) — `preflight`, `fetch-api` (Bluesky today; YouTube, Meta,
   Threads once credentials exist — see [`docs/api-setup.md`](docs/api-setup.md)),
   `add-week` (record or patch a week by hand), `validate`, `build`, `notify`

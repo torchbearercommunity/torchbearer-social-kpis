@@ -51,6 +51,18 @@ SPAs (LinkedIn, Meta, Substack) — wait and retry, or prefer `get_page_text`.
 - A follower count reconstructed from "today's total minus reported daily
   changes" is acceptable for backfill only, and must be called out as derived.
 
+## Three numbers added in v2.1, on every platform that shows them
+
+- `posts`: how many posts (or videos) TBC published that week. It is the one input
+  the team controls, and it turns every other number into a per-post figure. Count
+  original posts and quote posts; leave out replies and plain reposts.
+- `linkClicks`: X, LinkedIn, Facebook. Clicks on links in posts: the step from
+  attention to the website, the DIP, or a sign-up.
+- `watchHours`: YouTube only. Watch time for the week, in hours to one decimal.
+
+These are optional. A week without them is still a complete week; `preflight` only
+asks for metrics a week already lists as `null`.
+
 ## Platforms → `data/kpi-history.json` fields
 
 ### x — @JoinTorchbearer (browser)
@@ -59,8 +71,8 @@ pick Monday then Sunday → Escape. Cards: Verified followers *A / B* (B = total
 followers), Impressions, Engagement rate, Engagements, Profile visits. Page-text
 extraction misses the card numbers — read them from a screenshot.
 Fields: `followers`, `verifiedFollowers`, `impressions`, `engagements`,
-`engagementRate`, `profileVisits`. Historical follower counts are not shown, so
-backfilled weeks leave `followers` null.
+`engagementRate`, `profileVisits`, `linkClicks`, `posts`. Historical follower
+counts are not shown, so backfilled weeks leave `followers` null.
 
 ### instagram — Torchbearer Community (browser, or Meta API)
 `instagram.com/accounts/insights/` → Account insights, **Last 7 days** (no custom
@@ -86,14 +98,15 @@ impressions, reactions, comments, reposts; the Metrics dropdown gives Members
 reached and Clicks. `engagements` = reactions + comments + reposts + clicks;
 `engagementRate` = engagements ÷ impressions × 100. Followers from the sidebar
 (current only). Fields: `followers`, `membersReached`, `impressions`,
-`engagements`, `engagementRate`.
+`engagements`, `engagementRate`, `linkClicks` (the Clicks metric), `posts`.
 
 ### youtube — channel UCo1kAWa39iW5DPIHk__qvXQ (browser, or API for subscribers)
 Studio → Analytics → **Advanced mode**. The URL accepts the range directly:
 `…/explore?…&time_period=<startMs>%2C<endMs>` (epoch ms at local midnight,
 end = next Monday) with `t_metrics=RATINGS_LIKES&t_metrics=COMMENTS&t_metrics=SHARINGS&t_metrics=EXTERNAL_VIEWS&t_metrics=SUBSCRIBERS_NET_CHANGE&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS_VTR`.
 Read the **Total** row. Fields: `subscribers` (current), `views`, `impressions`,
-`likes`, `comments`, `engagements` (= likes + comments + shares), `impressionsCtr`.
+`likes`, `comments`, `engagements` (= likes + comments + shares), `impressionsCtr`,
+`watchHours`, `posts` (videos and Shorts published in the week).
 
 ### facebook — Torchbearer Community page (browser, or Meta API)
 The Business Suite date picker ignores automated clicks. Use
@@ -103,7 +116,7 @@ views, viewers, content interactions, link clicks, visits, and follows over the
 last 28 days; sum the seven days of the week. Current followers from the page
 itself (`facebook.com/profile.php?id=61587232704207`). Fields: `followers`,
 `views`, `viewers`, `engagements` (content interactions), `viewsCtr`
-(= link clicks ÷ views × 100).
+(= link clicks ÷ views × 100), `linkClicks`, `posts`.
 
 ### threads — @torchbearercommunity (browser, or Threads API)
 `https://www.threads.net/insights`, last 7 days. Insights are gated until the
@@ -118,9 +131,12 @@ Analytics. Fields: `followers`, `views`, `engagements` (likes + comments +
 shares), `profileVisits`.
 
 ### bluesky — jointorchbearer.bsky.social (API only)
-`node scripts/fetch-api.mjs --week <start> --apply` collects it from the public
-API (no credentials). Fields: `followers`, `engagements` (likes + reposts +
-replies + quotes on the week's posts). No browser step.
+The Monday GitHub Actions job collects it from the public API (no credentials);
+`node scripts/fetch-api.mjs --week <start> --apply` does the same by hand. Fields:
+`followers`, `engagements` (likes + reposts + replies + quotes on TBC's own posts
+from the week; posts by others that TBC reposted are not counted), `posts`. No
+browser step. Past weeks can be backfilled for `engagements` and `posts`; the
+follower total cannot, so a backfill leaves it alone.
 
 ## Recording
 

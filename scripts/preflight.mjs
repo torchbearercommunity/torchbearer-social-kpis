@@ -48,7 +48,7 @@ if (existing) {
 // 3. collectors
 const api = {
   bluesky: true,
-  youtube: !!env.YOUTUBE_API_KEY,
+  youtube: !!(env.YOUTUBE_API_KEY || env.YOUTUBE_REFRESH_TOKEN),
   facebook: !!(env.META_PAGE_TOKEN && env.META_PAGE_ID),
   instagram: !!(env.META_PAGE_TOKEN && env.META_PAGE_ID),
   threads: !!env.THREADS_ACCESS_TOKEN,

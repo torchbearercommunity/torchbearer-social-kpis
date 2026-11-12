@@ -14,8 +14,12 @@ anything that needs Kevin into the final Discord summary instead.
 ## 0. Preflight
 
 ```
+git pull --rebase
 node scripts/preflight.mjs
 ```
+Pull first: the GitHub Actions job (`.github/workflows/weekly-api.yml`) commits the
+API platforms early every Monday, so the week usually exists already and preflight
+reports RETRY with the browser-only metrics left to fill.
 It prints the reporting week (`<start>`) and the mode:
 - **NEW** — collect everything.
 - **RETRY** — the week exists with nulls (Tuesday after a bad Monday, or a rerun).
@@ -30,8 +34,9 @@ output and stop — do not touch the data file.
 ```
 node scripts/fetch-api.mjs --week <start> --apply
 ```
-Bluesky always works; YouTube/Facebook/Instagram/Threads are collected here too
-whenever their credentials are in `.env`. Note `stillNeedBrowser` from its output —
+Skip this step when the GitHub job already ran for the week (the week exists and
+Bluesky is filled). Bluesky always works; YouTube/Facebook/Instagram/Threads are
+collected here too whenever their credentials are in `.env`. Note `stillNeedBrowser` from its output —
 that is the browser to-do list.
 
 ## 2. Browser pass
@@ -49,7 +54,8 @@ that is the browser to-do list.
    **instagram, substack** (irrecoverable — always first), then **x, linkedin,
    youtube, facebook**, then **threads, tiktok**. Skip metrics the API pass
    already filled. Apply the rules in the collection guide; anything unreadable is
-   `null`, never a guess. Cap effort per platform at roughly a dozen tool calls —
+   `null`, never a guess. Where the page shows them, also record the optional
+   `posts`, `linkClicks`, and `watchHours` (see the collection guide). Cap effort per platform at roughly a dozen tool calls —
    if a page will not cooperate, null it, note why, move on.
 4. Close the tabs you opened (`tabs_close_mcp`).
 
@@ -57,9 +63,9 @@ that is the browser to-do list.
 
 ```
 node scripts/validate.mjs && node scripts/build.mjs
-git add data/kpi-history.json index.html
+git add data/kpi-history.json data/summary.json index.html
 git commit -m "KPIs for week of <start>"
-git push
+git pull --rebase && git push
 ```
 Also commit any edits you made to `docs/collection-guide.md`. If nothing at all
 was collected, skip the commit. Only push what validates.

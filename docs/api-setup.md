@@ -5,6 +5,20 @@ browser. Each one you set up removes a fragile step from the Monday run. All are
 Put credentials in `.env` (gitignored; template in `.env.example`) and run
 `node scripts/preflight.mjs` to see which collectors are enabled.
 
+## Where the keys go: GitHub, so nobody's computer has to be on
+
+`.github/workflows/weekly-api.yml` runs `fetch-api.mjs` on GitHub's servers every
+Monday morning, commits what it collected, and the push republishes the dashboard.
+Bluesky already works there with no setup. For each platform below, add the same
+key names as repository secrets (repo → Settings → Secrets and variables →
+Actions → New repository secret) and that platform stops needing a browser, a
+logged-in Chrome, or any one volunteer. Keep a copy in your local `.env` only if
+you also want to run the collectors by hand.
+
+To backfill a past week, open the workflow under the repo's Actions tab, choose
+Run workflow, and enter that week's Monday. A backfill records the week's activity
+(views, engagements, posts) and leaves follower totals alone.
+
 | Platform | Setup | API provides | Still browser-only |
 |---|---|---|---|
 | **Bluesky** | none — works today | followers, weekly engagements | — |
@@ -26,7 +40,7 @@ history cannot be backfilled.
 2. **Credentials → Create credentials → API key**. Restrict it to the YouTube Data API.
 3. `.env`: `YOUTUBE_API_KEY=...` (the channel id is already filled in).
 
-Optional OAuth for weekly views/likes/comments: enable *YouTube Analytics API*, create an OAuth client (Desktop), complete the consent flow once with scope `https://www.googleapis.com/auth/yt-analytics.readonly`, and put the access token in `YOUTUBE_ACCESS_TOKEN`. Access tokens expire hourly, so this only pays off with a refresh-token flow — ask Claude to add one if you want it.
+OAuth for weekly views, likes, comments, and watch hours: enable *YouTube Analytics API*, create an OAuth client (type Desktop), and complete the consent flow once with scope `https://www.googleapis.com/auth/yt-analytics.readonly` while signed in as the account that owns the channel (the OAuth Playground at developers.google.com/oauthplayground works: gear icon → use your own client id and secret → authorize the scope → exchange for tokens). Save `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, and the **refresh token** as `YOUTUBE_REFRESH_TOKEN`; the collector trades it for a fresh access token on every run. Set the OAuth consent screen to *In production*: in *Testing* mode Google expires refresh tokens after seven days. This path has not yet been run against the live channel, so check the first run's output.
 
 ## Facebook + Instagram (Meta Graph API)
 1. https://developers.facebook.com → **Create app** → type *Business*. Add the *Facebook Login for Business* and *Instagram Graph API* products.

@@ -14,8 +14,13 @@ minute). This repo is the only home for the project: the earlier
   never 0 and never a guess. Weeks sorted ascending by `start`.
 - `src/dashboard-template.html` — dashboard markup/CSS/JS with a `/*__DATA__*/;`
   marker where the JSON is inlined at build time. Edit this, never `index.html`.
-- `index.html` — **build output, but committed** because GitHub Pages serves
-  it. Regenerate with `node scripts/build.mjs`; never hand-edit.
+- `index.html` and `data/summary.json`: **build outputs, but committed** because
+  GitHub Pages serves them. Regenerate with `node scripts/build.mjs`; never
+  hand-edit. `summary.json` is the small feed other sites read (contract in
+  `docs/embedding.md`): add fields, never rename them.
+- `.github/workflows/weekly-api.yml`: runs `fetch-api.mjs --apply` on GitHub
+  every Monday and pushes the result, so the API platforms need no computer.
+  Its keys are repository secrets with the same names as `.env.example`.
 - `scripts/` — `preflight.mjs` (what mode/what is configured), `fetch-api.mjs`
   (API collectors), `add-week.mjs` (create/patch a week by hand), `validate.mjs`,
   `build.mjs`, `notify.mjs` (Discord). `merge-legacy-kpis.mjs` and
@@ -23,6 +28,8 @@ minute). This repo is the only home for the project: the earlier
   do not re-run them.
 - `docs/collection-guide.md` — per-platform pages, handles, field mapping, and
   hard-won UI quirks. `docs/api-setup.md` — how to move platforms off the browser.
+  `docs/embedding.md`: the `?embed=` modes and the JSON feed for showing these
+  numbers inside the TBC community dashboard.
 - `.claude/skills/collect-kpis/SKILL.md` — the weekly runbook. The scheduled
   task `weekly-social-kpis` (Mon + Tue 9am) invokes it.
 - `.env` (gitignored) — Discord webhook and any API credentials. `.env.example`
@@ -30,8 +37,9 @@ minute). This repo is the only home for the project: the earlier
 
 ## The weekly run, in one line each
 
-preflight → API pass → browser pass (Instagram and Substack first) → validate →
-build → commit + push → Discord summary. Full detail in the skill file.
+GitHub job (API platforms, Monday early) → then locally: pull → preflight → browser
+pass (Instagram and Substack first) → validate → build → commit + push → Discord
+summary. Full detail in the skill file.
 
 ## Conventions that matter
 
@@ -44,6 +52,11 @@ build → commit + push → Discord summary. Full detail in the skill file.
 - The dashboard treats a platform's latest known value as current and labels
   it "as of <week>" when it is older than the newest week.
 - The engagement summary tile excludes Substack (its `views` are not engagements).
+- Follower and subscriber totals are only ever recorded for the current week. A
+  backfill of an older week records activity counts and leaves totals null.
+- Total audience carries each platform forward from its last report. Growth
+  figures are like-for-like: only platforms known at both dates count, so a
+  platform that started being tracked in between is not reported as growth.
 - Browser collection uses Kevin's real Chrome via the claude-in-chrome tools —
   the connected browser is named "TBC Chrome" (profile "Profile 7"). The
   extension only navigates domains Kevin has allowed in its site-access

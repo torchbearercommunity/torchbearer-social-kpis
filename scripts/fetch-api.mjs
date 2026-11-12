@@ -3,8 +3,14 @@
 // Platforms whose credentials are absent are skipped, not errors. Never guesses: a
 // metric an API cannot provide is simply omitted so the browser step fills it.
 //
-// Usage: node scripts/fetch-api.mjs --week 2026-08-24 [--apply]
+// Usage: node scripts/fetch-api.mjs [--week 2026-08-24] [--apply]
+//   --week    the week's Monday. Defaults to the most recent completed Mon-Sun week (UTC).
 //   --apply   writes the collected values into data/kpi-history.json via add-week.mjs
+//
+// Running it for an OLDER week (a backfill) records only that week's activity counts.
+// Follower and subscriber totals are "the value right now", so they are written only
+// when --week is the most recent completed week; otherwise today's total would be
+// filed under a past date.
 //
 // Credentials: .env.example / docs/api-setup.md. Meta and Threads rename insight
 // metrics over time; on a 400 "invalid metric" see the Metric names section there.
@@ -12,15 +18,26 @@ import { execSync } from "child_process";
 import { loadEnv, ROOT } from "./lib/env.mjs";
 
 const env = loadEnv();
+const iso = (d) => d.toISOString().slice(0, 10);
+const lastMonday = (() => { // Monday of the most recent completed Mon-Sun week, in UTC
+  const d = new Date(); d.setUTCHours(0, 0, 0, 0);
+  const dow = d.getUTCDay(); // 0 = Sunday
+  d.setUTCDate(d.getUTCDate() - (dow === 0 ? 13 : dow + 6));
+  return iso(d);
+})();
 const wi = process.argv.indexOf("--week");
-if (wi === -1) { console.error("--week YYYY-MM-DD (the week's Monday) is required"); process.exit(1); }
-const start = process.argv[wi + 1];
+const start = wi === -1 ? lastMonday : process.argv[wi + 1];
+if (!/^\d{4}-\d{2}-\d{2}$/.test(start ?? "") || new Date(start + "T00:00:00Z").getUTCDay() !== 1) {
+  console.error("--week must be a Monday as YYYY-MM-DD"); process.exit(1);
+}
+const isCurrent = start === lastMonday; // totals are only valid for the current week
 const startMs = Date.parse(start + "T00:00:00Z");
 const endMs = startMs + 7 * 864e5; // [Monday 00:00 UTC, next Monday 00:00 UTC)
 const sinceSec = Math.floor(startMs / 1000), untilSec = Math.floor(endMs / 1000);
 const apply = process.argv.includes("--apply");
 
 const out = {}, notes = [], browser = [];
+if (!isCurrent) notes.push(`backfill of ${start}: follower/subscriber totals skipped (they are only known for ${lastMonday})`);
 const sum = (arr, f) => arr.reduce((a, x) => a + (Number(f(x)) || 0), 0);
 async function getJson(url, headers = {}) {
   const r = await fetch(url, { headers });
@@ -34,35 +51,60 @@ try {
   const prof = await getJson(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${handle}`);
   const posts = [];
   let cursor;
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 20; i++) {
     const page = await getJson(`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${handle}&limit=100&filter=posts_no_replies${cursor ? "&cursor=" + cursor : ""}`);
-    posts.push(...page.feed.map((f) => f.post));
+    // Own posts only: the feed also returns other accounts' posts that TBC reposted
+    // (marked with `reason`), and their likes are not TBC's engagement.
+    posts.push(...page.feed.filter((f) => !f.reason && f.post.author.did === prof.did).map((f) => f.post));
     cursor = page.cursor;
-    if (!cursor || posts.some((p) => Date.parse(p.indexedAt) < startMs)) break;
+    // stop once TBC's own posts reach back past the week (a repost of an old post must not end paging early)
+    if (!cursor || posts.some((p) => Date.parse(p.record?.createdAt ?? p.indexedAt) < startMs)) break;
+    if (i === 19) notes.push("bluesky: stopped paging after 2,000 feed items; older weeks may be undercounted");
   }
-  const inWeek = posts.filter((p) => { const t = Date.parse(p.indexedAt); return t >= startMs && t < endMs; });
+  const when = (p) => Date.parse(p.record?.createdAt ?? p.indexedAt);
+  const inWeek = posts.filter((p) => { const t = when(p); return t >= startMs && t < endMs; });
   out.bluesky = {
-    followers: prof.followersCount,
     engagements: sum(inWeek, (p) => (p.likeCount || 0) + (p.repostCount || 0) + (p.replyCount || 0) + (p.quoteCount || 0)),
+    posts: inWeek.length,
   };
-  notes.push(`bluesky: ${inWeek.length} post(s) in week, ${prof.followersCount} followers`);
+  if (isCurrent) out.bluesky.followers = prof.followersCount;
+  notes.push(`bluesky: ${inWeek.length} own post(s) in week` + (isCurrent ? `, ${prof.followersCount} followers` : ""));
 } catch (e) { notes.push("bluesky FAILED: " + e.message); browser.push("bluesky"); }
 
 // ---------- YouTube ----------
-if (env.YOUTUBE_API_KEY) {
+// A refresh token (YOUTUBE_CLIENT_ID + _SECRET + _REFRESH_TOKEN) is what makes the
+// Analytics half work unattended: access tokens expire after an hour.
+async function youtubeAccessToken() {
+  if (env.YOUTUBE_REFRESH_TOKEN && env.YOUTUBE_CLIENT_ID && env.YOUTUBE_CLIENT_SECRET) {
+    const r = await fetch("https://oauth2.googleapis.com/token", {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ client_id: env.YOUTUBE_CLIENT_ID, client_secret: env.YOUTUBE_CLIENT_SECRET, refresh_token: env.YOUTUBE_REFRESH_TOKEN, grant_type: "refresh_token" }),
+    });
+    if (!r.ok) throw new Error(`token refresh ${r.status}: ${(await r.text()).slice(0, 200)}`);
+    return (await r.json()).access_token;
+  }
+  return env.YOUTUBE_ACCESS_TOKEN || null;
+}
+if (env.YOUTUBE_API_KEY || env.YOUTUBE_REFRESH_TOKEN || env.YOUTUBE_ACCESS_TOKEN) {
   try {
-    const ch = await getJson(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${env.YOUTUBE_CHANNEL_ID}&key=${env.YOUTUBE_API_KEY}`);
-    out.youtube = { subscribers: Number(ch.items[0].statistics.subscriberCount) };
-    if (env.YOUTUBE_ACCESS_TOKEN) {
+    out.youtube = {};
+    if (env.YOUTUBE_API_KEY && isCurrent) {
+      const ch = await getJson(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${env.YOUTUBE_CHANNEL_ID}&key=${env.YOUTUBE_API_KEY}`);
+      out.youtube.subscribers = Number(ch.items[0].statistics.subscriberCount);
+    }
+    const token = await youtubeAccessToken();
+    if (token) {
       const endDate = new Date(endMs - 864e5).toISOString().slice(0, 10);
-      const rep = await getJson(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel==MINE&startDate=${start}&endDate=${endDate}&metrics=views,likes,comments,shares`, { authorization: `Bearer ${env.YOUTUBE_ACCESS_TOKEN}` });
-      const [views = 0, likes = 0, comments = 0, shares = 0] = rep.rows?.[0] ?? [];
-      Object.assign(out.youtube, { views, likes, comments, engagements: likes + comments + shares });
+      const rep = await getJson(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel==MINE&startDate=${start}&endDate=${endDate}&metrics=views,likes,comments,shares,estimatedMinutesWatched`, { authorization: `Bearer ${token}` });
+      const [views = 0, likes = 0, comments = 0, shares = 0, minutes = 0] = rep.rows?.[0] ?? [];
+      Object.assign(out.youtube, { views, likes, comments, engagements: likes + comments + shares, watchHours: Math.round(minutes / 6) / 10 });
       browser.push("youtube (impressions, CTR — Studio only)");
     } else {
-      notes.push("youtube: subscribers only; weekly views/likes/comments need YOUTUBE_ACCESS_TOKEN");
+      notes.push("youtube: subscribers only; weekly views/likes/comments need the OAuth keys (docs/api-setup.md)");
       browser.push("youtube (views, impressions, CTR, likes, comments)");
     }
+    if (!Object.keys(out.youtube).length) delete out.youtube;
   } catch (e) { notes.push("youtube FAILED: " + e.message); browser.push("youtube"); }
 } else browser.push("youtube");
 
@@ -72,7 +114,7 @@ if (env.META_PAGE_TOKEN && env.META_PAGE_ID) {
   const g = "https://graph.facebook.com/v21.0";
   try {
     const page = await getJson(`${g}/${env.META_PAGE_ID}?fields=followers_count,instagram_business_account&${tok}`);
-    out.facebook = { followers: page.followers_count };
+    out.facebook = isCurrent ? { followers: page.followers_count } : {};
     try {
       const ins = await getJson(`${g}/${env.META_PAGE_ID}/insights?metric=page_views_total,page_post_engagements&period=day&since=${sinceSec}&until=${untilSec}&${tok}`);
       for (const m of ins.data ?? []) {
@@ -86,7 +128,7 @@ if (env.META_PAGE_TOKEN && env.META_PAGE_ID) {
     const ig = page.instagram_business_account?.id;
     if (ig) {
       const prof = await getJson(`${g}/${ig}?fields=followers_count&${tok}`);
-      out.instagram = { followers: prof.followers_count };
+      out.instagram = isCurrent ? { followers: prof.followers_count } : {};
       try {
         const ins = await getJson(`${g}/${ig}/insights?metric=reach,profile_views,total_interactions,views&period=day&metric_type=total_value&since=${sinceSec}&until=${untilSec}&${tok}`);
         const field = { reach: "reach", profile_views: "profileVisits", total_interactions: "interactions", views: "views" };
@@ -110,7 +152,7 @@ if (env.THREADS_ACCESS_TOKEN) {
     out.threads = {};
     for (const m of ins.data ?? []) {
       const v = m.total_value?.value ?? sum(m.values ?? [], (x) => x.value);
-      if (m.name === "followers_count") out.threads.followers = v;
+      if (m.name === "followers_count") { if (isCurrent) out.threads.followers = v; }
       else if (m.name === "views") out.threads.views = v;
       else out.threads.interactions = (out.threads.interactions || 0) + v;
     }
@@ -120,6 +162,7 @@ if (env.THREADS_ACCESS_TOKEN) {
 
 browser.push("x", "linkedin", "substack", "tiktok");
 
+for (const k of Object.keys(out)) if (!Object.keys(out[k]).length) delete out[k];
 console.log(JSON.stringify({ week: start, collected: out, stillNeedBrowser: browser, notes }, null, 2));
 if (apply && Object.keys(out).length) {
   execSync(`node scripts/add-week.mjs ${start} --json ${JSON.stringify(JSON.stringify(out))}`, { cwd: ROOT, stdio: "inherit" });
