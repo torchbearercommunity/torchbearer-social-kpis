@@ -29,7 +29,6 @@ Run workflow, and enter that week's Monday. A backfill records the week's activi
 | X | $200/mo | — | everything (stay on browser) |
 | LinkedIn | weeks (app approval) | — | everything (stay on browser) |
 | Substack | no API exists | — | everything |
-| TikTok | app approval | — | everything |
 
 Do Meta first — it removes Facebook and Instagram, the two platforms whose analytics UI
 fought browser automation hardest, and Instagram is one of the two platforms whose

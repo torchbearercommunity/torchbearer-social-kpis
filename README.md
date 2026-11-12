@@ -2,7 +2,7 @@
 
 Public weekly dashboard of social media KPIs for the Torchbearer Community
 volunteer group: X, LinkedIn, YouTube, Facebook, Instagram, Substack, Bluesky,
-Threads, and TikTok. Forty weeks of history since November 2025.
+and Threads. Weekly history since November 2025.
 
 **Live dashboard:** https://torchbearercommunity.github.io/torchbearer-social-kpis/
 

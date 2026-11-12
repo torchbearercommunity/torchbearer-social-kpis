@@ -16,22 +16,65 @@ collected (retry — fill nulls only), or done.
    two of ending is gone forever. Everything else can be backfilled later with a
    custom date range.
 2. Then X, LinkedIn, YouTube, Facebook.
-3. Then Threads, TikTok, Bluesky (Bluesky is API-only and never needs the browser).
+3. Then Threads. Bluesky is API-only and never needs the browser.
 
 Record each platform as soon as it is collected (`node scripts/add-week.mjs …`)
 so a crash halfway through keeps what was already gathered.
 
+## Two browsers, not one
+
+The accounts live in two Chrome profiles, and a run needs both connected:
+
+- **TBC profile** (signed in as the TBC accounts): X, YouTube Studio, Substack,
+  Instagram, Threads.
+- **Kevin's personal profile**: LinkedIn and Facebook. Those are pages administered
+  from his personal logins, so the TBC profile cannot open their analytics.
+
+Pick the browser with `select_browser` before each group. The quickest check that
+you are in the right one: `x.com/i/account_analytics` shows @JoinTorchbearer.
+TBC has no TikTok account; it was dropped from the dashboard in November 2026.
+
+## Catching up after missed weeks (methods proven on 2026-11-12)
+
+Each of these returns daily numbers for a long range in one page load, so ten
+missed weeks cost about the same as one. Sum the days Monday to Sunday.
+
+- **X**: on Account overview pick 3M, then the download icon. The CSV is built in
+  the page: wrap `URL.createObjectURL` first to keep the Blob, then read its text
+  (no need to open the Downloads folder). Columns include Impressions,
+  Engagements, Profile visits, New follows, Unfollows. "Create Post" is not the
+  number of posts published. New follows minus unfollows does not reconcile with
+  the follower total (off by 7 over ten weeks), so past follower totals stay null.
+- **YouTube**: advanced mode with `dimension=DAY` lists one row per day, 50 rows
+  per page (use two ranges for more). Studio counts days in Pacific time and the
+  end of `time_period` is exclusive, so for a last day D pass midnight Central of
+  D+2. Daily "Subscribers" is the net change and reconciles exactly with the
+  current total, so past subscriber totals can be rebuilt from it. Weekly CTR is
+  the impression-weighted mean of the daily CTRs; watch hours are summed.
+- **LinkedIn**: set the range to Last 90 days. The chart is Highcharts:
+  `Highcharts.charts[0].series[0].data` holds one point per day for the metric
+  chosen in the dropdown (Impressions, Clicks, Reactions, Comments, Reposts).
+  Members reached cannot be summed across days, so backfilled weeks leave it
+  null. The Followers tab charts new followers only, which does not rebuild totals.
+- **Substack**: `/api/v1/publish-dashboard/summary-v2?range=N` (fetched from the
+  dashboard page while signed in) returns `totalSubscribersStart`, the subscriber
+  total N days ago. That gives every past week's total; it matched the recorded
+  232 for Aug 9 exactly. `/publish/posts/published` lists each post's date, views
+  and open rate for the per-post `views`, `openRate` and `posts` fields.
+- **Facebook**: the insights results page only reaches back 28 days.
+- **Instagram**: nothing weekly is recoverable. Record the follower total.
+- **Threads**: now at `threads.com`; the extension may refuse page scripts there,
+  so read the follower count from a screenshot of the profile.
+
 ## Browser prerequisites
 
-Collection uses Kevin's real Chrome via the claude-in-chrome tools. The connected
-browser is named **"TBC Chrome"** (profile "Profile 7", where every TBC account is
-logged in). Select it with `select_browser` by its deviceId.
+Collection uses Kevin's real Chrome via the claude-in-chrome tools, in the two
+profiles described above.
 
 The extension only navigates domains Kevin has allowed in its site-access settings
 (Claude toolbar icon → site access). Required: `x.com`, `linkedin.com`,
 `studio.youtube.com` + `youtube.com`, `business.facebook.com`, `instagram.com`,
-`substack.com` + `torchbearercommunity.substack.com`, `threads.net`, `tiktok.com`,
-`bsky.app`. A `navigate` that returns **"Navigation to this domain is not allowed"**
+`substack.com` + `torchbearercommunity.substack.com`, `threads.com`, and `facebook.com`. A `navigate` that returns **"Navigation to this domain is not allowed"**
 is a configuration problem: record it, report it in the summary, never guess the
 numbers. As of 2026-09-01 only `x.com` was allowed.
 
@@ -123,12 +166,6 @@ itself (`facebook.com/profile.php?id=61587232704207`). Fields: `followers`,
 account passes 100 followers ("Insights await") — until then only `followers`
 (profile header) is available and the rest stay null. Fields: `followers`,
 `views`, `interactions`, `profileVisits`.
-
-### tiktok — @torchbearercommunity (browser)
-`https://www.tiktok.com/tiktokstudio/analytics` → date dropdown → Custom →
-Monday..Sunday → Apply. Followers total is on the Studio home page, not in
-Analytics. Fields: `followers`, `views`, `engagements` (likes + comments +
-shares), `profileVisits`.
 
 ### bluesky — jointorchbearer.bsky.social (API only)
 The Monday GitHub Actions job collects it from the public API (no credentials);

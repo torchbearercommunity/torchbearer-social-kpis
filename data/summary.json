@@ -5,65 +5,65 @@
     "start": "2026-11-02",
     "end": "2026-11-08"
   },
-  "totalAudience": 1103,
+  "totalAudience": 1360,
   "platforms": {
     "x": {
       "name": "X / Twitter",
       "handle": "@JoinTorchbearer",
       "url": "https://x.com/JoinTorchbearer",
-      "audience": 478,
+      "audience": 500,
       "audienceMetric": "followers",
-      "asOf": "2026-08-24",
-      "change": 3,
-      "changeSince": "2026-08-17",
-      "weeklyEngagements": 163,
-      "engagementsWeek": "2026-08-24"
+      "asOf": "2026-11-02",
+      "change": 22,
+      "changeSince": "2026-08-24",
+      "weeklyEngagements": 159,
+      "engagementsWeek": "2026-11-02"
     },
     "linkedin": {
       "name": "LinkedIn",
       "handle": null,
       "url": "https://www.linkedin.com/company/109655987",
-      "audience": 127,
+      "audience": 178,
       "audienceMetric": "followers",
-      "asOf": "2026-08-03",
-      "change": 3,
-      "changeSince": "2026-07-27",
-      "weeklyEngagements": 46,
-      "engagementsWeek": "2026-08-17"
+      "asOf": "2026-11-02",
+      "change": 51,
+      "changeSince": "2026-08-03",
+      "weeklyEngagements": 8,
+      "engagementsWeek": "2026-11-02"
     },
     "youtube": {
       "name": "YouTube",
       "handle": null,
       "url": "https://www.youtube.com/channel/UCo1kAWa39iW5DPIHk__qvXQ",
-      "audience": 81,
+      "audience": 95,
       "audienceMetric": "subscribers",
-      "asOf": "2026-08-17",
-      "change": 3,
-      "changeSince": "2026-08-10",
-      "weeklyEngagements": 21,
-      "engagementsWeek": "2026-08-17"
+      "asOf": "2026-11-02",
+      "change": 1,
+      "changeSince": "2026-10-26",
+      "weeklyEngagements": 0,
+      "engagementsWeek": "2026-11-02"
     },
     "facebook": {
       "name": "Facebook",
       "handle": null,
       "url": "https://www.facebook.com/profile.php?id=61587232704207",
-      "audience": 30,
+      "audience": 42,
       "audienceMetric": "followers",
-      "asOf": "2026-08-17",
-      "change": 2,
-      "changeSince": "2026-08-10",
-      "weeklyEngagements": 23,
-      "engagementsWeek": "2026-08-17"
+      "asOf": "2026-11-02",
+      "change": 12,
+      "changeSince": "2026-08-17",
+      "weeklyEngagements": 3,
+      "engagementsWeek": "2026-11-02"
     },
     "instagram": {
       "name": "Instagram",
       "handle": null,
       "url": null,
-      "audience": 132,
+      "audience": 171,
       "audienceMetric": "followers",
-      "asOf": "2026-08-17",
-      "change": 12,
-      "changeSince": "2026-08-03",
+      "asOf": "2026-11-02",
+      "change": 39,
+      "changeSince": "2026-08-17",
       "weeklyEngagements": 35,
       "engagementsWeek": "2026-08-17"
     },
@@ -71,11 +71,11 @@
       "name": "Substack",
       "handle": null,
       "url": "https://torchbearercommunity.substack.com",
-      "audience": 232,
+      "audience": 339,
       "audienceMetric": "subscribers",
-      "asOf": "2026-08-03",
-      "change": 8,
-      "changeSince": "2026-07-27",
+      "asOf": "2026-11-02",
+      "change": 6,
+      "changeSince": "2026-10-26",
       "weeklyEngagements": null,
       "engagementsWeek": null
     },
@@ -94,26 +94,14 @@
     "threads": {
       "name": "Threads",
       "handle": "@torchbearercommunity",
-      "url": "https://www.threads.net/@torchbearercommunity",
-      "audience": 5,
+      "url": "https://www.threads.com/@torchbearercommunity",
+      "audience": 18,
       "audienceMetric": "followers",
-      "asOf": "2026-06-01",
-      "change": null,
-      "changeSince": null,
+      "asOf": "2026-11-02",
+      "change": 13,
+      "changeSince": "2026-06-01",
       "weeklyEngagements": null,
       "engagementsWeek": null
-    },
-    "tiktok": {
-      "name": "TikTok",
-      "handle": "@torchbearercommunity",
-      "url": null,
-      "audience": 1,
-      "audienceMetric": "followers",
-      "asOf": "2026-06-01",
-      "change": null,
-      "changeSince": null,
-      "weeklyEngagements": 0,
-      "engagementsWeek": "2026-06-01"
     }
   },
   "audienceSeries": [
@@ -260,67 +248,112 @@
     {
       "start": "2026-06-01",
       "end": "2026-06-07",
-      "total": 860
+      "total": 859
     },
     {
       "start": "2026-06-08",
       "end": "2026-06-14",
-      "total": 878
+      "total": 887
     },
     {
       "start": "2026-06-15",
       "end": "2026-06-21",
-      "total": 890
+      "total": 908
     },
     {
       "start": "2026-06-22",
       "end": "2026-06-28",
-      "total": 897
+      "total": 925
     },
     {
       "start": "2026-07-06",
       "end": "2026-07-12",
-      "total": 963
+      "total": 967
     },
     {
       "start": "2026-07-13",
       "end": "2026-07-19",
-      "total": 991
+      "total": 997
     },
     {
       "start": "2026-07-20",
       "end": "2026-07-26",
-      "total": 1013
+      "total": 1019
     },
     {
       "start": "2026-07-27",
       "end": "2026-08-02",
-      "total": 1034
+      "total": 1041
     },
     {
       "start": "2026-08-03",
       "end": "2026-08-09",
-      "total": 1057
+      "total": 1065
     },
     {
       "start": "2026-08-10",
       "end": "2026-08-16",
-      "total": 1062
+      "total": 1114
     },
     {
       "start": "2026-08-17",
       "end": "2026-08-23",
-      "total": 1091
+      "total": 1150
     },
     {
       "start": "2026-08-24",
       "end": "2026-08-30",
-      "total": 1099
+      "total": 1174
+    },
+    {
+      "start": "2026-08-31",
+      "end": "2026-09-06",
+      "total": 1192
+    },
+    {
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "total": 1218
+    },
+    {
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "total": 1241
+    },
+    {
+      "start": "2026-09-21",
+      "end": "2026-09-27",
+      "total": 1258
+    },
+    {
+      "start": "2026-09-28",
+      "end": "2026-10-04",
+      "total": 1270
+    },
+    {
+      "start": "2026-10-05",
+      "end": "2026-10-11",
+      "total": 1288
+    },
+    {
+      "start": "2026-10-12",
+      "end": "2026-10-18",
+      "total": 1306
+    },
+    {
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "total": 1324
+    },
+    {
+      "start": "2026-10-26",
+      "end": "2026-11-01",
+      "total": 1341
     },
     {
       "start": "2026-11-02",
       "end": "2026-11-08",
-      "total": 1103
+      "total": 1360
     }
   ],
   "dashboardUrl": "https://torchbearercommunity.github.io/torchbearer-social-kpis/"

@@ -55,9 +55,9 @@ is rebuilt with every data update:
 
 (The values above are placeholders that show the shape.) Dates are the Monday of a
 Monday to Sunday week. `asOf` is the week a platform last reported, which can be
-older than `dataThrough`; show it when it is. `audienceSeries` carries each
-platform forward from its last report, so the total never dips because one report
-was skipped. Fields may be added; existing ones will not be renamed.
+older than `dataThrough`; show it when it is. In `audienceSeries` a platform's value runs on a
+straight line between two reports and is carried forward after its last one, so
+the total never dips because one report was skipped. Fields may be added; existing ones will not be renamed.
 
 The full history, every metric for every week, is at `data/kpi-history.json` in
 the same place.

@@ -290,7 +290,7 @@
 
   <section class="tables">
     <h2>Data tables</h2>
-    <p>Every value in the charts, without hovering. A dash means not recorded that week; gray audience figures are carried forward from the last report.</p>
+    <p>Every value in the charts, without hovering. A dash means not recorded that week; gray audience figures are estimated between two reports or carried forward from the last one.</p>
     <div id="tables"></div>
   </section>
 
@@ -353,8 +353,6 @@ const PLATFORMS = [
     secondary: [['engagements','Weekly engagements'],['posts','Posts published']] },
   { key: 'threads',   name: 'Threads',  primary: 'followers', primaryLabel: 'followers', engage: 'interactions',
     secondary: [['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['posts','Posts published']] },
-  { key: 'tiktok',    name: 'TikTok',   primary: 'followers', primaryLabel: 'followers', engage: 'engagements',
-    secondary: [['views','Views'],['engagements','Weekly engagements'],['profileVisits','Profile views']] },
 ];
 
 // Audience-by-platform stack: fixed order and fixed colors (color follows the
@@ -366,7 +364,7 @@ const STACK = [
   { key: 'youtube',   color: 'var(--cat-3)' },
   { key: 'instagram', color: 'var(--cat-4)' },
   { key: 'substack',  color: 'var(--cat-5)' },
-  { key: 'other',     color: 'var(--cat-other)', name: 'Other platforms', members: ['facebook', 'bluesky', 'threads', 'tiktok'] },
+  { key: 'other',     color: 'var(--cat-other)', name: 'Other platforms', members: ['facebook', 'bluesky', 'threads'] },
 ];
 const P_BY_KEY = Object.fromEntries(PLATFORMS.map((P) => [P.key, P]));
 
@@ -610,22 +608,28 @@ function barChart(pts, { width = 340, height = 72, valueLabel = '' } = {}) {
 }
 
 /* ───────── community-level model ───────── */
-// Audience per week with carry-forward: a platform counts at its latest known
-// value from its first report onward (null before that), so one skipped report
-// never makes the total dip. `reported` marks values recorded in that exact week.
+// Audience per week. A platform counts from its first report onward (null before).
+// Between two reports its value runs on a straight line (`estimated`); after its last
+// report the value is carried forward. `reported` marks values recorded that exact week.
 const AUDIENCE = (() => {
-  const last = {};
-  return weeks.map((w) => {
-    const vals = {}, reported = {};
-    let total = 0;
-    for (const P of PLATFORMS) {
-      const v = w.platforms[P.key] && w.platforms[P.key][P.primary];
-      if (v != null) { last[P.key] = v; reported[P.key] = true; }
-      vals[P.key] = last[P.key] ?? null;
-      total += vals[P.key] || 0;
-    }
-    return { week: w, t: parseDate(w.start).getTime(), vals, reported, total };
-  });
+  const rows = weeks.map((w) => ({ week: w, t: parseDate(w.start).getTime(), vals: {}, reported: {}, estimated: {}, total: 0 }));
+  for (const P of PLATFORMS) {
+    const known = []; // indexes of the weeks with a report for this platform
+    weeks.forEach((w, i) => { if (w.platforms[P.key] && w.platforms[P.key][P.primary] != null) known.push(i); });
+    rows.forEach((r, i) => {
+      const before = known.filter((k) => k <= i).pop(), after = known.find((k) => k >= i);
+      if (before === undefined) { r.vals[P.key] = null; return; }
+      const a = weeks[before].platforms[P.key][P.primary];
+      if (before === i) { r.vals[P.key] = a; r.reported[P.key] = true; return; }
+      if (after === undefined) { r.vals[P.key] = a; return; } // past the last report: carried forward
+      // between two reports: a straight line, the same way the platform cards draw it
+      const b = weeks[after].platforms[P.key][P.primary];
+      r.vals[P.key] = Math.round(a + (b - a) * (r.t - rows[before].t) / (rows[after].t - rows[before].t));
+      r.estimated[P.key] = true;
+    });
+  }
+  for (const r of rows) r.total = PLATFORMS.reduce((a, P) => a + (r.vals[P.key] || 0), 0);
+  return rows;
 })();
 // The last week in which platforms holding at least half the audience actually reported.
 // Past it, totals are carried forward, which is absence of data and not flat growth.
@@ -851,7 +855,7 @@ function buildProgress() {
     return p;
   };
 
-  const a = panel('Total audience', 'Followers and subscribers, by platform. A platform joins the total at its first report.');
+  const a = panel('Total audience', 'Followers and subscribers, by platform. Weeks between two reports are drawn as a straight line.');
   const arows = AUDIENCE.filter((r) => keep.has(r.week));
   const legend = document.createElement('div'); legend.className = 'legend';
   for (const B of STACK) {
@@ -1029,12 +1033,14 @@ function buildCards() {
       card.appendChild(blk);
     }
 
-    // secondary metrics (latest known each)
+    // secondary metrics: only those in the platform's most recent report, so a number
+    // from months ago never sits unlabeled beside this week's
     if (P.secondary.length) {
       const dl = document.createElement('dl'); dl.className = 'metrics';
+      const repWeek = [...weeks].reverse().find((w) => w.platforms[P.key] && Object.values(w.platforms[P.key]).some((v) => v != null));
       for (const [metric, label, unit] of P.secondary) {
         const lpm = latestPoint(P.key, metric);
-        if (!lpm) continue;
+        if (!lpm || lpm.week !== repWeek) continue;
         const row = document.createElement('div');
         const dt = document.createElement('dt'); dt.textContent = label;
         const dd = document.createElement('dd');
@@ -1060,7 +1066,6 @@ const TABLE_COLS = {
   substack: [['followers','Followers'],['subscribers','Subscribers'],['views','Views'],['uniqueVisitors','Unique visitors'],['subscriberConversionRate','Conv. %'],['openRate','Open rate %'],['posts','Posts']],
   bluesky: [['followers','Followers'],['engagements','Engagements'],['posts','Posts']],
   threads: [['followers','Followers'],['views','Views'],['interactions','Interactions'],['profileVisits','Profile visits'],['posts','Posts']],
-  tiktok: [['followers','Followers'],['views','Views'],['engagements','Engagements'],['profileVisits','Profile views']],
 };
 
 function buildTables() {
@@ -1087,7 +1092,7 @@ function buildTables() {
         const td = document.createElement('td');
         const v = r.vals[P.key];
         td.textContent = v == null ? '–' : fmtInt(v);
-        if (v == null || !r.reported[P.key]) { td.className = 'na'; if (v != null) td.title = 'Carried forward from an earlier report'; }
+        if (v == null || !r.reported[P.key]) { td.className = 'na'; if (v != null) td.title = r.estimated[P.key] ? 'Estimated: straight line between two reports' : 'Carried forward from an earlier report'; }
         tr.appendChild(td);
       }
       tbody.appendChild(tr);

@@ -160,7 +160,7 @@ if (env.THREADS_ACCESS_TOKEN) {
   } catch (e) { notes.push("threads FAILED: " + e.message); browser.push("threads"); }
 } else browser.push("threads");
 
-browser.push("x", "linkedin", "substack", "tiktok");
+browser.push("x", "linkedin", "substack");
 
 for (const k of Object.keys(out)) if (!Object.keys(out[k]).length) delete out[k];
 console.log(JSON.stringify({ week: start, collected: out, stillNeedBrowser: browser, notes }, null, 2));

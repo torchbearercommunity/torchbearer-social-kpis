@@ -34,11 +34,7 @@
     "threads": {
       "name": "Threads",
       "handle": "@torchbearercommunity",
-      "url": "https://www.threads.net/@torchbearercommunity"
-    },
-    "tiktok": {
-      "name": "TikTok",
-      "handle": "@torchbearercommunity"
+      "url": "https://www.threads.com/@torchbearercommunity"
     }
   },
   "weeks": [
@@ -1022,12 +1018,6 @@
           "subscribers": 150,
           "views": 359,
           "openRate": 17.9
-        },
-        "tiktok": {
-          "followers": 1,
-          "views": 0,
-          "engagements": 0,
-          "profileVisits": 0
         }
       }
     },
@@ -1485,10 +1475,12 @@
         },
         "substack": {
           "followers": null,
-          "subscribers": null,
-          "views": null,
+          "subscribers": 259,
+          "views": 218,
           "uniqueVisitors": null,
-          "subscriberConversionRate": null
+          "subscriberConversionRate": null,
+          "openRate": 37,
+          "posts": 1
         },
         "bluesky": {
           "posts": 2,
@@ -1539,10 +1531,12 @@
         },
         "substack": {
           "followers": null,
-          "subscribers": null,
-          "views": null,
+          "subscribers": 272,
+          "views": 205,
           "uniqueVisitors": null,
-          "subscriberConversionRate": null
+          "subscriberConversionRate": null,
+          "openRate": 38,
+          "posts": 1
         },
         "bluesky": {
           "posts": 1,
@@ -1566,6 +1560,384 @@
           "followers": 13,
           "engagements": 3,
           "posts": 1
+        },
+        "youtube": {
+          "subscribers": 82,
+          "views": 156,
+          "impressions": 2271,
+          "likes": 13,
+          "comments": 6,
+          "engagements": 20,
+          "impressionsCtr": 1.4,
+          "watchHours": 0.9
+        },
+        "linkedin": {
+          "impressions": 312,
+          "engagements": 39,
+          "engagementRate": 12.5,
+          "linkClicks": 22
+        },
+        "substack": {
+          "subscribers": 283,
+          "views": 338,
+          "openRate": 40,
+          "posts": 1
+        }
+      }
+    },
+    {
+      "start": "2026-08-31",
+      "end": "2026-09-06",
+      "platforms": {
+        "x": {
+          "impressions": 3019,
+          "engagements": 89,
+          "engagementRate": 2.9,
+          "profileVisits": 0
+        },
+        "youtube": {
+          "subscribers": 82,
+          "views": 127,
+          "impressions": 1362,
+          "likes": 1,
+          "comments": 0,
+          "engagements": 2,
+          "impressionsCtr": 1.7,
+          "watchHours": 0.4
+        },
+        "linkedin": {
+          "impressions": 183,
+          "engagements": 17,
+          "engagementRate": 9.3,
+          "linkClicks": 14
+        },
+        "substack": {
+          "subscribers": 290,
+          "views": 241,
+          "openRate": 39,
+          "posts": 1
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "platforms": {
+        "x": {
+          "impressions": 16115,
+          "engagements": 243,
+          "engagementRate": 1.5,
+          "profileVisits": 32
+        },
+        "youtube": {
+          "subscribers": 84,
+          "views": 95,
+          "impressions": 679,
+          "likes": 0,
+          "comments": 0,
+          "engagements": 0,
+          "impressionsCtr": 2.5,
+          "watchHours": 0.4
+        },
+        "linkedin": {
+          "impressions": 93,
+          "engagements": 13,
+          "engagementRate": 14,
+          "linkClicks": 12
+        },
+        "substack": {
+          "subscribers": 302,
+          "views": 224,
+          "openRate": 37,
+          "posts": 1
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "platforms": {
+        "x": {
+          "impressions": 1220,
+          "engagements": 26,
+          "engagementRate": 2.1,
+          "profileVisits": 0
+        },
+        "youtube": {
+          "subscribers": 84,
+          "views": 78,
+          "impressions": 536,
+          "likes": 4,
+          "comments": 0,
+          "engagements": 4,
+          "impressionsCtr": 4.1,
+          "watchHours": 0.4
+        },
+        "linkedin": {
+          "impressions": 135,
+          "engagements": 10,
+          "engagementRate": 7.4,
+          "linkClicks": 8
+        },
+        "substack": {
+          "subscribers": 313,
+          "views": null,
+          "openRate": null,
+          "posts": 0
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-09-21",
+      "end": "2026-09-27",
+      "platforms": {
+        "x": {
+          "impressions": 1880,
+          "engagements": 84,
+          "engagementRate": 4.5,
+          "profileVisits": 3
+        },
+        "youtube": {
+          "subscribers": 86,
+          "views": 94,
+          "impressions": 476,
+          "likes": 0,
+          "comments": 0,
+          "engagements": 0,
+          "impressionsCtr": 3.1,
+          "watchHours": 1.2
+        },
+        "linkedin": {
+          "impressions": 81,
+          "engagements": 3,
+          "engagementRate": 3.7,
+          "linkClicks": 3
+        },
+        "substack": {
+          "subscribers": 317,
+          "views": 292,
+          "openRate": 39,
+          "posts": 1
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-09-28",
+      "end": "2026-10-04",
+      "platforms": {
+        "x": {
+          "impressions": 842,
+          "engagements": 12,
+          "engagementRate": 1.4,
+          "profileVisits": 2
+        },
+        "youtube": {
+          "subscribers": 87,
+          "views": 67,
+          "impressions": 335,
+          "likes": 0,
+          "comments": 0,
+          "engagements": 0,
+          "impressionsCtr": 4.5,
+          "watchHours": 0.4
+        },
+        "linkedin": {
+          "impressions": 81,
+          "engagements": 8,
+          "engagementRate": 9.9,
+          "linkClicks": 8
+        },
+        "substack": {
+          "subscribers": 316,
+          "views": 280,
+          "openRate": 36,
+          "posts": 1
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-10-05",
+      "end": "2026-10-11",
+      "platforms": {
+        "x": {
+          "impressions": 464,
+          "engagements": 15,
+          "engagementRate": 3.2,
+          "profileVisits": 1
+        },
+        "youtube": {
+          "subscribers": 88,
+          "views": 79,
+          "impressions": 432,
+          "likes": 5,
+          "comments": 0,
+          "engagements": 7,
+          "impressionsCtr": 4,
+          "watchHours": 1.3
+        },
+        "linkedin": {
+          "impressions": 154,
+          "engagements": 8,
+          "engagementRate": 5.2,
+          "linkClicks": 3
+        },
+        "substack": {
+          "subscribers": 321,
+          "views": null,
+          "openRate": null,
+          "posts": 0
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-10-12",
+      "end": "2026-10-18",
+      "platforms": {
+        "x": {
+          "impressions": 307,
+          "engagements": 18,
+          "engagementRate": 5.9,
+          "profileVisits": 0
+        },
+        "youtube": {
+          "subscribers": 89,
+          "views": 87,
+          "impressions": 511,
+          "likes": 2,
+          "comments": 1,
+          "engagements": 3,
+          "impressionsCtr": 1.8,
+          "watchHours": 1.1
+        },
+        "linkedin": {
+          "impressions": 143,
+          "engagements": 18,
+          "engagementRate": 12.6,
+          "linkClicks": 12
+        },
+        "substack": {
+          "subscribers": 327,
+          "views": 188,
+          "openRate": 32,
+          "posts": 1
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "platforms": {
+        "x": {
+          "impressions": 3001,
+          "engagements": 81,
+          "engagementRate": 2.7,
+          "profileVisits": 7
+        },
+        "youtube": {
+          "subscribers": 93,
+          "views": 1727,
+          "impressions": 7356,
+          "likes": 26,
+          "comments": 12,
+          "engagements": 41,
+          "impressionsCtr": 3.2,
+          "watchHours": 6.3
+        },
+        "linkedin": {
+          "impressions": 247,
+          "engagements": 17,
+          "engagementRate": 6.9,
+          "linkClicks": 3
+        },
+        "substack": {
+          "subscribers": 328,
+          "views": null,
+          "openRate": null,
+          "posts": 0
+        },
+        "facebook": {
+          "views": 501,
+          "viewers": 385,
+          "engagements": 21,
+          "linkClicks": 0,
+          "viewsCtr": 0
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
+        }
+      }
+    },
+    {
+      "start": "2026-10-26",
+      "end": "2026-11-01",
+      "platforms": {
+        "x": {
+          "impressions": 2100,
+          "engagements": 159,
+          "engagementRate": 7.6,
+          "profileVisits": 5
+        },
+        "youtube": {
+          "subscribers": 94,
+          "views": 668,
+          "impressions": 3217,
+          "likes": 6,
+          "comments": 0,
+          "engagements": 6,
+          "impressionsCtr": 3.3,
+          "watchHours": 4.7
+        },
+        "linkedin": {
+          "impressions": 264,
+          "engagements": 18,
+          "engagementRate": 6.8,
+          "linkClicks": 4
+        },
+        "substack": {
+          "subscribers": 333,
+          "views": 230,
+          "openRate": 36,
+          "posts": 1
+        },
+        "facebook": {
+          "views": 1396,
+          "viewers": 958,
+          "engagements": 46,
+          "linkClicks": 0,
+          "viewsCtr": 0
+        },
+        "bluesky": {
+          "posts": 0,
+          "engagements": 0
         }
       }
     },
@@ -1577,6 +1949,50 @@
           "followers": 17,
           "engagements": 0,
           "posts": 2
+        },
+        "x": {
+          "impressions": 2246,
+          "engagements": 159,
+          "engagementRate": 7.1,
+          "profileVisits": 4,
+          "followers": 500
+        },
+        "youtube": {
+          "subscribers": 95,
+          "views": 98,
+          "impressions": 357,
+          "likes": 0,
+          "comments": 0,
+          "engagements": 0,
+          "impressionsCtr": 3.3,
+          "watchHours": 2.1
+        },
+        "linkedin": {
+          "impressions": 97,
+          "engagements": 8,
+          "engagementRate": 8.2,
+          "linkClicks": 2,
+          "followers": 178
+        },
+        "substack": {
+          "subscribers": 339,
+          "views": 218,
+          "openRate": 33.4,
+          "posts": 1
+        },
+        "facebook": {
+          "views": 149,
+          "viewers": 80,
+          "engagements": 3,
+          "linkClicks": 0,
+          "viewsCtr": 0,
+          "followers": 42
+        },
+        "instagram": {
+          "followers": 171
+        },
+        "threads": {
+          "followers": 18
         }
       }
     }

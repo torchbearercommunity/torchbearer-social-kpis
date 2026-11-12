@@ -34,14 +34,22 @@ const d = JSON.parse(data);
 const PRIMARY = { youtube: "subscribers", substack: "subscribers" }; // everything else: followers
 const ENGAGE = { instagram: "interactions", threads: "interactions", substack: null }; // else: engagements
 const latest = d.weeks[d.weeks.length - 1];
-const known = {}; // carry-forward audience per platform
-const audienceSeries = d.weeks.map((w) => {
-  for (const key of Object.keys(d.platforms)) {
-    const v = w.platforms[key]?.[PRIMARY[key] ?? "followers"];
-    if (v != null) known[key] = { value: v, asOf: w.start };
-  }
-  return { start: w.start, end: w.end, total: Object.values(known).reduce((a, x) => a + x.value, 0) };
-});
+// Audience per week: a platform's value runs on a straight line between two reports
+// and is carried forward after its last one (same rule as the dashboard chart).
+const T = (w) => Date.parse(w.start);
+const audienceSeries = d.weeks.map((w) => ({ start: w.start, end: w.end, total: 0 }));
+for (const key of Object.keys(d.platforms)) {
+  const metric = PRIMARY[key] ?? "followers";
+  const known = d.weeks.map((w, i) => (w.platforms[key]?.[metric] != null ? i : -1)).filter((i) => i >= 0);
+  d.weeks.forEach((w, i) => {
+    const before = known.filter((k) => k <= i).pop(), after = known.find((k) => k >= i);
+    if (before === undefined) return;
+    const a = d.weeks[before].platforms[key][metric];
+    if (before === i || after === undefined) { audienceSeries[i].total += a; return; }
+    const b = d.weeks[after].platforms[key][metric];
+    audienceSeries[i].total += Math.round(a + (b - a) * (T(w) - T(d.weeks[before])) / (T(d.weeks[after]) - T(d.weeks[before])));
+  });
+}
 const platforms = {};
 for (const [key, meta] of Object.entries(d.platforms)) {
   const metric = PRIMARY[key] ?? "followers";
