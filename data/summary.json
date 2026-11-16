@@ -1,9 +1,9 @@
 {
   "organization": "Torchbearer Community",
-  "updated": "2026-11-12",
+  "updated": "2026-11-16",
   "dataThrough": {
-    "start": "2026-11-02",
-    "end": "2026-11-08"
+    "start": "2026-11-09",
+    "end": "2026-11-15"
   },
   "totalAudience": 1360,
   "platforms": {
@@ -85,11 +85,11 @@
       "url": "https://bsky.app/profile/jointorchbearer.bsky.social",
       "audience": 17,
       "audienceMetric": "followers",
-      "asOf": "2026-11-02",
-      "change": 4,
-      "changeSince": "2026-08-24",
+      "asOf": "2026-11-09",
+      "change": 0,
+      "changeSince": "2026-11-02",
       "weeklyEngagements": 0,
-      "engagementsWeek": "2026-11-02"
+      "engagementsWeek": "2026-11-09"
     },
     "threads": {
       "name": "Threads",
@@ -353,6 +353,11 @@
     {
       "start": "2026-11-02",
       "end": "2026-11-08",
+      "total": 1360
+    },
+    {
+      "start": "2026-11-09",
+      "end": "2026-11-15",
       "total": 1360
     }
   ],
