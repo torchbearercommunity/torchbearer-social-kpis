@@ -65,8 +65,10 @@ missed weeks cost about the same as one. Sum the days Monday to Sunday.
 - **LinkedIn**: set the range to Last 90 days. The chart is Highcharts:
   `Highcharts.charts[0].series[0].data` holds one point per day for the metric
   chosen in the dropdown (Impressions, Clicks, Reactions, Comments, Reposts).
-  Members reached cannot be summed across days, so backfilled weeks leave it
-  null. The Followers tab charts new followers only, which does not rebuild totals.
+  Members reached: for Nov 9–15, 2026 the custom-range total (53) equalled
+  the sum of the seven daily points, so summing days appears to work; it was
+  previously assumed not to, so check against a custom-range total when
+  backfilling. The Followers tab charts new followers only, which does not rebuild totals.
 - **Substack**: `/api/v1/publish-dashboard/summary-v2?range=N` (fetched from the
   dashboard page while signed in) returns `totalSubscribersStart`, the subscriber
   total N days ago. That gives every past week's total; it matched the recorded
