@@ -126,6 +126,11 @@ asks for metrics a week already lists as `null`.
 pick Monday then Sunday → Escape. Cards: Verified followers *A / B* (B = total
 followers), Impressions, Engagement rate, Engagements, Profile visits. Page-text
 extraction misses the card numbers — read them from a screenshot.
+`posts` and `linkClicks`: open
+`https://x.com/i/account_analytics/content?type=posts&sort=date&dir=desc&days=14`
+(the "Posts" filter excludes replies but keeps quote posts), wrap
+`URL.createObjectURL`, click the download icon, and read the per-post CSV: count
+rows dated Mon–Sun for `posts`, sum the `URL Clicks` column for `linkClicks`.
 Fields: `followers`, `verifiedFollowers`, `impressions`, `engagements`,
 `engagementRate`, `profileVisits`, `linkClicks`, `posts`. Historical follower
 counts are not shown, so backfilled weeks leave `followers` null.
