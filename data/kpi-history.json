@@ -2024,7 +2024,12 @@
         "youtube": {
           "subscribers": 96,
           "views": 545,
-          "watchHours": 6.3
+          "watchHours": 6.3,
+          "impressions": 177,
+          "impressionsCtr": 3.4,
+          "likes": 27,
+          "comments": 6,
+          "engagements": 33
         },
         "linkedin": {
           "followers": 182,

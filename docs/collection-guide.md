@@ -161,14 +161,23 @@ reached and Clicks. `engagements` = reactions + comments + reposts + clicks;
 `engagements`, `engagementRate`, `linkClicks` (the Clicks metric), `posts`.
 
 ### youtube — channel UCo1kAWa39iW5DPIHk__qvXQ (browser, or API for subscribers)
-Studio → Analytics → **Advanced mode**. The URL accepts the range directly:
-`…/explore?…&time_period=<startMs>%2C<endMs>` (epoch ms at local midnight,
-end = next Monday) with `t_metrics=RATINGS_LIKES&t_metrics=COMMENTS&t_metrics=SHARINGS&t_metrics=EXTERNAL_VIEWS&t_metrics=SUBSCRIBERS_NET_CHANGE&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS_VTR`.
-Read the **Total** row. As of 2026-11-16 Studio renamed Analytics to "Insights"
-(route `analytics/hub_overview`) and every `explore?…` URL tried redirects to
-"Oops, something went wrong". Fallback: the hub_overview **Key metrics → 7 days**
-tab (Monday run = Mon–Sun) gives views, watch hours, and total subscribers;
-impressions, CTR, likes, comments stay null until the explore URL is fixed. Fields: `subscribers` (current), `views`, `impressions`,
+Studio → Insights → **Advanced mode**. Since Studio renamed Analytics to
+"Insights" (Nov 2026) the old `analytics/tab-overview/…/explore` URLs show
+"Oops, something went wrong". The working URL (verified 2026-11-17):
+
+```
+https://studio.youtube.com/channel/UCo1kAWa39iW5DPIHk__qvXQ/analytics/hub_overview/explore?entity_type=CHANNEL&entity_id=UCo1kAWa39iW5DPIHk__qvXQ&time_period=<startMs>%2C<endMs>&explore_type=TABLE_AND_CHART&metrics_computation_type=DELTA&metric=EXTERNAL_VIEWS&granularity=DAY&t_metrics=RATINGS_LIKES&t_metrics=COMMENTS&t_metrics=SHARINGS&t_metrics=EXTERNAL_VIEWS&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS_VTR&t_metrics=EXTERNAL_WATCH_TIME&t_metrics=SUBSCRIBERS_NET_CHANGE&dimension=DAY&o_column=DAY&o_direction=ANALYTICS_ORDER_DIRECTION_ASC
+```
+
+Studio counts days in Pacific time, so for a Mon–Sun week pass **midnight
+Central of Tuesday** as start and **midnight Central of the following Tuesday**
+as end (Nov 9–15, 2026 = `1794290400000%2C1794895200000`; compute with
+`node -e "console.log(Date.parse('2026-11-10T00:00:00-06:00'))"`, `-05:00` in
+summer). Check that the date control reads the exact week. The table renders in
+an overlay that page-text extraction misses; read the **Total** row from a
+screenshot (scroll right for watch time and subscribers). Columns: Likes,
+Comments added, Shares, Views, Thumbnail impressions, Thumbnail CTR, Watch time,
+Subscribers. Fields: `subscribers` (current), `views`, `impressions`,
 `likes`, `comments`, `engagements` (= likes + comments + shares), `impressionsCtr`,
 `watchHours`, `posts` (videos and Shorts published in the week).
 
