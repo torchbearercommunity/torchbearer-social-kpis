@@ -54,6 +54,10 @@ summary. Full detail in the skill file.
 - The engagement summary tile excludes Substack (its `views` are not engagements).
 - Follower and subscriber totals are only ever recorded for the current week. A
   backfill of an older week records activity counts and leaves totals null.
+  Exception: Substack reports exact past subscriber totals (its daily
+  subscriber CSV export, or `summary-v2?range=N`), so empty past
+  `substack.subscribers` may be filled from the Sunday's figure. Existing
+  recorded values are left alone (they were read a day or two after Sunday).
 - Total audience carries each platform forward from its last report. Growth
   figures are like-for-like: only platforms known at both dates count, so a
   platform that started being tracked in between is not reported as growth.

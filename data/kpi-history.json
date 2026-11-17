@@ -280,6 +280,9 @@
           "likes": 7,
           "comments": 1,
           "impressionsCtr": null
+        },
+        "substack": {
+          "subscribers": 2
         }
       }
     },
@@ -312,6 +315,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 5
+        },
+        "substack": {
+          "subscribers": 2
         }
       }
     },
@@ -344,6 +350,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 8
+        },
+        "substack": {
+          "subscribers": 4
         }
       }
     },
@@ -376,6 +385,9 @@
         "bluesky": {
           "posts": 3,
           "engagements": 12
+        },
+        "substack": {
+          "subscribers": 5
         }
       }
     },
@@ -408,6 +420,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 6
+        },
+        "substack": {
+          "subscribers": 5
         }
       }
     },
@@ -440,6 +455,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 5
+        },
+        "substack": {
+          "subscribers": 5
         }
       }
     },
@@ -472,6 +490,9 @@
         "bluesky": {
           "posts": 1,
           "engagements": 5
+        },
+        "substack": {
+          "subscribers": 5
         }
       }
     },
@@ -504,6 +525,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 11
+        },
+        "substack": {
+          "subscribers": 5
         }
       }
     },
@@ -536,6 +560,9 @@
         "bluesky": {
           "posts": 0,
           "engagements": 0
+        },
+        "substack": {
+          "subscribers": 6
         }
       }
     },
@@ -568,6 +595,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 8
+        },
+        "substack": {
+          "subscribers": 9
         }
       }
     },
@@ -600,6 +630,9 @@
         "bluesky": {
           "posts": 1,
           "engagements": 6
+        },
+        "substack": {
+          "subscribers": 33
         }
       }
     },
@@ -639,6 +672,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 7
+        },
+        "substack": {
+          "subscribers": 42
         }
       }
     },
@@ -725,6 +761,9 @@
         "bluesky": {
           "posts": 1,
           "engagements": 4
+        },
+        "substack": {
+          "subscribers": 62
         }
       }
     },
@@ -772,6 +811,9 @@
         "bluesky": {
           "posts": 1,
           "engagements": 8
+        },
+        "substack": {
+          "subscribers": 76
         }
       }
     },
@@ -819,6 +861,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 6
+        },
+        "substack": {
+          "subscribers": 106
         }
       }
     },
@@ -866,6 +911,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 6
+        },
+        "substack": {
+          "subscribers": 113
         }
       }
     },
@@ -913,6 +961,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 13
+        },
+        "substack": {
+          "subscribers": 122
         }
       }
     },
@@ -960,6 +1011,9 @@
         "bluesky": {
           "posts": 2,
           "engagements": 8
+        },
+        "substack": {
+          "subscribers": 138
         }
       }
     },
@@ -1065,6 +1119,9 @@
         "bluesky": {
           "posts": 0,
           "engagements": 0
+        },
+        "substack": {
+          "subscribers": 149
         }
       }
     },
@@ -1112,6 +1169,9 @@
         "bluesky": {
           "posts": 1,
           "engagements": 3
+        },
+        "substack": {
+          "subscribers": 161
         }
       }
     },
@@ -1159,6 +1219,9 @@
         "bluesky": {
           "posts": 1,
           "engagements": 7
+        },
+        "substack": {
+          "subscribers": 167
         }
       }
     },
