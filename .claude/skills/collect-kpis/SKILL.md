@@ -41,13 +41,23 @@ that is the browser to-do list.
 
 ## 2. Browser pass
 
-1. Load the claude-in-chrome tools (ToolSearch `select:` the core set). Call
-   `list_connected_browsers`; pick the one named **"TBC Chrome"** with
-   `select_browser` (do not use AskUserQuestion). `tabs_context_mcp` with
-   `createIfEmpty`.
+1. Load the claude-in-chrome tools (ToolSearch `select:` the core set, plus
+   `list_connected_browsers`, `select_browser`). Browsers are chosen by
+   **deviceId**, not name (the extension cannot rename them):
+   - TBC profile `f869c2a9-d0fa-47a9-93eb-9f36ac4abfab`: instagram, substack,
+     x, youtube, threads.
+   - Kevin's personal profile `6f74ec9d-ec80-44b7-b0da-64fb931a8ddf`:
+     linkedin, facebook.
+   `select_browser` the TBC one first (never AskUserQuestion), then
+   `tabs_context_mcp` with `createIfEmpty`, and confirm
+   `x.com/i/account_analytics` shows @JoinTorchbearer. If an ID is missing or
+   the check fails, use that check to tell the profiles apart and put the new
+   IDs in the Discord summary. Switch with `select_browser` for the personal
+   group; tab IDs do not carry across browsers.
 2. **Site-access probe**: `navigate` to each domain still needed. Any
-   "Navigation to this domain is not allowed" → add that platform to a `blocked`
-   list and skip it. If *every* platform is blocked, go straight to step 4 with
+   "Navigation to this domain is not allowed", or an approval prompt that times
+   out with nobody there → add that platform to a `blocked` list and skip it
+   (tell Kevin to approve the domain in that profile). If *every* platform is blocked, go straight to step 4 with
    status `fail`.
 3. Collect in this order, recording each platform immediately with
    `node scripts/add-week.mjs <start> platform.metric=value …` before moving on:

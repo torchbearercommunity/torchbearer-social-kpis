@@ -57,9 +57,17 @@ summary. Full detail in the skill file.
 - Total audience carries each platform forward from its last report. Growth
   figures are like-for-like: only platforms known at both dates count, so a
   platform that started being tracked in between is not reported as growth.
-- Browser collection uses Kevin's real Chrome via the claude-in-chrome tools —
-  the connected browser is named "TBC Chrome" (profile "Profile 7"). The
-  extension only navigates domains Kevin has allowed in its site-access
-  settings; a "Navigation to this domain is not allowed" error is a
-  configuration problem to report, not something to work around.
+- Browser collection uses Kevin's real Chrome via the claude-in-chrome tools,
+  in two profiles. The extension cannot rename browsers (they list as
+  "Browser 1"/"Browser 2"), so pick them by **deviceId**:
+  - TBC profile: `f869c2a9-d0fa-47a9-93eb-9f36ac4abfab` (Instagram, X,
+    YouTube Studio, Substack, Threads)
+  - Kevin's personal profile: `6f74ec9d-ec80-44b7-b0da-64fb931a8ddf`
+    (LinkedIn, Facebook)
+  Confirm before collecting: `x.com/i/account_analytics` shows
+  @JoinTorchbearer only in the TBC profile. If the IDs no longer match, identify
+  the profiles by that check and report the new IDs in the Discord summary.
+  The extension only navigates domains Kevin has allowed; a "Navigation to this
+  domain is not allowed" error, or an approval prompt that times out unattended,
+  is a blocked platform to report, not something to work around.
 - Never guess a number. `null` plus a note in the summary beats a plausible value.

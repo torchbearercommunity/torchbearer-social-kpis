@@ -30,8 +30,19 @@ The accounts live in two Chrome profiles, and a run needs both connected:
 - **Kevin's personal profile**: LinkedIn and Facebook. Those are pages administered
   from his personal logins, so the TBC profile cannot open their analytics.
 
+The extension has no rename setting, so the browsers list as "Browser 1" and
+"Browser 2" and are picked by deviceId (recorded 2026-11-17):
+
+| Profile | deviceId | Listed as |
+|---|---|---|
+| TBC | `f869c2a9-d0fa-47a9-93eb-9f36ac4abfab` | Browser 1 |
+| Kevin personal | `6f74ec9d-ec80-44b7-b0da-64fb931a8ddf` | Browser 2 |
+
 Pick the browser with `select_browser` before each group. The quickest check that
 you are in the right one: `x.com/i/account_analytics` shows @JoinTorchbearer.
+The personal profile is signed in to Substack as Kevin and gets "this page is
+private" on the TBC dashboard. Each profile approves sites separately; a site
+that was never approved raises a prompt that blocks unattended runs.
 TBC has no TikTok account; it was dropped from the dashboard in November 2026.
 
 ## Catching up after missed weeks (methods proven on 2026-11-12)
