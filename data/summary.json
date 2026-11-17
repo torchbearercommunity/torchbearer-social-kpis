@@ -1,45 +1,45 @@
 {
   "organization": "Torchbearer Community",
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "dataThrough": {
     "start": "2026-11-09",
     "end": "2026-11-15"
   },
-  "totalAudience": 1360,
+  "totalAudience": 1375,
   "platforms": {
     "x": {
       "name": "X / Twitter",
       "handle": "@JoinTorchbearer",
       "url": "https://x.com/JoinTorchbearer",
-      "audience": 500,
+      "audience": 499,
       "audienceMetric": "followers",
-      "asOf": "2026-11-02",
-      "change": 22,
-      "changeSince": "2026-08-24",
-      "weeklyEngagements": 159,
-      "engagementsWeek": "2026-11-02"
+      "asOf": "2026-11-09",
+      "change": -1,
+      "changeSince": "2026-11-02",
+      "weeklyEngagements": 72,
+      "engagementsWeek": "2026-11-09"
     },
     "linkedin": {
       "name": "LinkedIn",
       "handle": null,
       "url": "https://www.linkedin.com/company/109655987",
-      "audience": 178,
+      "audience": 182,
       "audienceMetric": "followers",
-      "asOf": "2026-11-02",
-      "change": 51,
-      "changeSince": "2026-08-03",
-      "weeklyEngagements": 8,
-      "engagementsWeek": "2026-11-02"
+      "asOf": "2026-11-09",
+      "change": 4,
+      "changeSince": "2026-11-02",
+      "weeklyEngagements": 13,
+      "engagementsWeek": "2026-11-09"
     },
     "youtube": {
       "name": "YouTube",
       "handle": null,
       "url": "https://www.youtube.com/channel/UCo1kAWa39iW5DPIHk__qvXQ",
-      "audience": 95,
+      "audience": 96,
       "audienceMetric": "subscribers",
-      "asOf": "2026-11-02",
+      "asOf": "2026-11-09",
       "change": 1,
-      "changeSince": "2026-10-26",
+      "changeSince": "2026-11-02",
       "weeklyEngagements": 0,
       "engagementsWeek": "2026-11-02"
     },
@@ -49,33 +49,33 @@
       "url": "https://www.facebook.com/profile.php?id=61587232704207",
       "audience": 42,
       "audienceMetric": "followers",
-      "asOf": "2026-11-02",
-      "change": 12,
-      "changeSince": "2026-08-17",
-      "weeklyEngagements": 3,
-      "engagementsWeek": "2026-11-02"
+      "asOf": "2026-11-09",
+      "change": 0,
+      "changeSince": "2026-11-02",
+      "weeklyEngagements": 22,
+      "engagementsWeek": "2026-11-09"
     },
     "instagram": {
       "name": "Instagram",
       "handle": null,
       "url": null,
-      "audience": 171,
+      "audience": 174,
       "audienceMetric": "followers",
-      "asOf": "2026-11-02",
-      "change": 39,
-      "changeSince": "2026-08-17",
-      "weeklyEngagements": 35,
-      "engagementsWeek": "2026-08-17"
+      "asOf": "2026-11-09",
+      "change": 3,
+      "changeSince": "2026-11-02",
+      "weeklyEngagements": 36,
+      "engagementsWeek": "2026-11-09"
     },
     "substack": {
       "name": "Substack",
       "handle": null,
       "url": "https://torchbearercommunity.substack.com",
-      "audience": 339,
+      "audience": 347,
       "audienceMetric": "subscribers",
-      "asOf": "2026-11-02",
-      "change": 6,
-      "changeSince": "2026-10-26",
+      "asOf": "2026-11-09",
+      "change": 8,
+      "changeSince": "2026-11-02",
       "weeklyEngagements": null,
       "engagementsWeek": null
     },
@@ -97,9 +97,9 @@
       "url": "https://www.threads.com/@torchbearercommunity",
       "audience": 18,
       "audienceMetric": "followers",
-      "asOf": "2026-11-02",
-      "change": 13,
-      "changeSince": "2026-06-01",
+      "asOf": "2026-11-09",
+      "change": 0,
+      "changeSince": "2026-11-02",
       "weeklyEngagements": null,
       "engagementsWeek": null
     }
@@ -358,7 +358,7 @@
     {
       "start": "2026-11-09",
       "end": "2026-11-15",
-      "total": 1360
+      "total": 1375
     }
   ],
   "dashboardUrl": "https://torchbearercommunity.github.io/torchbearer-social-kpis/"

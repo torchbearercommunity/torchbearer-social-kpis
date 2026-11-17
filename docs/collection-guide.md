@@ -131,7 +131,13 @@ tab's custom date range fails to load ("Failed to load") every time — take
 `uniqueVisitors` from the default 30-day Traffic view only if it can be isolated
 to the week (else null). Substack has no weekly open rate; `openRate` is the
 average of the week's posts' per-post engagement-rate column (Kevin's decision,
-2026-07-02). Fields: `followers`, `subscribers`, `views`, `uniqueVisitors`,
+2026-07-02). Fast path from the stats page: `summary-v2?range=2` →
+`totalSubscribersEnd` is the current total, and
+`/api/v1/post_management/published?offset=0&limit=8&order_by=post_date&order_direction=desc`
+lists posts with `stats.views` and `stats.engagement_rate`. A week with no post
+records `posts=0`, `views=0`. The Home page no longer shows a followers count.
+Substack is signed in as TBC only in the TBC profile; Kevin's personal profile
+gets "this page is private". Fields: `followers`, `subscribers`, `views`, `uniqueVisitors`,
 `subscriberConversionRate`, `openRate`.
 
 ### linkedin — company id 109655987 (browser)
@@ -147,7 +153,11 @@ reached and Clicks. `engagements` = reactions + comments + reposts + clicks;
 Studio → Analytics → **Advanced mode**. The URL accepts the range directly:
 `…/explore?…&time_period=<startMs>%2C<endMs>` (epoch ms at local midnight,
 end = next Monday) with `t_metrics=RATINGS_LIKES&t_metrics=COMMENTS&t_metrics=SHARINGS&t_metrics=EXTERNAL_VIEWS&t_metrics=SUBSCRIBERS_NET_CHANGE&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS&t_metrics=VIDEO_THUMBNAIL_IMPRESSIONS_VTR`.
-Read the **Total** row. Fields: `subscribers` (current), `views`, `impressions`,
+Read the **Total** row. As of 2026-11-16 Studio renamed Analytics to "Insights"
+(route `analytics/hub_overview`) and every `explore?…` URL tried redirects to
+"Oops, something went wrong". Fallback: the hub_overview **Key metrics → 7 days**
+tab (Monday run = Mon–Sun) gives views, watch hours, and total subscribers;
+impressions, CTR, likes, comments stay null until the explore URL is fixed. Fields: `subscribers` (current), `views`, `impressions`,
 `likes`, `comments`, `engagements` (= likes + comments + shares), `impressionsCtr`,
 `watchHours`, `posts` (videos and Shorts published in the week).
 
